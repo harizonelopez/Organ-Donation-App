@@ -33,9 +33,7 @@ from io import StringIO, BytesIO
 from xhtml2pdf import pisa
 from PyPDF2 import PdfFileMerger, PdfFileReader
 
-
 # Create your views here.
-
 
 def home(request):
     if request.POST:
