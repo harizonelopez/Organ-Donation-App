@@ -20,6 +20,7 @@ from django.http import HttpResponse
 
 
 # Create your views here.
+
 # @login_required(login_url="donor-login")
 def donor_register(request):
     # If method is post
