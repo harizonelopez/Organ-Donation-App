@@ -1,22 +1,16 @@
 cairocffi==1.0.2
 CairoSVG==2.3.0
-# cffi==1.15.1
 cssselect2==0.2.1
 defusedxml==0.5.0
 Django==5
 html5lib==1.0.1
 pdfkit
-# Pillow==9.0.0
 pycparser==2.19
 PyPDF2
 Pyphen==0.9.5
-# pytz==2023.0
-# reportlab==3.5.13
-# six==1.16.0
 tinycss2==1.0.1
 WeasyPrint==46
 webencodings==0.5.1
-# wkhtmltopdfxhtml2pdf==0.2.3
 xhtml2pdf
 wkhtmltopdf
 cffi
@@ -24,3 +18,4 @@ Pillow
 pytz
 six
 
+#  reportlab==3.5.13  ----> The library isn't installed {used for PDF conversion}
