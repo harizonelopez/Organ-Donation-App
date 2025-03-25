@@ -6,15 +6,15 @@ body{
     background-attachment: fixed;
     background-size: cover;
     background-position: center;
-	  background-repeat: no-repeat;
+	background-repeat: no-repeat;
    }
 /* nav bar for company name header*/
 .nav-bar{
 
     display: flex;
     font-size: 0.8em;
-   /* background-color: #51EAEA;*/
 }
+
 #company_name{
     text-align: left;
     margin-left: 1%;
@@ -56,6 +56,8 @@ a:link{
   margin-right: 5%;
 }
 
+
+
 /***********************************************************************
  *  Blue Background
  **********************************************************************/
@@ -88,6 +90,11 @@ a:link{
     .nav-bar{
     display: flex;
     font-size: 0.2em;
+}
+@media (max-width: 768px) {
+    .card {
+        width: 90%; /* Makes cards full-width on small screens */
+    }
 }
  .footer_style{
    text-align: center;
@@ -135,7 +142,7 @@ a:link{
  /*color:#F97300 ;*/
  color:brown;
 }
-.description>p{
+.description p{
  color:#666;
  font-size: 20px;
  width: 50%;
@@ -159,7 +166,7 @@ a:link{
  color:brown;
  font-size: 20px;
 }
-.description>p{
+.description p{
  color:#666;
  font-size: 15px;
  width: 50%;
@@ -178,17 +185,21 @@ a:link{
     color: black;
 }
 .details-grid-container{
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  padding: 10px;
-  grid-gap: 10%;
-  margin-top: 5%;
+  display: flex;
+  /*grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));*/
+  padding: 2rem 0;
+  /*grid-gap: 10%;*/
+  gap: 3rem;
+  /*margin-top: 5%;*/
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .details-grid-item{
-  padding: 20px;
+  /*padding: 20px;*/
   font-size: 30px;
   text-align: center;
+  /*width: 45%;*/
 }
 
 .Details{
