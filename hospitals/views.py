@@ -185,10 +185,6 @@ def hospital_login(request):
         if user is not None:
             if user.is_active:
                 if user.is_staff:
-
-                 #                msg = """Logged in successfully. The homepage is with the other developer who is working on it. But,
-                                        # the remaining functionality works the exact same way it does on donor side. Hence, you
-                                        # are being redirected to same login page."""
                     login(request, user)
                     return redirect(request.POST.get("next", "home"))
         else:
@@ -342,10 +338,10 @@ def hospital_forgot_password(request):
             password = random.randint(1000000, 999999999999)
             user.set_password(password)
             user.save()
-            send_mail("foodatdalteam@gmail.com", email, "Password reset for your organ donation account",
+            send_mail("harizonelopez23@gmail.com", email, "Password reset for your account",
                       """Your request to change password has been processed.\nThis is your new password: {}\n
                             If you wish to change password, please go to your user profile and change it.""".format(password),
-                      server="smtp.gmail.com", username="foodatdalteam@gmail.com", password="foodatdal")
+                      server="smtp.gmail.com", username="harizonelopez23@gmail.com", password="xkfu aslr yswq bdbt")
             success = 1
             msg = "Success. Check your registered email for new password!"
             return render(request, "hospital-forgot-password.html", {"success": success, "msg": msg})
@@ -385,9 +381,9 @@ def form_to_PDF(request, donor_id=1):
 
 def email_donor(request, donor_id=1):
     donor = DonationRequests.objects.get(id=donor_id).donor
-    send_mail("foodatdalteam@gmail.com", donor.email, "Organ Donation",
+    send_mail("harizonelopez23@gmail.com", donor.email, "Organ Donation",
               """You've been requested by {} to donate organ. Thanks!""".format(request.user.hospital_name),
-              server="smtp.gmail.com", username="foodatdalteam@gmail.com", password="foodatdal")
+              server="smtp.gmail.com", username="harizonelopez23@gmail.com", password="xkfu aslr yswq bdbt")
     return HttpResponse("Success")
 
 

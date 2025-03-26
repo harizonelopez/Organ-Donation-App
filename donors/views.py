@@ -23,7 +23,7 @@ from django.http import HttpResponse
 
 # @login_required(login_url="donor-login")
 def donor_register(request):
-    # If method is post
+    # If method is POST
     if request.POST:
         user = User()
         user.username = request.POST.get("username", "")
@@ -51,7 +51,7 @@ def donor_login(request):
             if user.is_active:
                 if not user.is_staff:
                     login(request, user)
-                    print(request.user, "helo")
+                    print(request.user, "Hello, Welcome Abord.")
                     return redirect(request.POST.get("next", "donor-landing-page"))
         else:
             msg = "Invalid password"
@@ -129,8 +129,8 @@ def send_mail(
     files=[],
     server="localhost",
     port=587,
-    username="",
-    password="",
+    username="harizonelopez23@gmail.com",
+    password="xkfu aslr yswq bdbt",
     use_tls=True,
 ):
     message = MIMEMultipart()
@@ -156,7 +156,7 @@ def donor_forgot_password(request):
             email = user.email
             password = random.randint(1000000, 999999999999)
             send_mail(
-                "foodatdalteam@gmail.com",
+                "harizonelopez23@gmail.com",
                 email,
                 "Password reset for your organ donation account",
                 """Your request to change password has been processed.\nThis is your new password: {}\n
@@ -164,8 +164,8 @@ def donor_forgot_password(request):
                     password
                 ),
                 server="smtp.gmail.com",
-                username="foodatdalteam@gmail.com",
-                password="foodatdal",
+                username="harizonelopez23@gmail.com",
+                password="xkfu aslr yswq bdbt",
             )
             user.set_password(password)
             user.save()
