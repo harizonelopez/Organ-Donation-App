@@ -40,9 +40,8 @@ def donor_register(request):
 
     return render(request, "donor-registration.html")
 
-
 def donor_login(request):
-    # If method is post
+    # If method is POST
     if request.POST:
         username = request.POST.get("username", "")
         password = request.POST.get("password", "")
@@ -94,16 +93,8 @@ def donor_profile_update(request):
             msg = "Invalid password"
     donor = User.objects.get(id=request.user.id)
     provinces = [
-        "Nova Scotia",
-        "British Columbia",
-        "Ontario",
-        "Quebec",
-        "Alberta",
-        "New Brunswick",
-        "Manitoba",
-        "Sasketchawan",
-        "New Foundland and Labrador",
-        "Prince Edward Island",
+        "Nairobi",
+        "Naivasha"
     ]
     provinces = [1 if donor.province is not None else 0 for i in provinces]
 
@@ -234,7 +225,7 @@ def new_donation_request(request):
 
 
 def book_appointment(request):
-    # If method is post
+    # If method is POST
     if request.POST:
         print(request.POST.get("hospital-name", ""))
         apmt = Appointments()
