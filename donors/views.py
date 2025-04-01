@@ -92,9 +92,10 @@ def donor_profile_update(request):
             pscheck = 1
             msg = "Invalid password"
     donor = User.objects.get(id=request.user.id)
-    provinces = [ # To be changed and more city names to be added
+    provinces = [ # To be changed and more province names to be added
         "Nairobi",
         "Naivasha"
+        ""
     ]
     provinces = [1 if donor.province is not None else 0 for i in provinces]
 
