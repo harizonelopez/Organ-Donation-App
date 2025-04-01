@@ -113,7 +113,7 @@ def donor_profile_update(request):
     )
 
 
-def send_mail(
+def send_mail(  #  the email function tobe worked on and its settings
     send_from,
     send_to,
     subject,
