@@ -95,6 +95,34 @@ def donor_profile_update(request):
     provinces = [ # To be changed and more province names to be added ---> Dynamically to be pulled from the database
         "Nairobi",
         "Naivasha"
+        "Mombasa",
+        "Kisumu",
+        "Nakuru",
+        "Eldoret",
+        "Thika",
+        "Kakamega",
+        "Kisii",
+        "Meru",
+        "Nyeri",
+        "Embu",
+        "Kitale",
+        "Garissa",
+        "Kericho",
+        "Naivasha",
+                                            <option value="Mombasa">Mombasa</option>
+                                            <option value="Kisumu">Kisumu</option>
+                                            <option value="Nakuru">Nakuru</option>
+                                            <option value="Eldoret">Eldoret</option>
+                                            <option value="Thika">Thika</option>
+                                            <option value="Kakamega">Kakamega</option>
+                                            <option value="Kisii">Kisii</option>
+                                            <option value="Meru">Meru</option>
+                                            <option value="Nyeri">Nyeri</option>
+                                            <option value="Embu">Embu</option>
+                                            <option value="Kitale">Kitale</option>
+                                            <option value="Garissa">Garissa</option>
+                                            <option value="Kericho">Kericho</option>
+                                            <option value="Naivasha">Naivasha</option>
         ""
     ]
     provinces = [1 if donor.province is not None else 0 for i in provinces]
