@@ -108,22 +108,7 @@ def donor_profile_update(request):
         "Kitale",
         "Garissa",
         "Kericho",
-        "Naivasha",
-                                            <option value="Mombasa">Mombasa</option>
-                                            <option value="Kisumu">Kisumu</option>
-                                            <option value="Nakuru">Nakuru</option>
-                                            <option value="Eldoret">Eldoret</option>
-                                            <option value="Thika">Thika</option>
-                                            <option value="Kakamega">Kakamega</option>
-                                            <option value="Kisii">Kisii</option>
-                                            <option value="Meru">Meru</option>
-                                            <option value="Nyeri">Nyeri</option>
-                                            <option value="Embu">Embu</option>
-                                            <option value="Kitale">Kitale</option>
-                                            <option value="Garissa">Garissa</option>
-                                            <option value="Kericho">Kericho</option>
-                                            <option value="Naivasha">Naivasha</option>
-        ""
+        "Naivasha"
     ]
     provinces = [1 if donor.province is not None else 0 for i in provinces]
 
