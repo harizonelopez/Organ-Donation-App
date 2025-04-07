@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect
 from hospitals.models import User
 from .models import DonationRequests
 from django.contrib.auth import login, logout, authenticate
-from django.views.decorators.csrf import csrf_protect
-from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_protect  # Not required for 'login_required'
+from django.contrib.auth.decorators import login_required  # Not required for now
 import smtplib
 import getpass
 from email.mime.multipart import MIMEMultipart
@@ -126,7 +126,7 @@ def donor_profile_update(request):
     )
 
 
-def send_mail(  #  the email function tobe worked on and its settings
+def send_mail(  #  The email function to be worked on and its settings together with the {.env} file
     send_from,
     send_to,
     subject,
@@ -164,7 +164,7 @@ def donor_forgot_password(request):
                 "harizonelopez23@gmail.com",
                 email,
                 "Password reset for your organ donation account",
-                """Your request to change password has been processed.\nThis is your new password: {}\n
+                """Your request to change password has been received and processed.\nThis is your new password: {}\n
                             If you wish to modify or change password, please go to your user profile account and change it.""".format(
                     password
                 ),
