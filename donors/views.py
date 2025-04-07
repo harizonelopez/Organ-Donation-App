@@ -165,7 +165,7 @@ def donor_forgot_password(request):
                 email,
                 "Password reset for your organ donation account",
                 """Your request to change password has been processed.\nThis is your new password: {}\n
-                            If you wish to change password, please go to your user profile and change it.""".format(
+                            If you wish to modify or change password, please go to your user profile account and change it.""".format(
                     password
                 ),
                 server="smtp.gmail.com",
@@ -175,7 +175,7 @@ def donor_forgot_password(request):
             user.set_password(password)
             user.save()
             success = 1
-            msg = "Success. Check your registered email for new password!"
+            msg = "Success, Check your registered email for new password!"
             return render(
                 request, "donor-forgot-password.html", {"success": success, "msg": msg}
             )
