@@ -166,7 +166,7 @@ def donor_forgot_password(request):
                 email,
                 "Password reset for your organ donation account",
                 """Your request to change password has been received and processed.\nThis is your new password: {}\n
-                            If you wish to modify or change password, please go to your user profile account and change it.""".format(
+                            If you wish to modify the password, please go to your user profile account and change it.""".format(
                     password
                 ),
                 server="smtp.gmail.com",
