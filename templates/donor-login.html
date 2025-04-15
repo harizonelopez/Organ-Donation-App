@@ -35,7 +35,7 @@
       </div>
     </header>
 
-    <!-- Login Form -->
+    <!-- Login Form for the donor -->
     <div class="overlay">
       <div class="container">
         <div class="card bg-light mb-3">
@@ -57,13 +57,21 @@
               <div class="form-group">
                 <span class="input-group-addon"><i class="fa fa-user"></i></span>
                 <label for="username">Username:</label>
-                <input type="text" name="username" id="username" class="form-control increase-width" required autofocus>
+                <input 
+                    type="text" 
+                    name="username" 
+                    id="username" 
+                    class="form-control increase-width" required autofocus>
               </div>
 
               <div class="form-group">
                 <span class="input-group-addon"><i class="fa fa-lock"></i></span>
                 <label for="pwd">Password:</label>
-                <input type="password" name="password" id="pwd" class="form-control" required>
+                <input 
+                    type="password" 
+                    name="password" 
+                    id="pwd" 
+                    class="form-control" required>
               </div>
 
               {% if request.GET.next %}
