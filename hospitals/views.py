@@ -159,9 +159,8 @@ def fetch_donations(request):
 
 
 def hospital_register(request):
-
-    # If method is post
-    if request.POST:
+    # If method is POST
+    if request.method == "POST":
         user = User()
         user.username = request.POST.get("username", "")
         user.set_password(request.POST.get("password", ""))
@@ -177,8 +176,59 @@ def hospital_register(request):
 
     return render(request, "hospital-registration.html")
 
+
 def hospital_login(request):
-    if request.POST:
+    if request.method == "POST":
+        username = request.POST.get("username", "")
+        password = request.POST.get("password", "")
+        user = authenticate(username=username, password=password)
+        
+        if user is not None:
+            if user.is_active and user.is_staff:
+                login(request, user)
+                return redirect('home')  # Directly redirect to hospital dashboard after login
+            else:
+                msg = "Your account is either not active or not authorized."
+                success = False
+        else:
+            msg = "Invalid username or password."
+            success = False
+
+        return render(request, "hospital-login.html", {"success": success, "msg": msg})
+
+    return render(request, "hospital-login.html")
+
+
+"""
+def hospital_login(request):
+    if request.method == "POST":
+        username = request.POST.get("username", "")
+        password = request.POST.get("password", "")
+        user = authenticate(username=username, password=password)
+        
+        if user is not None:
+            if user.is_active and user.is_staff:
+                login(request, user)
+                
+                # Redirect to 'next' if available, otherwise home
+                next_url = request.POST.get("next") or request.GET.get("next")
+                if next_url:
+                    return redirect(next_url)
+                return redirect('home')  # Default home redirection
+            else:
+                msg = "Your account is either not active or not authorized."
+                success = False
+        else:
+            msg = "Invalid username or password."
+            success = False
+
+        return render(request, "hospital-login.html", {"success": success, "msg": msg})
+
+    return render(request, "hospital-login.html")
+
+    
+def hospital_login(request):
+    if request.method == "POST":
         username = request.POST.get("username", "")
         password = request.POST.get("password", "")
         user = authenticate(username=username, password=password)
@@ -192,7 +242,8 @@ def hospital_login(request):
             success = 1
             return render(request, "hospital-login.html", {"success": success, "msg": msg})
 
-    return render(request, "hospital-login.html")
+    return render(request, "hospital-login.html") 
+"""
 
 
 def fetch_appointment_details(request):

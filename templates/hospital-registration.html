@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS links -->
+    <!-- Bootstrap & Custom CSS links -->
     <link 
         rel="stylesheet" 
         href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
@@ -42,7 +42,8 @@
                                 <i>Register for a new account</i></h4>
                         </header>
                         <div class="card-content p-3">
-                            <form>
+                            <form action="{% url 'hospital-register' %}" method="POST">
+                                {% csrf_token %}
                                 <div class="form-group">
                                     <label>Hospital name</label>
                                     <input 

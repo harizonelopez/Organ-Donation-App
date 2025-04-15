@@ -18,7 +18,9 @@
 
     <!-- Navbar -->
     <nav class="navbar fixed-top navbar-dark navbar-expand-sm bg-primary" id="navbar">
-      <a class="navbar-brand" href="{% url 'donor-landing-page' %}">Book an Appointment</a>
+        <div class="nav-bar">
+            <p id="company_name" class="push_this_left"><a href="hospital-main-page.html"> 🩺 LifeGiver – Matching organs, saving lives </a></p>
+        </div>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTop" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -103,7 +105,7 @@
 
                 <!-- Submit -->
                 <div class="form-group">
-                  <button type="submit" class="btn btn-info btn-block">Book</button>
+                  <button type="submit" class="btn btn-info btn-block" disabled>Book</button>
                 </div>
               </form>
             </div>

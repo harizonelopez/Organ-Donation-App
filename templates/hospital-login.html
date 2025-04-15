@@ -42,7 +42,7 @@
         <div class="card-content">
           <form method="POST" action="{% url 'hospital-login' %}">
             {% csrf_token %}
-            {% if success %}
+            {% if success %} 
             <div class="form-group">
               {{ msg }}
             </div>
