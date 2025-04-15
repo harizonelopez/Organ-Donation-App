@@ -30,7 +30,7 @@
     <header class="zone blue">
       <div class="nav-bar">
         <p id="company_name" class="push_this_left">
-          <a href="{% url 'wedonate' %}">Donor Login</a>
+          <a href="{% url 'wedonate' %}">Donor's Login</a>
         </p>
       </div>
     </header>
@@ -39,9 +39,10 @@
     <div class="overlay">
       <div class="container">
         <div class="card bg-light mb-3">
-          <div class="card-header bg-light mb-3">
-            <b>Donor Login</b>
-          </div>
+            <header class="card-header bg-light mb-3">
+                <h4 align="Center" class="card-title mt-2"> <b>Donor Dashboard</b><br>
+                    <i>Login to your account</i></h4>
+              </header>
 
           <div class="card-content">
             <form method="POST" action="{% url 'donor-login' %}">
