@@ -20,8 +20,8 @@ from django.shortcuts import redirect
 
 urlpatterns = [
     path('', lambda request: redirect('wedonate')),  # Redirect root to the home page by name
-    path('home/', v.wedonate, name='wedonate'),  # Define home page route
-    path('donors/', include('donors.urls')),
-    path('hospitals/', include('hospitals.urls')),
-    path('admin/', admin.site.urls),
+    path('home/', v.wedonate, name='wedonate'),  # Home page route
+    path('donors/', include('donors.urls')),    # Include donor's app URLs
+    path('hospitals/', include('hospitals.urls')),  # Include hospital's app URLs
+    path('admin/', admin.site.urls),    # Admin site route
 ]
