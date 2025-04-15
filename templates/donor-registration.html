@@ -42,33 +42,46 @@
             <div class="col-md-6">
               <div class="card bg-light mb-3">
                 <header class="card-header bg-light mb-3">
-                  <h4 class="card-title mt-2">Registration</h4>
+                    <h4 align="Center" class="card-title mt-2"> <b>Donor Dashboard</b><br>
+                        <i>Register for a new account</i></h4>
                 </header>
 
                 <div class="card-content">
                   <div class="form-group">
                     <span class="input-group-addon"><i class="fa fa-user"></i></span>
                     <label>Donor name</label>
-                    <input type="text" name="donor_name" class="form-control" required>
+                    <input 
+                      type="text" 
+                      name="donor_name" 
+                      class="form-control" required>
                   </div>
 
                   <div class="form-group">
                     <span class="input-group-addon"><i class="fa fa-at"></i></span>
                     <label>Email address</label>
-                    <input type="email" name="email" class="form-control" required>
+                    <input 
+                      type="email" 
+                      name="email" 
+                      class="form-control" required>
                   </div>
 
                   <div class="form-group">
                     <span class="input-group-addon"><i class="fa fa-user"></i></span>
                     <label>Enter Username</label>
-                    <input type="text" name="username" class="form-control" required>
+                    <input 
+                      type="text" 
+                      name="username" 
+                      class="form-control" required>
                   </div>
 
                   <div class="form-row">
                     <div class="form-group col-md-6">
                       <span class="input-group-addon"><i class="fa fa-building"></i></span>
                       <label>City</label>
-                      <input type="text" name="city" class="form-control">
+                      <input 
+                        type="text" 
+                        name="city" 
+                        class="form-control">
                     </div>
 
                     <div class="form-group col-md-6">
@@ -93,7 +106,12 @@
                     <div class="form-group col-md-6">
                       <span class="input-group-addon"><i class="fa fa-mobile"></i></span>
                       <label>Contact no. (+1)</label>
-                      <input type="text" name="contact_number" class="form-control" maxlength="10" minlength="10">
+                      <input 
+                        type="text" 
+                        name="contact_number" 
+                        class="form-control" 
+                        maxlength="10" 
+                        minlength="10">
                     </div>
 
                     <div class="form-group col-md-6">
@@ -118,7 +136,11 @@
                   <div class="form-group">
                     <span class="input-group-addon"><i class="fa fa-lock"></i></span>
                     <label>Confirm password</label>
-                    <input class="form-control" type="password" id="password2" oninput="checkpassword();" required>
+                    <input 
+                      class="form-control" 
+                      type="password" 
+                      id="password2" 
+                      oninput="checkpassword();" required>
                   </div>
 
                   <div class="form-group">
@@ -130,7 +152,7 @@
                   </div>
 
                   <div class="form-group align-center">
-                    <i>Already have an account?</i> <a href="{% url 'donor-login' %}" class="fnt-color">click here</a>
+                    <i>Already have an account?</i> <a href="{% url 'donor-login' %}">click here</a>
                   </div>
                 </div> <!-- card-content -->
               </div> <!-- card -->
