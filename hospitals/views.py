@@ -201,7 +201,7 @@ def hospital_login(request):
 
 """
 def hospital_login(request):
-    if request.method == "POST":
+    if request.POST:
         username = request.POST.get("username", "")
         password = request.POST.get("password", "")
         user = authenticate(username=username, password=password)
