@@ -159,7 +159,7 @@ def fetch_donations(request):
 
 
 def hospital_register(request):
-    # If method is a POST request
+    # If method is POST
     if request.method == "POST":
         user = User()
         user.username = request.POST.get("username", "")
