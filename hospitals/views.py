@@ -104,7 +104,7 @@ def search_donation_details(request):
 
 
 def fetch_appointments(request):
-    if request.POST:
+    if request.method == "POST":
         pass
     else:
         # Fetching appointment details
@@ -159,7 +159,7 @@ def fetch_donations(request):
 
 
 def hospital_register(request):
-    # If method is POST
+    # If method is a POST request
     if request.method == "POST":
         user = User()
         user.username = request.POST.get("username", "")
@@ -178,7 +178,7 @@ def hospital_register(request):
 
 
 def hospital_login(request):
-    if request.method == "POST":
+    if request.POST:
         username = request.POST.get("username", "")
         password = request.POST.get("password", "")
         user = authenticate(username=username, password=password)
@@ -483,6 +483,7 @@ def update_pwd_details(request):
             print("about to save password...")
             user.save(update_fields=["password"])
     return HttpResponse("success")
+
 
 def hospital_logout(request):
     logout(request)
