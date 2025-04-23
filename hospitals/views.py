@@ -393,14 +393,13 @@ def hospital_forgot_password(request):
             user.set_password(password)
             user.save()
             send_mail("harizonelopez23@gmail.com",
-                      email,
-                      "Password reset for your account", 
+                      email, "Password reset for your account", 
                       """Your request to change password has been processed.
                       \n This is your new password: {}
                       \n If you wish to change password, please go to your user profile and change it.""".format(password),
                       server="smtp.gmail.com", username="harizonelopez23@gmail.com", password="xkfu aslr yswq bdbt")
             success = 1
-            msg = "Success. Check your registered email for new password!"
+            msg = "Success. Check your email for new password!"
             return render(request, "hospital-forgot-password.html", {"success": success, "msg": msg})
         except:
             success = 1
