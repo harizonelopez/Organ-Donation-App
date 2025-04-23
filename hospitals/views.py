@@ -47,7 +47,7 @@ def search_donations(request):
     else:
         search_keyword = request.GET.get('keyword', '')
         status = "Approved"
-        # Search for donations based on organ type/blood type/donor name
+        # Search for donations based on organ type, blood type or donor name
         donations = DonationRequests.objects.filter((Q(organ_type__iexact=search_keyword) | Q(blood_type__startswith=search_keyword) | Q(donor__first_name__iexact=search_keyword) | Q(donor__last_name__iexact=search_keyword)) & Q(donation_status__iexact=status))
         print(donations)
         # Search for donations based on donation id
@@ -65,7 +65,7 @@ def search_donations(request):
             temp_dict["blood_group"] = donation.blood_type
             donation_list.append(temp_dict)
         search_list = json.dumps(donation_list)
-        print("hi", search_list)
+        print("Hy", search_list)
         return HttpResponse(search_list)
 
 
@@ -108,7 +108,7 @@ def fetch_appointments(request):
         pass
     else:
         # Fetching appointment details
-        print("fetching appointments from db...")
+        print("Fetching appointments from db...") # For debugging purpose..!
         status = "Pending"
         appointments = Appointments.objects.filter(Q(hospital__id__iexact=request.user.id) & Q(appointment_status__iexact=status))
         
@@ -159,7 +159,7 @@ def fetch_donations(request):
 
 
 def hospital_register(request):
-    # If method is POST
+    # If method is a POST request
     if request.method == "POST":
         user = User()
         user.username = request.POST.get("username", "")
@@ -226,7 +226,7 @@ def hospital_login(request):
 
     return render(request, "hospital-login.html")
 
-    
+
 def hospital_login(request):
     if request.method == "POST":
         username = request.POST.get("username", "")
@@ -252,7 +252,7 @@ def fetch_appointment_details(request):
     else:
         # Fetching appointment details
         appointment_id_from_UI = request.GET.get('appointment_id', '')
-        print('appointment id', appointment_id_from_UI)
+        print('Appointment id', appointment_id_from_UI)
         appointments = Appointments.objects.filter(Q(id=int(appointment_id_from_UI)))
         appointment_list = []
         for appointment in appointments:
@@ -289,7 +289,7 @@ def fetch_donation_details(request):
     else:
         # Fetching donation details
         donation_id_from_UI = request.GET.get('donation_id', '')
-        print('donation id', donation_id_from_UI)
+        print('Donation id', donation_id_from_UI)
         donations = DonationRequests.objects.filter(Q(id=int(donation_id_from_UI)))
         donation_list = []
         for donation in donations:
@@ -321,21 +321,21 @@ def approve_appointments(request):
     if request.POST:
         appointment_id_from_UI = request.POST.get('ID', '')
         actionToPerform = request.POST.get('action', '')
-        print('appointment id', appointment_id_from_UI)
-        print('actionToPerform', actionToPerform)
+        print('Appointment id', appointment_id_from_UI)
+        print('ActionToPerform', actionToPerform)
         appointments = get_object_or_404(Appointments, id=appointment_id_from_UI)
         appointments.appointment_status = actionToPerform
         appointments.save(update_fields=["appointment_status"])
     return HttpResponse("success")
 
 
-@csrf_exempt
+@csrf_exempt  # Used for form submission protection
 def approve_donations(request):
     if request.POST:
         donation_id_from_UI = request.POST.get('ID', '')
         actionToPerform = request.POST.get('action', '')
-        print('donation id', donation_id_from_UI)
-        print('actionToPerform', actionToPerform)
+        print('Donation id', donation_id_from_UI)
+        print('ActionToPerform', actionToPerform)
         donation = get_object_or_404(DonationRequests, id=donation_id_from_UI)
         donation.donation_status = actionToPerform
         donation.save(update_fields=["donation_status"])
@@ -348,11 +348,11 @@ def fetch_counts(request):
     else:
         print(request.user.hospital_name)
         appointment_count = Appointments.objects.filter(Q(hospital__hospital_name__iexact=request.user.hospital_name) & Q(appointment_status__iexact="Pending")).count()
-        print("appointment count", appointment_count)
+        print("Appointment count", appointment_count)
         donation_status = "Pending"
         appointment_status = "Approved"
         donation_count = Appointments.objects.filter(Q(hospital__hospital_name__iexact=request.user.hospital_name) & Q(appointment_status__iexact=appointment_status) & Q(donation_request__donation_status__iexact=donation_status)).count()
-        print("donation count", donation_count)
+        print("Donation count", donation_count)
         dummy_list = []
         temp_dict = {}
         temp_dict["appointment_count"] = appointment_count
@@ -363,7 +363,10 @@ def fetch_counts(request):
 
 
 def send_mail(send_from, send_to, subject, body_of_msg, files=[],
-              server="localhost", port=587, username='', password='',
+              server="localhost", 
+              port=587, 
+              username='', 
+              password='',
               use_tls=True):
     message = MIMEMultipart()
     message['From'] = send_from
@@ -389,16 +392,19 @@ def hospital_forgot_password(request):
             password = random.randint(1000000, 999999999999)
             user.set_password(password)
             user.save()
-            send_mail("harizonelopez23@gmail.com", email, "Password reset for your account",
-                      """Your request to change password has been processed.\nThis is your new password: {}\n
-                            If you wish to change password, please go to your user profile and change it.""".format(password),
+            send_mail("harizonelopez23@gmail.com",
+                      email,
+                      "Password reset for your account", 
+                      """Your request to change password has been processed.
+                      \n This is your new password: {}
+                      \n If you wish to change password, please go to your user profile and change it.""".format(password),
                       server="smtp.gmail.com", username="harizonelopez23@gmail.com", password="xkfu aslr yswq bdbt")
             success = 1
             msg = "Success. Check your registered email for new password!"
             return render(request, "hospital-forgot-password.html", {"success": success, "msg": msg})
         except:
             success = 1
-            msg = "User does not exist!"
+            msg = "User doesn't exist!"
             return render(request, "hospital-forgot-password.html", {"success": success, "msg": msg})
 
     return render(request, "hospital-forgot-password.html", {"success": success})
@@ -469,7 +475,7 @@ def update_user_details(request):
         user.city = request.POST.get('city', '')
         user.province = request.POST.get('province', '')
         user.contact_number = request.POST.get('contact', '')
-        print("about to save...")
+        print("About to save...")
         user.save()
     return HttpResponse("success")
 
@@ -480,7 +486,7 @@ def update_pwd_details(request):
         user = authenticate(username=request.user.username, password=request.POST.get("old_password", ""))
         if user is not None:
             user.set_password(request.POST.get("new_password", ""))
-            print("about to save password...")
+            print("About to save password...")
             user.save(update_fields=["password"])
     return HttpResponse("success")
 

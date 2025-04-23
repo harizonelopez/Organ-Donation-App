@@ -1,3 +1,4 @@
+/* Header & Footer customization */
 /* header */
 .custom-header{
     border: 5px;
@@ -17,6 +18,7 @@
     text-align: center;
     color: white;
 }
+
 .black{
    color: #000000;
 }
@@ -27,6 +29,7 @@
     font-size: 0.8em;
    /* background-color: #51EAEA;*/
 }
+
 #company_name{
     text-align: left;
     margin-left: 1%;
@@ -44,6 +47,7 @@
   color: black;
   font-size: 0.8em;
 }
+
 .push_this{
     margin-left: auto;
 }
@@ -51,14 +55,20 @@
 .push_this_left{
     margin-right: auto;
 }
-/*footer{
-  background-color: #51EAEA;
-}*/
 
 footer a{
     color: white;
     text-decoration: none;
 }
+
+.footer_style{
+    text-align: center;
+    font-size: 1em;
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    width: 100%;
+} 
 
 a:link{
   text-decoration: none!important;
@@ -78,7 +88,7 @@ a:link{
     background: linear-gradient(to top, #7abcff 0%,#60abf8 44%,#4096ee 100%); /* W3C */
 }
 
-.zone {
+.zone{
     cursor:pointer;
     font-size:2em;
     border-radius:4px;
@@ -86,44 +96,36 @@ a:link{
     transition: all 0.3s linear;
 }
 
-.zone:hover {
+.zone:hover{
     -webkit-box-shadow:rgba(0,0,0,0.8) 0px 5px 15px, inset rgba(0,0,0,0.15) 0px -10px 20px;
     -moz-box-shadow:rgba(0,0,0,0.8) 0px 5px 15px, inset rgba(0,0,0,0.15) 0px -10px 20px;
     -o-box-shadow:rgba(0,0,0,0.8) 0px 5px 15px, inset rgba(0,0,0,0.15) 0px -10px 20px;
     box-shadow:rgba(0,0,0,0.8) 0px 5px 15px, inset rgba(0,0,0,0.15) 0px -10px 20px;
 }
 
+
+/* responsiveness design */
 @media only screen and (max-width: 620px){
     .nav-bar{
-    display: flex;
-    font-size: 0.2em;
-}
- .footer_style{
-   text-align: center;
-   font-size: 0.4em;
-   bottom: 0;
-   position: fixed;
-   width: 100%;
-   height: 5%;
-
-}
-}
-
-.footer_style{
-   text-align: center;
-   font-size: 1em;
-   bottom: 0;
-   left: 0;
-   position: fixed;
-   width: 100%;
+        display: flex;
+        font-size: 0.2em;
+    }
+    .footer_style{
+        text-align: center;
+        font-size: 0.4em;
+        bottom: 0;
+        position: fixed;
+        width: 100%;
+        height: 5%;
+    }
 }
 
 @media only screen and (max-width: 1000px){
-  .footer_style{
-   text-align: center;
-   font-size: 0.8em;
-   bottom: 0;
-   position: fixed;
-   width: 100%;
-}
+    .footer_style{
+        text-align: center;
+        font-size: 0.8em;
+        bottom: 0;
+        position: fixed;
+        width: 100%;
+    }
 }

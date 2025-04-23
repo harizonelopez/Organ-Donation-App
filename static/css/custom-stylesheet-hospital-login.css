@@ -1,4 +1,4 @@
-/* Customize login form to fit the centre horizontally and vertically */
+/* Login form customization - hospital category */
 body{
     margin: auto 0px;
     background-image: url('../images/hospital_background.jpg');
@@ -39,11 +39,28 @@ body{
     text-align: center;
 }
 
-/* responsiveness */
+.overlay{
+    position: absolute;
+    min-height: 100%;
+    min-width: 100%;
+    left: 0;
+    background: rgba(244, 244, 244, 0.5);
+}
+   
+.homeButton{
+    text-align: center;
+}
+
+.top{
+    margin-top: 2%;
+}
+
+
+/* responsiveness design */
 @media only screen and (max-width: 599px){
     .card{
         width: 70%;
-        }
+    }
     .container{
         margin-top: 20%;
         height: 50%
@@ -53,24 +70,9 @@ body{
 @media only screen and (min-width: 600px){
     .card{
         width: 45%;
-        }
+    }
     .container{
         margin-top: 7%;
         height:50%
     }
-}
-
-.overlay{
- position: absolute;
- min-height: 100%;
- min-width: 100%;
- left: 0;
- background: rgba(244, 244, 244, 0.5);
-}
-
-.homeButton{
-    text-align: center;
-}
-.top{
-margin-top: 2%;
 }

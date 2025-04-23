@@ -65,16 +65,30 @@
               
               <div class="form-group">
                 <label><i class="fa fa-user"></i> Donor name</label>
-                <input type="text" name="donor_name" value="{{ donor.first_name }}" id="fn" class="form-control" required disabled>
+                <input 
+                  type="text" 
+                  name="donor_name" 
+                  value="{{ donor.first_name }}" 
+                  id="fn" class="form-control" required disabled>  <!-- Disabled for the moment -->
               </div>
               <div class="form-group">
                 <label><i class="fa fa-at"></i> Email address</label>
-                <input type="email" name="email" value="{{ donor.email }}" id="email" class="form-control" required disabled>
+                <input 
+                  type="email" 
+                  name="email" 
+                  value="{{ donor.email }}" 
+                  id="email" 
+                  class="form-control" required disabled> <!-- Disabled for the moment -->
               </div>
               <div class="form-row">
                 <div class="form-group col-md-6">
                   <label><i class="fa fa-building"></i> City</label>
-                  <input type="text" name="city" value="{{ donor.city }}" id="city" class="form-control" disabled>
+                  <input 
+                    type="text" 
+                    name="city" 
+                    value="{{ donor.city }}" 
+                    id="city" 
+                    class="form-control" disabled>  <!-- Disabled for the moment -->
                 </div>
                 <div class="form-group col-md-6">
                   <label><i class="fa fa-building"></i> Province</label>
@@ -94,18 +108,25 @@
               </div>
               <div class="form-row">
                 <div class="form-group col-md-6">
-                  <label><i class="fa fa-mobile"></i> Contact no. (+1)</label>
-                  <input type="text" name="contact" value="{{ donor.contact_number }}" maxlength="10" minlength="10" class="form-control" id="contact" disabled>
+                  <label><i class="fa fa-mobile"></i> Contact no. (+254)</label>
+                  <input 
+                    type="text" 
+                    name="contact" 
+                    value="{{ donor.contact_number }}" 
+                    maxlength="10" 
+                    minlength="10" 
+                    class="form-control" 
+                    id="contact" disabled>  <!-- Disabled for the moment -->
                 </div>
                 <div class="form-group col-md-6">
                   <label><i class="fa fa-globe"></i> Country</label>
-                  <select name="country" id="input-country" class="form-control" disabled>
+                  <select name="country" id="input-country" class="form-control" disabled>  <!-- Disabled -->
                     <option selected>Canada</option>
                   </select>
                 </div>
               </div>
               <div class="form-group">
-                <button name="profile" type="submit" class="btn btn-info btn-block" id="submit" disabled>Update</button>
+                <button name="profile" type="submit" class="btn btn-info btn-block" id="submit" disabled>Update</button>  <!-- Disabled -->
               </div>
             </form>
           </div>
@@ -128,29 +149,41 @@
               
               <div class="form-group">
                 <label><i class="fa fa-lock"></i> Old password</label>
-                <input type="password" name="old_password" id="password1" class="form-control" disabled required>
+                <input 
+                  type="password" 
+                  name="old_password" 
+                  id="password1" 
+                  class="form-control" disabled required>  <!-- Disabled -->
               </div>
               <div class="form-group">
                 <label><i class="fa fa-lock"></i> New password</label>
-                <input type="password" name="new_password" id="password2" class="form-control" minlength="6"
+                <input 
+                  type="password" 
+                  name="new_password" 
+                  id="password2" 
+                  class="form-control" 
+                  minlength="6"
                        pattern="(?=.*[a-z])(?=.*\d).{6,}"
-                       title="Include at least 1 lowercase letter and 1 digit" disabled required>
+                       title="Include at least 1 lowercase letter and 1 digit" disabled required>  <!-- Disabled -->
               </div>
               <div class="form-group">
                 <label><i class="fa fa-lock"></i> Confirm password</label>
-                <input type="password" id="password3" class="form-control" oninput="checkpassword();" disabled required>
+                <input 
+                  type="password" 
+                  id="password3" 
+                  class="form-control" 
+                  oninput="checkpassword();" disabled required>  <!-- Disabled -->
               </div>
               <div class="form-group">
                 <span id="password-validation-msg"></span>
               </div>
               <div class="form-group">
-                <button name="password" type="submit" class="btn btn-info btn-block" id="update-password" disabled>Update</button>
+                <button name="password" type="submit" class="btn btn-info btn-block" id="update-password" disabled>Update</button>  <!-- Disabled -->
               </div>
             </form>
           </div>
         </div>
       </div>
-
     </div>
   </div>
 

@@ -132,35 +132,50 @@
                             <form id="updateDetailsForm">
                                 <div class="form-group">
                                     <label>Hospital Name</label>
-                                    <input type="text" id="hospitalName" class="form-control" disabled>
+                                    <input 
+                                        type="text" 
+                                        id="hospitalName" 
+                                        class="form-control" disabled>  <!-- Disabled -->
                                 </div>
                                 <div class="form-group">
                                     <label>Email</label>
-                                    <input type="email" id="emailHospital" class="form-control" disabled>
+                                    <input 
+                                        type="email" 
+                                        id="emailHospital" 
+                                        class="form-control" disabled>  <!-- Disabled -->
                                 </div>
                                 <div class="form-group">
                                     <label>City</label>
-                                    <input type="text" id="city" class="form-control" disabled>
+                                    <input 
+                                        type="text" 
+                                        id="city" 
+                                        class="form-control" disabled>  <!-- Disabled -->
                                 </div>
                                 <div class="form-group">
                                     <label>Province</label>
                                     <select id="input-province" class="form-control" disabled>
                                         <option>Nova Scotia</option>
                                         <option>Ontario</option>
-                                        <!-- More options... -->
+                                        <!-- More options to be added... -->
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label>Contact Number</label>
-                                    <input type="text" id="hospitalContact" class="form-control" maxlength="10" minlength="10" disabled>
+                                    <label>Contact Number (+254)</label>
+                                    <input 
+                                        type="text" 
+                                        id="hospitalContact" 
+                                        class="form-control" 
+                                        maxlength="10" 
+                                        minlength="10" disabled>  <!-- Disabled -->
                                 </div>
                                 <div class="form-group">
                                     <label>Country</label>
                                     <select id="input-country" class="form-control" disabled>
                                         <option selected>Canada</option>
+                                        <!-- More options to be added... -->
                                     </select>
                                 </div>
-                                <button type="submit" id="submitUpdateProf" class="btn btn-primary" disabled>Update</button>
+                                <button type="submit" id="submitUpdateProf" class="btn btn-primary" disabled>Update</button>  <!-- Disabled -->
                             </form>
                         </div>
                     </div>
@@ -175,20 +190,30 @@
                             <form>
                                 <div class="form-group">
                                     <label>Old Password</label>
-                                    <input type="password" id="password1" class="form-control" disabled>
+                                    <input 
+                                        type="password" 
+                                        id="password1" 
+                                        class="form-control" disabled>  <!-- Disabled -->
                                 </div>
                                 <div class="form-group">
                                     <label>New Password</label>
-                                    <input type="password" id="password2" class="form-control" disabled>
+                                    <input 
+                                        type="password" 
+                                        id="password2" 
+                                        class="form-control" disabled>  <!-- Disabled -->  
                                 </div>
                                 <div class="form-group">
                                     <label>Confirm Password</label>
-                                    <input type="password" id="password3" class="form-control" oninput="checkpassword();" disabled>
+                                    <input 
+                                        type="password" 
+                                        id="password3" 
+                                        class="form-control" 
+                                        oninput="checkpassword();" disabled>  <!-- Disabled -->
                                 </div>
                                 <div class="form-group">
                                     <span id="password-validation-msg"></span>
                                 </div>
-                                <button type="submit" id="update-password" class="btn btn-primary" disabled>Update</button>
+                                <button type="submit" id="update-password" class="btn btn-primary" disabled>Update</button>  <!-- Disabled -->
                             </form>
                         </div>
                     </div>
@@ -197,6 +222,8 @@
         </div>
     </div>
   </div>
+
+  <!-- Js scripts links -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>

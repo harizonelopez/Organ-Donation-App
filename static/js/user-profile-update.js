@@ -7,6 +7,7 @@ function checkpassword(){
 		document.getElementById('update-password').disabled = true;
 	}
 }
+
 function enableedituserprofile(){
 	document.getElementById('fn').disabled = false;
 	document.getElementById('email').disabled = false;
@@ -15,6 +16,7 @@ function enableedituserprofile(){
 	document.getElementById('contact').disabled = false;
 	document.getElementById('submit').disabled = false;
 }
+
 function enableeditpasswords(){
 	document.getElementById('password1').disabled = false;
 	document.getElementById('password2').disabled = false;

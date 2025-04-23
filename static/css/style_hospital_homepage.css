@@ -1,17 +1,16 @@
+/* Hospital home-menu customization */
 body{
     margin: auto 0px;
     font-family: Arial;
     background-color: #ffffff;
-    /*background-color: #E4E8EC;*/
-    /*#eafaea*/
 }
 
 /* nav bar for company name header*/
 .nav-bar{
     display: flex;
     font-size: 0.8em;
-   /* background-color: #51EAEA;*/
 }
+
 li{
    padding: 20px;
    list-style: none;
@@ -34,6 +33,7 @@ li{
   color: black;
   font-size: 0.8em;
 }
+
 .push_this{
     margin-left: auto;
 }
@@ -41,9 +41,15 @@ li{
 .push_this_left{
     margin-right: auto;
 }
-/*footer{
-  background-color: #51EAEA;
-}*/
+
+.footer_style{
+    text-align: center;
+    font-size: 1em;
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    width: 100%;
+}
 
 footer a{
     color: white;
@@ -51,12 +57,13 @@ footer a{
 }
 
 a:link{
-  text-decoration: none!important;
+    text-decoration: none!important;
 }
 
 .ml-auto{
-  margin-right: 5%;
+    margin-right: 5%;
 }
+
 
 /***********************************************************************
  *  Blue Background
@@ -86,39 +93,30 @@ a:link{
     box-shadow:rgba(0,0,0,0.8) 0px 5px 15px, inset rgba(0,0,0,0.15) 0px -10px 20px;
 }
 
+/* Responsiveness design */
 @media only screen and (max-width: 620px){
-    .nav-bar{
+  .nav-bar{
     display: flex;
     font-size: 0.2em;
-}
- .footer_style{
-   text-align: center;
-   font-size: 0.4em;
-   bottom: 0;
-   position: fixed;
-   width: 100%;
-   height: 5%;
-
-}
-}
-
-.footer_style{
-   text-align: center;
-   font-size: 1em;
-   bottom: 0;
-   left: 0;
-   position: fixed;
-   width: 100%;
+  }
+  .footer_style{
+    text-align: center;
+    font-size: 0.4em;
+    bottom: 0;
+    position: fixed;
+    width: 100%;
+    height: 5%;
+  }
 }
 
 @media only screen and (max-width: 1000px){
   .footer_style{
-   text-align: center;
-   font-size: 0.8em;
-   bottom: 0;
-   position: fixed;
-   width: 100%;
-}
+    text-align: center;
+    font-size: 0.8em;
+    bottom: 0;
+    position: fixed;
+    width: 100%;
+  }
 }
 
 .top{
@@ -148,32 +146,40 @@ a:link{
   text-decoration: none;
   color: black;
 }
+
 .anchor_prop:hover{
   text-decoration: none;
   color: #f5f5f6;
 }
+
 .search_box{
    position: absolute;
    transform: translate(-50%,-50%);
    margin-left: 45%;
 }
+
 .buttons{
   border: 0px;
 }
+
 .container{
     display: flex;
     justify-content: center;
     flex-direction: column;
 }
+
 .child1{
     align-self: center;
 }
+
 .child2{
     width: 100%;
 }
+
 .child3{
     align-self: center;
 }
+
 .buttons:hover{
     cursor: pointer;
     -webkit-box-shadow:rgba(0,0,0,0.8) 0px 5px 15px, inset rgba(0,0,0,0.15) 0px -10px 20px;
@@ -182,92 +188,107 @@ a:link{
     box-shadow:rgba(0,0,0,0.8) 0px 5px 15px, inset rgba(0,0,0,0.15) 0px -10px 20px;
     color: #f5f5f6;
 }
+
 .update-flex{
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-/*Customizing boostrap's nav bar - Starts*/
+/* Customizing boostrap's nav bar - Starts */
 .nav{
   /*background: #CCCCFF;*/
   padding-left: 0.25%;
   margin-top: 2%;
   background-color:#ebebff;
- /* background-color: #51EAEA;*/
 }
+
 .nav-tabs {
    text-align: center;
    border-bottom: 2px solid #000000;
    border-top: 2px solid #000000;
 }
+
 .nav-tabs > li {
    float: none;
    display: inline-flex;
    margin-bottom: -2.5px;
 }
+
 .nav-tabs > li > a {
-color: #000000;
-border: 1.25px solid transparent;
+  color: #000000;
+  border: 1.25px solid transparent;
 }
+
 .nav-tabs > li > a.active {
-color: #cd0000;
-font-size: 1.25em;
-}
+  color: #cd0000;
+  font-size: 1.25em;
+  }
+
 .nav-tabs > li.focus-prop > a:hover {
-color: #cd0000;
+  color: #cd0000;
 }
 
 .nav-tabs:hover{
--webkit-box-shadow:rgba(0,0,0,0.8) 0px 5px 15px, inset rgba(0,0,0,0.15) 0px -10px 20px;
--moz-box-shadow:rgba(0,0,0,0.8) 0px 5px 15px, inset rgba(0,0,0,0.15) 0px -10px 20px;
--o-box-shadow:rgba(0,0,0,0.8) 0px 5px 15px, inset rgba(0,0,0,0.15) 0px -10px 20px;
-box-shadow:rgba(0,0,0,0.8) 0px 5px 15px, inset rgba(0,0,0,0.15) 0px -10px 20px;
+  -webkit-box-shadow:rgba(0,0,0,0.8) 0px 5px 15px, inset rgba(0,0,0,0.15) 0px -10px 20px;
+  -moz-box-shadow:rgba(0,0,0,0.8) 0px 5px 15px, inset rgba(0,0,0,0.15) 0px -10px 20px;
+  -o-box-shadow:rgba(0,0,0,0.8) 0px 5px 15px, inset rgba(0,0,0,0.15) 0px -10px 20px;
+  box-shadow:rgba(0,0,0,0.8) 0px 5px 15px, inset rgba(0,0,0,0.15) 0px -10px 20px;
 }
+
 .nav-tabs .nav-link{
-border: 1px ridge ;
+  border: 1px ridge ;
 }
+
 .tab-pane{
   padding: 2%;
 }
 /*Customizing boostrap's nav bar - Ends*/
 
 .child2{
-overflow-y: auto;
-height: 275px;
--ms-overflow-style: -ms-autohiding-scrollbar;
+  overflow-y: auto;
+  height: 275px;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
 }
 
+/* Responsive design */
 @media only screen and (max-width: 620px){
     .child2{
-    height: 200px;
+      height: 200px;
+    }
 }
-}
+
 .update-flex{
   display: flex;
 }
- .update-flex-child2{
-   text-align: center;
- }
+
+.update-flex-child2{
+  text-align: center;
+}
+
 .selectable_row{
   cursor:pointer;
   transition:all .25s ease-in-out;
 }
+
 .selectable_row:hover{
   background: linear-gradient(to top, #7abcff 0%,#60abf8 44%,#4096ee 100%);
   box-shadow:rgba(0,0,0,0.8) 0px 5px 15px, inset rgba(0,0,0,0.15) 0px -10px 20px;
 }
+
 #cpContainer{
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 .cpform-container{
   background: #fff;
   padding: 30px;
   border-radius: 10px;
 }
+
 .div-highlight{
   background: #ddd;
   padding: 30px;
@@ -275,8 +296,8 @@ height: 275px;
 }
 
 .enable-scroll{
-overflow: auto;
-height: 850px;
+  overflow: auto;
+  height: 850px;
 }
 
 .details-grid-container{
@@ -285,10 +306,11 @@ height: 850px;
   padding: 10px;
 }
 
+/* Responsive design */
 @media only screen and (max-width: 620px){
- .details-grid-container{
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-}
+  .details-grid-container{
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
 }
 
 .details-grid-item{
@@ -307,11 +329,10 @@ height: 850px;
 }
 
 .card:hover{
- box-shadow:rgba(0,0,0,0.8) 0px 5px 15px, inset rgba(0,0,0,0.15) 0px -10px 20px;
+  box-shadow:rgba(0,0,0,0.8) 0px 5px 15px, inset rgba(0,0,0,0.15) 0px -10px 20px;
 }
 
-/*Update profile*/
-
+/* Update profile */
 .align-center{
     text-align: center;
 }

@@ -32,6 +32,7 @@ This project is a web application built using Django to facilitate and manage or
     ```
 5. Apply migrations:
     ```bash
+    python manage.py makemigrations
     python manage.py migrate
     ```
 6. Run the development server:

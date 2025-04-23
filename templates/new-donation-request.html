@@ -5,12 +5,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
+    <!-- Bootstrap CSS & Custom CSS links-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'css/header-footer.css' %}">
     <link rel="stylesheet" href="{% static 'css/new-donation-request.css' %}">
 
@@ -59,30 +58,57 @@
                 <div class="form-row">
                   <div class="form-group col-md-6">
                     <label for="organ_type">Organ Type</label>
-                    <input type="text" name="organ_type" class="form-control" id="organ_type" required>
+                    <input 
+                      type="text" 
+                      name="organ_type" 
+                      class="form-control" 
+                      id="organ_type" required>
                   </div>
                   <div class="form-group col-md-6">
                     <label for="blood_type">Blood Type</label>
-                    <input type="text" name="blood_type" class="form-control" id="blood_type" required>
+                    <input 
+                      type="text" 
+                      name="blood_type" 
+                      class="form-control" 
+                      id="blood_type" required>
                   </div>
                   <div class="form-group col-md-6">
                     <label for="family_relation">Family Relation</label>
-                    <input type="text" class="form-control" name="family_relation" id="family_relation" required>
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        name="family_relation" 
+                        id="family_relation" required>
                   </div>
                   <div class="form-group col-md-6">
                     <label for="family_relation_name">Family Relation Name</label>
-                    <input type="text" class="form-control" name="family_relation_name" id="family_relation_name" required>
+                    <input 
+                      type="text" 
+                      class="form-control" 
+                      name="family_relation_name" 
+                      id="family_relation_name" required>
                   </div>
                   <div class="form-group col-md-12">
-                    <label for="family_contact_number">Donor's Relationship Contact No. (+1)</label>
-                    <input type="text" class="form-control" name="family_contact_number" id="family_contact_number" maxlength="10" minlength="10">
+                    <label for="family_contact_number">Donor's Relationship Contact No. (+254)</label>
+                    <input 
+                      type="text" 
+                      class="form-control" 
+                      name="family_contact_number" 
+                      id="family_contact_number" 
+                      maxlength="10" 
+                      minlength="10">
                   </div>
                 </div>
 
                 <div class="form-row">
                   <div class="form-group col-md-12">
                     <div class="custom-file">
-                      <input id="logo" type="file" class="custom-file-input" name="file" onchange="setName(this.value);">
+                      <input 
+                        id="logo" 
+                        type="file" 
+                        class="custom-file-input" 
+                        name="file" 
+                        onchange="setName(this.value);">
                       <label for="logo" class="custom-file-label text-truncate" id="customfield">Upload medical report..</label>
                     </div>
                   </div>
@@ -91,11 +117,21 @@
                 <div class="form-group">
                   <label>Has the above donor donated before?</label><br>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="donated_before" value="True" id="donated_yes">
+                    <input 
+                      class="form-check-input" 
+                      type="radio" 
+                      name="donated_before" 
+                      value="True" 
+                      id="donated_yes">
                     <label class="form-check-label" for="donated_yes">Yes</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="donated_before" value="False" id="donated_no">
+                    <input 
+                      class="form-check-input" 
+                      type="radio" 
+                      name="donated_before" 
+                      value="False" 
+                      id="donated_no">
                     <label class="form-check-label" for="donated_no">No</label>
                   </div>
                 </div>
@@ -103,11 +139,21 @@
                 <div class="form-group">
                   <label>Is your family okay with donating your organ?</label><br>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="family_consent" value="True" id="consent_yes">
+                    <input 
+                      class="form-check-input" 
+                      type="radio" 
+                      name="family_consent" 
+                      value="True" 
+                      id="consent_yes">
                     <label class="form-check-label" for="consent_yes">Yes</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="family_consent" value="False" id="consent_no">
+                    <input 
+                      class="form-check-input" 
+                      type="radio" 
+                      name="family_consent" 
+                      value="False" 
+                      id="consent_no">
                     <label class="form-check-label" for="consent_no">No</label>
                   </div>
                 </div>

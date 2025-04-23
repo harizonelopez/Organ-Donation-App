@@ -31,7 +31,7 @@
             <p id="company_name" class="push_this_left"><a href="hospital-main-page.html"> Doctor's Registration</a></p>
         </div>
     </header>
-    <!-- Registration form for hospital personel -->      
+    <!-- Registration form -->      
     <div class="overlay">
         <div class="container">
             <div class="row justify-content-center">
@@ -76,7 +76,7 @@
                                             placeholder="Enter city name!" required>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label>County</label> <!-- A feature to be put to scan all cities in home country. Just leave the province name -->
+                                        <label>County</label> <!-- A feature to be put to scan all cities in home country. Just leave the province name for the time being (: -->
                                         <select id="input-province" class="form-control">
                                             <option value="Nairobi">Nairobi</option>
                                             <option value="Mombasa">Mombasa</option>
@@ -106,12 +106,13 @@
                                             minlength="10" 
                                             pattern="\d*" 
                                             title="Enter a valid 10-digit phone number"
-                                            placeholder="Enter phone number!" required>  <!-- Phone number verification coming later-->
+                                            placeholder="Enter phone number!" required>  <!-- Phone number verification coming later  -->
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label>Country</label>
                                         <select id="input-country" class="form-control">
                                             <option selected>Kenya</option>
+                                            <!-- More options... -->
                                         </select>
                                     </div>
                                 </div>
@@ -156,7 +157,7 @@
         &copy; 2025. Dev Aladinh production. We donate Inc. All rights reserved. | <a href= "#">About us | </a> <a href= "#">Contact us. </a> 
     </footer>
 
-    <!-- Javascript pwd check func -->
+    <!-- jQuery, Popper.js & Bootstrap JS -->
     <script> 
         // Password validation function
         function checkPassword() {
@@ -173,7 +174,6 @@
             }
         }
     </script>
-    <!-- jQuery, Popper.js & Bootstrap JS scripts -->
     <script 
         src="{% static 'js/hospital-registration.js' %}">
     </script>

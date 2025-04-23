@@ -22,6 +22,12 @@ from django.http import HttpResponse  # Not required for now
 
 # Create your views here.
 
+def wedonate(request):
+    if request.POST:
+        pass
+    return render(request, "index.html")
+
+
 # @login_required(login_url="donor-login")
 def donor_register(request):
     # If method is POST
@@ -260,8 +266,3 @@ def book_appointment(request):
     users = User.objects.filter(is_staff=True)
     return render(request, "book-appointment.html", {"users": users, "donors": donors})
 
-
-def wedonate(request):
-    if request.POST:
-        pass
-    return render(request, "index.html")
