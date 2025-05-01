@@ -73,7 +73,7 @@ def search_donation_details(request):
     if request.POST:
         pass
     else:
-        # Fetching donation details
+        # Fetching donation details from the database
         donation_id_from_UI = request.GET.get('donation_id', '')
         donations = Appointments.objects.filter(Q(donation_request__id=int(donation_id_from_UI)))
         donation_list = []
@@ -108,7 +108,7 @@ def fetch_appointments(request):
         pass
     else:
         # Fetching appointment details
-        print("Fetching appointments from db...") # For debugging purpose..!
+        print("Fetching appointments from db...") # For debugging purpose...!
         status = "Pending"
         appointments = Appointments.objects.filter(Q(hospital__id__iexact=request.user.id) & Q(appointment_status__iexact=status))
         
