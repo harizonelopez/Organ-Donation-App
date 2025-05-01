@@ -4,33 +4,33 @@ from django.conf import settings
 from django.db.models import Q
 from donors.models import DonationRequests, Appointments
 import json
-from django.http import JsonResponse, HttpResponse, FileResponse
+from django.http import HttpResponse, FileResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404
-from django.template import RequestContext
+# from django.template import RequestContext   #  Not required for now
 from django.template.loader import get_template
 from django.shortcuts import render, redirect
 from .models import User
 from django.contrib.auth import login, logout, authenticate
-from django.views.decorators.csrf import csrf_protect
-from django.contrib.auth.decorators import login_required
+# from django.views.decorators.csrf import csrf_protect   #  Not required for now
+# from django.contrib.auth.decorators import login_required   #  Not required for now
 import smtplib
-import getpass
+# import getpass   #  Not required for now
 from email.mime.multipart import MIMEMultipart
-from email.mime.base import MIMEBase
+# from email.mime.base import MIMEBase   #  Not required for now
 from email.mime.text import MIMEText
-from email.utils import COMMASPACE, formatdate
-from email import encoders
-import string
-import secrets
-import ast
+from email.utils import formatdate, COMMASPACE
+# from email import encoders   #  Not required for now
+# import string   #  Not required for now
+# import secrets   #  Not required for now
+# import ast   #  Not required for now
 import random
 from donors.models import DonationRequests, Appointments
-from django.core.files.storage import FileSystemStorage
+# from django.core.files.storage import FileSystemStorage   #  Not required for now
 from django.http import HttpResponse
-from django.template.loader import render_to_string
-from io import StringIO, BytesIO
-from xhtml2pdf import pisa
+# from django.template.loader import render_to_string   #  Not required for now
+from io import BytesIO, StringIO
+# from xhtml2pdf import pisa   #  Not required for now
 from PyPDF2 import PdfFileMerger, PdfFileReader
 
 # Create your views here.

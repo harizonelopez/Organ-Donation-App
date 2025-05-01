@@ -2,21 +2,21 @@ from django.shortcuts import render, redirect
 from hospitals.models import User
 from .models import DonationRequests
 from django.contrib.auth import login, logout, authenticate
-from django.views.decorators.csrf import csrf_protect  # Not required for 'login_required'
-from django.contrib.auth.decorators import login_required  # Not required for now
+# from django.views.decorators.csrf import csrf_protect  # Not required for 'login_required'
+# from django.contrib.auth.decorators import login_required  # Not required for now
 import smtplib
-import getpass  # Not required for now
+# import getpass  # Not required for now
 from email.mime.multipart import MIMEMultipart
-from email.mime.base import MIMEBase  # Not usefull for now
+# from email.mime.base import MIMEBase  # Not usefull for now
 from email.mime.text import MIMEText
 from email.utils import COMMASPACE, formatdate
-from email import encoders  # Not required for now
-import string  # Not required for now
-import secrets  # Not required for now
-import ast  # Not required for now
+# from email import encoders  # Not required for now
+# import string  # Not required for now
+# import secrets  # Not required for now
+# import ast  # Not required for now
 import random
 from .models import DonationRequests, Appointments
-from django.http import HttpResponse  # Not required for now
+# from django.http import HttpResponse  # Not required for now
 # Ensure that the User model is imported correctly
 
 
@@ -30,7 +30,6 @@ def wedonate(request):
 
 # @login_required(login_url="donor-login")
 def donor_register(request):
-    # If method is POST
     if request.POST:
         user = User()
         user.username = request.POST.get("username", "")
@@ -48,7 +47,6 @@ def donor_register(request):
     return render(request, "donor-registration.html")
 
 def donor_login(request):
-    # If method is POST
     if request.POST:
         username = request.POST.get("username", "")
         password = request.POST.get("password", "")
