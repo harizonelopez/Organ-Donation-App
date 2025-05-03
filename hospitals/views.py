@@ -7,37 +7,37 @@ import json
 from django.http import HttpResponse, FileResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404
-# from django.template import RequestContext   #  Not required for now
 from django.template.loader import get_template
 from django.shortcuts import render, redirect
 from .models import User
 from django.contrib.auth import login, logout, authenticate
-# from django.views.decorators.csrf import csrf_protect   #  Not required for now
-# from django.contrib.auth.decorators import login_required   #  Not required for now
 import smtplib
-# import getpass   #  Not required for now
 from email.mime.multipart import MIMEMultipart
-# from email.mime.base import MIMEBase   #  Not required for now
 from email.mime.text import MIMEText
 from email.utils import formatdate, COMMASPACE
-# from email import encoders   #  Not required for now
-# import string   #  Not required for now
-# import secrets   #  Not required for now
-# import ast   #  Not required for now
 import random
 from donors.models import DonationRequests, Appointments
-# from django.core.files.storage import FileSystemStorage   #  Not required for now
 from django.http import HttpResponse
-# from django.template.loader import render_to_string   #  Not required for now
 from io import BytesIO, StringIO
-# from xhtml2pdf import pisa   #  Not required for now
 from PyPDF2 import PdfFileMerger, PdfFileReader
+# from django.views.decorators.csrf import csrf_protect   --->  Not required for now
+# from django.contrib.auth.decorators import login_required   --->  Not required for now
+# from django.template import RequestContext   --->  Not required for now
+# import getpass   --->  Not required for now
+# from email.mime.base import MIMEBase   --->  Not required for now
+# from email import encoders   --->  Not required for now
+# import string   --->  Not required for now
+# import secrets   --->  Not required for now
+# import ast   --->  Not required for now
+# from django.core.files.storage import FileSystemStorage   --->  Not required for now
+# from django.template.loader import render_to_string   --->  Not required for now
+# from xhtml2pdf import pisa   --->  Not required for now
 
 # Create your views here.
 
 def home(request):
-    if request.POST:
-        pass
+    # if request.POST:
+    #     pass
     return render(request, "hospital-main-page.html")
 
 
@@ -49,7 +49,7 @@ def search_donations(request):
         status = "Approved"
         # Search for donations based on organ type, blood type or donor name
         donations = DonationRequests.objects.filter((Q(organ_type__iexact=search_keyword) | Q(blood_type__startswith=search_keyword) | Q(donor__first_name__iexact=search_keyword) | Q(donor__last_name__iexact=search_keyword)) & Q(donation_status__iexact=status))
-        print(donations)
+        print(donations)  # Debigging purpose
         # Search for donations based on donation id
         if not donations:
             if search_keyword.isdigit():
@@ -57,7 +57,7 @@ def search_donations(request):
 
         donation_list = []
         for donation in donations:
-            print(donation.donation_status)
+            print(donation.donation_status)  # Debbuging purpose
             temp_dict = {}
             temp_dict["donor"] = f"{donation.donor.first_name} {donation.donor.last_name}"
             temp_dict["organ"] = donation.organ_type
@@ -65,7 +65,7 @@ def search_donations(request):
             temp_dict["blood_group"] = donation.blood_type
             donation_list.append(temp_dict)
         search_list = json.dumps(donation_list)
-        print("Hy", search_list)
+        print("Hy", search_list)  # Debbuging purpose
         return HttpResponse(search_list)
 
 
@@ -87,7 +87,7 @@ def search_donation_details(request):
             temp_dict["contact_number"] = donation.donation_request.donor.contact_number
             temp_dict["city"] = donation.donation_request.donor.city
             temp_dict["country"] = donation.donation_request.donor.country
-            temp_dict["province"] = donation.donation_request.donor.province
+            temp_dict["province"] = donation.donation_request.donor.province  # To be ommitted soon
             # Donation details
             temp_dict["organ"] = donation.donation_request.organ_type
             temp_dict["donation_id"] = donation.donation_request.id
@@ -167,9 +167,10 @@ def hospital_register(request):
         user.email = request.POST.get("email", "")
         user.first_name = request.POST.get("hospital_name", "")
         user.city = request.POST.get("city", "")
-        user.province = request.POST.get("province", "")
+        user.province = request.POST.get("province", "")  # To be ommitted soon
         user.country = request.POST.get("country", "")
         user.contact_number = request.POST.get("contact_number", "")
+        user.is_active = True
         user.is_staff = True
         user.save()
         return redirect('hospital-login')
@@ -182,11 +183,35 @@ def hospital_login(request):
         username = request.POST.get("username", "")
         password = request.POST.get("password", "")
         user = authenticate(username=username, password=password)
+
+        if user is not user:
+            if user.is_active and user.is_staff:
+                login(request, user)
+                return redirect("home")
+            else:
+                msg = "Account inactive or unauthorized!"
+                success = 0
+        else:        
+            msg = "Incorrect password or username!"
+            success = 1
+
+        return render(request, "hospital-login.html", {"success": success, "msg": msg})
+
+    return render(request, "hospital-login.html") 
+
+
+"""
+def hospital_login(request):
+    if request.POST:
+        username = request.POST.get("username", "")
+        password = request.POST.get("password", "")
+        user = authenticate(username=username, password=password)
         
         if user is not None:
             if user.is_active and user.is_staff:
                 login(request, user)
-                return redirect('home')  # Directly redirect to hospital dashboard after login
+                # return render(request, "hospital-main-page.html")
+                # return redirect('home')  # Directly redirect to hospital dashboard after login
             else:
                 msg = "Your account is either not active or not authorized."
                 success = False
@@ -199,7 +224,7 @@ def hospital_login(request):
     return render(request, "hospital-login.html")
 
 
-"""
+
 def hospital_login(request):
     if request.POST:
         username = request.POST.get("username", "")
@@ -225,24 +250,6 @@ def hospital_login(request):
         return render(request, "hospital-login.html", {"success": success, "msg": msg})
 
     return render(request, "hospital-login.html")
-
-
-def hospital_login(request):
-    if request.method == "POST":
-        username = request.POST.get("username", "")
-        password = request.POST.get("password", "")
-        user = authenticate(username=username, password=password)
-        if user is not None:
-            if user.is_active:
-                if user.is_staff:
-                    login(request, user)
-                    return redirect(request.POST.get("next", "home"))
-        else:
-            msg = "Invalid password"
-            success = 1
-            return render(request, "hospital-login.html", {"success": success, "msg": msg})
-
-    return render(request, "hospital-login.html") 
 """
 
 
@@ -252,7 +259,7 @@ def fetch_appointment_details(request):
     else:
         # Fetching appointment details
         appointment_id_from_UI = request.GET.get('appointment_id', '')
-        print('Appointment id', appointment_id_from_UI)
+        print('Appointment id', appointment_id_from_UI)  # Debbuging purpose
         appointments = Appointments.objects.filter(Q(id=int(appointment_id_from_UI)))
         appointment_list = []
         for appointment in appointments:
@@ -264,7 +271,7 @@ def fetch_appointment_details(request):
             temp_dict["contact_number"] = appointment.donation_request.donor.contact_number
             temp_dict["city"] = appointment.donation_request.donor.city
             temp_dict["country"] = appointment.donation_request.donor.country
-            temp_dict["province"] = appointment.donation_request.donor.province
+            temp_dict["province"] = appointment.donation_request.donor.province  # To be ommitted sooner
             # Donation details
             temp_dict["organ"] = appointment.donation_request.organ_type
             temp_dict["donation_id"] = appointment.donation_request.id
@@ -301,7 +308,7 @@ def fetch_donation_details(request):
             temp_dict["contact_number"] = donation.donor.contact_number
             temp_dict["city"] = donation.donor.city
             temp_dict["country"] = donation.donor.country
-            temp_dict["province"] = donation.donor.province
+            temp_dict["province"] = donation.donor.province  # To be ommittd sooner
             # Donation details
             temp_dict["organ"] = donation.organ_type
             temp_dict["donation_id"] = donation.id
@@ -321,38 +328,38 @@ def approve_appointments(request):
     if request.POST:
         appointment_id_from_UI = request.POST.get('ID', '')
         actionToPerform = request.POST.get('action', '')
-        print('Appointment id', appointment_id_from_UI)
-        print('ActionToPerform', actionToPerform)
+        print('Appointment id', appointment_id_from_UI)  # Debbuging purpose
+        print('ActionToPerform', actionToPerform)  # Debbuging purpose
         appointments = get_object_or_404(Appointments, id=appointment_id_from_UI)
         appointments.appointment_status = actionToPerform
         appointments.save(update_fields=["appointment_status"])
     return HttpResponse("success")
 
 
-@csrf_exempt  # Used for form submission protection
+@csrf_exempt
 def approve_donations(request):
     if request.POST:
         donation_id_from_UI = request.POST.get('ID', '')
         actionToPerform = request.POST.get('action', '')
-        print('Donation id', donation_id_from_UI)
-        print('ActionToPerform', actionToPerform)
+        print('Donation id', donation_id_from_UI)  # Debbuging purpose
+        print('ActionToPerform', actionToPerform)  # Debbuging purpose
         donation = get_object_or_404(DonationRequests, id=donation_id_from_UI)
         donation.donation_status = actionToPerform
         donation.save(update_fields=["donation_status"])
     return HttpResponse("success")
 
 
-def fetch_counts(request):
+def fetch_counts(request): 
     if request.POST:
         pass
     else:
-        print(request.user.hospital_name)
+        print(request.user.hospital_name)  # Debbuging purpose
         appointment_count = Appointments.objects.filter(Q(hospital__hospital_name__iexact=request.user.hospital_name) & Q(appointment_status__iexact="Pending")).count()
-        print("Appointment count", appointment_count)
+        print("Appointment count", appointment_count)  # Debbuging purpose
         donation_status = "Pending"
         appointment_status = "Approved"
         donation_count = Appointments.objects.filter(Q(hospital__hospital_name__iexact=request.user.hospital_name) & Q(appointment_status__iexact=appointment_status) & Q(donation_request__donation_status__iexact=donation_status)).count()
-        print("Donation count", donation_count)
+        print("Donation count", donation_count)  # Debbuging purpose
         dummy_list = []
         temp_dict = {}
         temp_dict["appointment_count"] = appointment_count
@@ -420,7 +427,7 @@ def form_to_PDF(request, donor_id=1):
     try:
         pdf = pdfkit.from_string(html, False, configuration=config)
     except Exception as e:
-        print(e)
+        print(e)  # Debbuging purpose
         pass
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'inline; filename="report.pdf"'
@@ -453,7 +460,7 @@ def get_user_details(request):
         temp_dict["hospital_name"] = hospital.hospital_name
         temp_dict["hospital_email"] = hospital.email
         temp_dict["hospital_city"] = hospital.city
-        temp_dict["hospital_province"] = hospital.province
+        temp_dict["hospital_province"] = hospital.province # To be Ommitted sooner
         temp_dict["hospital_contact"] = hospital.contact_number
         user_details.append(temp_dict)
         user_json = json.dumps(user_details)
@@ -467,14 +474,15 @@ def update_user_details(request):
         email = request.POST.get('email', '')
         city = request.POST.get('city', '')
         contact = request.POST.get('contact', '')
-        province = request.POST.get('province', '')
+        province = request.POST.get('province', '')  # To be ommitted sooner
+
         user = User.objects.get(id=request.user.id)
         user.email = request.POST.get('email', '')
         user.hospital_name = request.POST.get('name', '')
         user.city = request.POST.get('city', '')
-        user.province = request.POST.get('province', '')
+        user.province = request.POST.get('province', '')  # To be ommitted sooner
         user.contact_number = request.POST.get('contact', '')
-        print("About to save...")
+        print("About to save..!")  # Debbuging purpose
         user.save()
     return HttpResponse("success")
 
@@ -485,7 +493,7 @@ def update_pwd_details(request):
         user = authenticate(username=request.user.username, password=request.POST.get("old_password", ""))
         if user is not None:
             user.set_password(request.POST.get("new_password", ""))
-            print("About to save password...")
+            print("About to save password..!")  # Debbuging purpose
             user.save(update_fields=["password"])
     return HttpResponse("success")
 
