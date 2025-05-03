@@ -36,8 +36,8 @@ from PyPDF2 import PdfFileMerger, PdfFileReader
 # Create your views here.
 
 def home(request):
-    # if request.POST:
-    #     pass
+    if request.POST:
+        pass
     return render(request, "hospital-main-page.html")
 
 
@@ -159,7 +159,6 @@ def fetch_donations(request):
 
 
 def hospital_register(request):
-    # If method is a POST request
     if request.method == "POST":
         user = User()
         user.username = request.POST.get("username", "")
@@ -167,7 +166,7 @@ def hospital_register(request):
         user.email = request.POST.get("email", "")
         user.first_name = request.POST.get("hospital_name", "")
         user.city = request.POST.get("city", "")
-        user.province = request.POST.get("province", "")  # To be ommitted soon
+        user.province = request.POST.get("province", "")  
         user.country = request.POST.get("country", "")
         user.contact_number = request.POST.get("contact_number", "")
         user.is_active = True
