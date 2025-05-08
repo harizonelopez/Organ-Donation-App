@@ -48,7 +48,11 @@ def search_donations(request):
         search_keyword = request.GET.get('keyword', '')
         status = "Approved"
         # Search for donations based on organ type, blood type or donor name
-        donations = DonationRequests.objects.filter((Q(organ_type__iexact=search_keyword) | Q(blood_type__startswith=search_keyword) | Q(donor__first_name__iexact=search_keyword) | Q(donor__last_name__iexact=search_keyword)) & Q(donation_status__iexact=status))
+        donations = DonationRequests.objects.filter((Q(organ_type__iexact=search_keyword) | 
+                                                     Q(blood_type__startswith=search_keyword) | 
+                                                     Q(donor__first_name__iexact=search_keyword) | 
+                                                     Q(donor__last_name__iexact=search_keyword)) & 
+                                                     Q(donation_status__iexact=status))
         print(donations)  # Debigging purpose
         # Search for donations based on donation id
         if not donations:
@@ -87,7 +91,7 @@ def search_donation_details(request):
             temp_dict["contact_number"] = donation.donation_request.donor.contact_number
             temp_dict["city"] = donation.donation_request.donor.city
             temp_dict["country"] = donation.donation_request.donor.country
-            temp_dict["province"] = donation.donation_request.donor.province  # To be ommitted soon
+            temp_dict["province"] = donation.donation_request.donor.province  
             # Donation details
             temp_dict["organ"] = donation.donation_request.organ_type
             temp_dict["donation_id"] = donation.donation_request.id
@@ -107,8 +111,7 @@ def fetch_appointments(request):
     if request.method == "POST":
         pass
     else:
-        # Fetching appointment details
-        print("Fetching appointments from db...") # For debugging purpose...!
+        print("Fetching appointments from db...") # For debugging purpose
         status = "Pending"
         appointments = Appointments.objects.filter(Q(hospital__id__iexact=request.user.id) & Q(appointment_status__iexact=status))
         
@@ -188,10 +191,10 @@ def hospital_login(request):
                 login(request, user)
                 return redirect("home")
             else:
-                msg = "Account inactive or unauthorized!"
+                msg = "Inactive account or unauthorized user!"
                 success = 0
         else:        
-            msg = "Incorrect password or username!"
+            msg = "Password or username mismatch!"
             success = 1
 
         return render(request, "hospital-login.html", {"success": success, "msg": msg})
@@ -210,9 +213,9 @@ def hospital_login(request):
             if user.is_active and user.is_staff:
                 login(request, user)
                 # return render(request, "hospital-main-page.html")
-                # return redirect('home')  # Directly redirect to hospital dashboard after login
+                return redirect('home')  # Directly redirect to hospital dashboard after login
             else:
-                msg = "Your account is either not active or not authorized."
+                msg = "Your account is either inactive or unauthorized."
                 success = False
         else:
             msg = "Invalid username or password."
@@ -240,7 +243,7 @@ def hospital_login(request):
                     return redirect(next_url)
                 return redirect('home')  # Default home redirection
             else:
-                msg = "Your account is either not active or not authorized."
+                msg = "Your account is either inactive or unauthorized."
                 success = False
         else:
             msg = "Invalid username or password."
@@ -270,7 +273,7 @@ def fetch_appointment_details(request):
             temp_dict["contact_number"] = appointment.donation_request.donor.contact_number
             temp_dict["city"] = appointment.donation_request.donor.city
             temp_dict["country"] = appointment.donation_request.donor.country
-            temp_dict["province"] = appointment.donation_request.donor.province  # To be ommitted sooner
+            temp_dict["province"] = appointment.donation_request.donor.province  
             # Donation details
             temp_dict["organ"] = appointment.donation_request.organ_type
             temp_dict["donation_id"] = appointment.donation_request.id
@@ -307,7 +310,7 @@ def fetch_donation_details(request):
             temp_dict["contact_number"] = donation.donor.contact_number
             temp_dict["city"] = donation.donor.city
             temp_dict["country"] = donation.donor.country
-            temp_dict["province"] = donation.donor.province  # To be ommittd sooner
+            temp_dict["province"] = donation.donor.province 
             # Donation details
             temp_dict["organ"] = donation.organ_type
             temp_dict["donation_id"] = donation.id
@@ -459,7 +462,7 @@ def get_user_details(request):
         temp_dict["hospital_name"] = hospital.hospital_name
         temp_dict["hospital_email"] = hospital.email
         temp_dict["hospital_city"] = hospital.city
-        temp_dict["hospital_province"] = hospital.province # To be Ommitted sooner
+        temp_dict["hospital_province"] = hospital.province # To be ommitted sooner
         temp_dict["hospital_contact"] = hospital.contact_number
         user_details.append(temp_dict)
         user_json = json.dumps(user_details)
@@ -500,3 +503,4 @@ def update_pwd_details(request):
 def hospital_logout(request):
     logout(request)
     return redirect("hospital-login")
+

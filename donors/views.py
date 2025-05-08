@@ -23,7 +23,7 @@ from .models import DonationRequests, Appointments
 
 def wedonate(request):
     if request.POST:
-        pass
+        pass  # Skip for the time being
     return render(request, "index.html")
 
 
@@ -57,7 +57,7 @@ def donor_login(request):
                     print(request.user, "Hello, Welcome Abord.")
                     return redirect(request.POST.get("next", "donor-landing-page"))
         else:
-            msg = "Invalid password"
+            msg = "Invalid password!"
             fail = 1
             return render(request, "donor-login.html", {"fail": fail, "msg": msg})
 
@@ -96,7 +96,7 @@ def donor_profile_update(request):
             pscheck = 1
             msg = "Invalid password"
     donor = User.objects.get(id=request.user.id)
-    provinces = [ # To be changed and more province names to be added ---> Dynamically to be pulled from the database
+    provinces = [ #  Future modifications to be done for the city names to dynamically be pulled from the database
         "Nairobi",
         "Naivasha"
         "Mombasa",
@@ -112,7 +112,7 @@ def donor_profile_update(request):
         "Kitale",
         "Garissa",
         "Kericho",
-        "Naivasha"
+        "Naivasha",
     ]
     provinces = [1 if donor.province is not None else 0 for i in provinces]
 
@@ -243,7 +243,6 @@ def new_donation_request(request):
 
 
 def book_appointment(request):
-    # If method is POST
     if request.POST:
         print(request.POST.get("hospital-name", ""))
         apmt = Appointments()
