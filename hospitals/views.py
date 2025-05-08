@@ -111,7 +111,7 @@ def fetch_appointments(request):
     if request.method == "POST":
         pass
     else:
-        print("Fetching appointments from db...") # For debugging purpose
+        print("Fetching appointments from db...")  # For debugging purpose
         status = "Pending"
         appointments = Appointments.objects.filter(Q(hospital__id__iexact=request.user.id) & Q(appointment_status__iexact=status))
         
