@@ -96,7 +96,7 @@ def donor_profile_update(request):
             pscheck = 1
             msg = "Invalid password"
     donor = User.objects.get(id=request.user.id)
-    provinces = [ #  Future modifications to be done for the city names to dynamically be pulled from the database
+    provinces = [  #  Future modifications to be done for the city names to dynamically be pulled from the database
         "Nairobi",
         "Naivasha"
         "Mombasa",
