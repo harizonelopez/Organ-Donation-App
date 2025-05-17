@@ -330,8 +330,8 @@ def approve_appointments(request):
     if request.POST:
         appointment_id_from_UI = request.POST.get('ID', '')
         actionToPerform = request.POST.get('action', '')
-        print('Appointment id', appointment_id_from_UI)  # Debbuging purpose
-        print('ActionToPerform', actionToPerform)  # Debbuging purpose
+        print('Appointment id', appointment_id_from_UI)  # Debbuging purposes
+        print('ActionToPerform', actionToPerform)  # Debbuging purposes
         appointments = get_object_or_404(Appointments, id=appointment_id_from_UI)
         appointments.appointment_status = actionToPerform
         appointments.save(update_fields=["appointment_status"])
@@ -343,8 +343,8 @@ def approve_donations(request):
     if request.POST:
         donation_id_from_UI = request.POST.get('ID', '')
         actionToPerform = request.POST.get('action', '')
-        print('Donation id', donation_id_from_UI)  # Debbuging purpose
-        print('ActionToPerform', actionToPerform)  # Debbuging purpose
+        print('Donation id', donation_id_from_UI)  # Debbuging reasons
+        print('ActionToPerform', actionToPerform)  # Debbuging reasons
         donation = get_object_or_404(DonationRequests, id=donation_id_from_UI)
         donation.donation_status = actionToPerform
         donation.save(update_fields=["donation_status"])
