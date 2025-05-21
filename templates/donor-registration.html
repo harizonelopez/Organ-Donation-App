@@ -45,7 +45,6 @@
                     <h4 align="Center" class="card-title mt-2"> <b>Donor Dashboard</b><br>
                         <i>Register for a new account</i></h4>
                 </header>
-
                 <div class="card-content">
                   <div class="form-group">
                     <span class="input-group-addon"><i class="fa fa-user"></i></span>
@@ -53,7 +52,8 @@
                     <input 
                       type="text" 
                       name="donor_name" 
-                      class="form-control" required>
+                      class="form-control" 
+                      placeholder="   ----- donor name -----   "required>
                   </div>
 
                   <div class="form-group">
@@ -62,7 +62,8 @@
                     <input 
                       type="email" 
                       name="email" 
-                      class="form-control" required>
+                      class="form-control"
+                      placeholder="   ----- donor email address -----   " required>
                   </div>
 
                   <div class="form-group">
@@ -71,7 +72,8 @@
                     <input 
                       type="text" 
                       name="username" 
-                      class="form-control" required>
+                      class="form-control"
+                      placeholder="   ----- donor user-name -----   " required>
                   </div>
 
                   <div class="form-row">
@@ -81,24 +83,17 @@
                       <input 
                         type="text" 
                         name="city" 
-                        class="form-control">
+                        class="form-control"
+                        placeholder="   ----- city name -----   "required>
                     </div>
-
                     <div class="form-group col-md-6">
                       <span class="input-group-addon"><i class="fa fa-building"></i></span>
-                      <label>Province</label>
-                      <select id="input-province" name="province" class="form-control">
-                        <option value="Nova Scotia">Nova Scotia</option>
-                        <option value="British Columbia">British Columbia</option>
-                        <option value="Ontario">Ontario</option>
-                        <option value="Quebec">Quebec</option>
-                        <option value="Alberta">Alberta</option>
-                        <option value="New Brunswick">New Brunswick</option>
-                        <option value="Manitoba">Manitoba</option>
-                        <option value="Sasketchawan">Sasketchawan</option>
-                        <option value="New Foundland and Labrador">New Foundland and Labrador</option>
-                        <option value="Prince Edward Island">Prince Edward Island</option>
-                      </select>
+                      <label>province</label> 
+                      <input 
+                          type="text"
+                          name="province" 
+                          class="form-control"
+                          placeholder="   ---residence province---" required>
                     </div>
                   </div>
 
@@ -108,17 +103,26 @@
                       <label>Contact no. (+254)</label>
                       <input 
                         type="text" 
-                        name="contact_number" 
                         class="form-control" 
                         maxlength="10" 
-                        minlength="10">
+                        minlength="10" 
+                        pattern="\d*" 
+                        title="Enter a valid 10-digit phone number"
+                        placeholder="   (07/01) _ _ _ _ _ _ _ _    " required>
                     </div>
-
                     <div class="form-group col-md-6">
                       <span class="input-group-addon"><i class="fa fa-building"></i></span>
                       <label>Country</label>
-                      <select id="input-country" name="country" class="form-control">
-                        <option selected>Canada</option>
+                      <select id="input-country" class="form-control">
+                        <option selected align="Center">---------------</option>
+                        <option value="Kenya">Kenya</option>
+                        <option value="Uganda">Uganda</option>
+                        <option value="Tanzania">Tanzania</option>
+                        <option value="Somalia">Somalia</option>
+                        <option value="Ethiopia">Ethiopia</option>
+                        <option value="Sudan">Sudan</option>
+                        <option value="Madagascar">Madagascar</option>
+                        <option align="Center">---------------</option>
                       </select>
                     </div>
                   </div>
@@ -126,21 +130,25 @@
                   <div class="form-group">
                     <span class="input-group-addon"><i class="fa fa-lock"></i></span>
                     <label>Create password</label>
-                    <input class="form-control" name="password" type="password"
-                           minlength="6"
-                           pattern="(?=.*[a-z])(?=.*\d).{6,}"
-                           title="Please include 1 lowercase letter and 1 digit in your password"
-                           id="password1" required>
+                    <input 
+                      type="password" 
+                      id="password1" 
+                      class="form-control" 
+                      minlength="6" 
+                      pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}" 
+                      title="Must include 1 uppercase, 1 lowercase letter, and 1 digit" 
+                      placeholder="       ----- password -----" required>
                   </div>
 
                   <div class="form-group">
                     <span class="input-group-addon"><i class="fa fa-lock"></i></span>
                     <label>Confirm password</label>
                     <input 
-                      class="form-control" 
                       type="password" 
                       id="password2" 
-                      oninput="checkpassword();" required>
+                      class="form-control" 
+                      oninput="checkPassword();" 
+                      placeholder="   --- re-enter password ---" required>
                   </div>
 
                   <div class="form-group">

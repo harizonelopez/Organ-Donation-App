@@ -27,7 +27,6 @@ def wedonate(request):
     return render(request, "index.html")
 
 
-# @login_required(login_url="donor-login")
 def donor_register(request):
     if request.POST:
         user = User()
@@ -41,7 +40,11 @@ def donor_register(request):
         user.contact_number = request.POST.get("contact_number", "")
         user.is_staff = False
         user.save()
-        return redirect("donor-login")
+
+        login(request, user)
+        print(request.user, "Hello, Welcome Abord.")
+        
+        return redirect("donor-landing page")
 
     return render(request, "donor-registration.html")
 
