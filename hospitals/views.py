@@ -343,8 +343,8 @@ def approve_donations(request):
     if request.POST:
         donation_id_from_UI = request.POST.get('ID', '')
         actionToPerform = request.POST.get('action', '')
-        print('Donation id', donation_id_from_UI)  # Debbuging reasons
-        print('ActionToPerform', actionToPerform)  # Debbuging reasons
+        print('Donation id', donation_id_from_UI)  # Debbuging purpose
+        print('ActionToPerform', actionToPerform)  # Debbuging purpose
         donation = get_object_or_404(DonationRequests, id=donation_id_from_UI)
         donation.donation_status = actionToPerform
         donation.save(update_fields=["donation_status"])

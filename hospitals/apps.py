@@ -1,3 +1,5 @@
+# Create your apps here.
+
 from django.apps import AppConfig
 
 

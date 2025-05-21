@@ -19,7 +19,7 @@ from donors import views as v
 from django.shortcuts import redirect
 
 urlpatterns = [
-    path('', lambda request: redirect('wedonate')),  # Redirect root to the home page by name
+    path('', lambda request: redirect('wedonate')),  # Redirect to the home page
     path('home/', v.wedonate, name='wedonate'),  # Home page route
     path('donors/', include('donors.urls')),    # Include donor's app URLs
     path('hospitals/', include('hospitals.urls')),  # Include hospital's app URLs

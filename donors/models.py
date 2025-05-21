@@ -1,8 +1,7 @@
-from django.db import models
-from hospitals.models import User
-
 # Create your models here.
 
+from django.db import models
+from hospitals.models import User
 
 class DonationRequests(models.Model):
 
