@@ -40,11 +40,7 @@ def donor_register(request):
         user.contact_number = request.POST.get("contact_number", "")
         user.is_staff = False
         user.save()
-
-        login(request, user)
-        print(request.user, "Hello, Welcome Abord.")
-        
-        return redirect("donor-landing page")
+        return redirect("donor-login")
 
     return render(request, "donor-registration.html")
 
