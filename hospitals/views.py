@@ -429,7 +429,7 @@ def form_to_PDF(request, donor_id=1):
     try:
         pdf = pdfkit.from_string(html, False, configuration=config)
     except Exception as e:
-        print(e)  # Debbuging purpose
+        print(e)  # Debbuging reason
         pass
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'inline; filename="report.pdf"'
