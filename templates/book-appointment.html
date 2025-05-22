@@ -73,11 +73,8 @@
                 <!-- Hospital Name -->
                 <div class="form-group">
                   <label for="hospital-name">Hospital Name</label>
-                  <select id="hospital-name" name="hospital-name" class="form-control">
-                    <!--{% for user in users %}
-                      <option value="{{ user.id }}">{{ user.hospital_name }}</option>
-                    {% endfor %}-->
-                    <option value="None" selected>--- select preferred hospital ---</option>
+                  <select id="hospital-name" name="hospital-name" class="form-control" required>
+                    <option value="" selected>--- select preferred hospital ---</option>
                     <option value="nairobi-hospital">The Nairobi Hospital (NH)</option>
                     <option value="kenyatta-hospital">Kenyatta National Hospital (KNH)</option>
                     <option value="moi-hospital">Moi Teaching and Referral Hospital (MTRH): </option>

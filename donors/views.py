@@ -239,33 +239,37 @@ def new_donation_request(request):
     return render(request, "new-donation-request.html")
 
 
-"""
-def book_appointment(request):
-    if request.method == "POST":
-        # print(request.POST.get("hospital-name", ""))
-        apmt = Appointments()
-        apmt.donation_request = DonationRequests.objects.get(
-            id=int(request.POST.get("dreq", ""))
-        )
-        apmt.hospital = User.objects.get(
-            hospital_name=request.POST.get("hospital-name", "")
-        )
-        apmt.date = request.POST.get("date", "")
-        apmt.time = request.POST.get("time", "")
-        apmt.appointment_status = "Pending"
-        apmt.save()
-        return redirect("donor-home")
-
-    donors = DonationRequests.objects.filter(donor=request.user.id)
-    users = User.objects.filter(is_staff=True)
-    return render(request, "book-appointment.html", {"users": users, "donors": donors})"""
-
-
 def book_appointment(request):
     if request.method == "POST":
         try:
-            hospital_name = request.POST.get("hospital-name", "").strip()
-            donation_request_id = request.POST.get("dreq", "").strip()
+            apmt = Appointments()
+            apmt.donation_request = DonationRequests.objects.get(
+                id=int(request.POST.get("dreq", ""))
+            )
+            apmt.hospital = request.POST.get("hospital-name", "") 
+            apmt.date = request.POST.get("date", "")
+            apmt.time = request.POST.get("time", "")
+            apmt.appointment_status = "Pending"
+            apmt.save()
+            messages.success(request, "Appointment booked successfully.")
+            return redirect("donor-home")
+
+        except Exception as e:
+            import traceback
+            traceback.print_exc()
+            messages.error(request, "Error booking appointment.")
+            return redirect("book-appointment")
+
+    donors = DonationRequests.objects.filter(donor=request.user)
+    return render(request, "book-appointment.html", {"donors": donors})
+
+
+"""
+def book_appointment(request):
+    if request.method == "POST":
+        try:
+            hospital_name = request.POST.get("hospital-name").strip()
+            donation_request_id = request.POST.get("dreq").strip()
 
             if not donation_request_id or not hospital_name:
                 messages.error(request, "Donation request and hospital are required.")
@@ -284,6 +288,7 @@ def book_appointment(request):
                 appointment_status="Pending"
             )
             apmt.save()
+
             messages.success(request, "Appointment booked successfully.")
             return redirect("donor-home")
 
@@ -293,8 +298,8 @@ def book_appointment(request):
             return redirect("donor-home")
 
     # GET request - show form
-    donors = DonationRequests.objects.filter(donor=request.user.id)
+    donors = DonationRequests.objects.filter(donor=request.user)
     users = User.objects.filter(is_staff=True)
     return render(request, "book-appointment.html", {"users": users, "donors": donors})
-
+"""
 
