@@ -63,7 +63,7 @@
                 <div class="form-group">
                   <label for="don-id">Donation ID</label>
                   <select id="don-id" name="dreq" class="form-control">
-                    <option value="None" selected>---------------</option>
+                    <option value="None">--- select donation id ---</option>
                     {% for donor in donors %}
                       <option value="{{ donor.id }}">{{ donor.id }}</option>
                     {% endfor %}
@@ -74,10 +74,11 @@
                 <div class="form-group">
                   <label for="hospital-name">Hospital Name</label>
                   <select id="hospital-name" name="hospital-name" class="form-control">
-                    <option value="None" selected>---------------</option>
-                    {% for user in users %}
-                      <option value="{{ user.hospital_name }}">{{ user.hospital_name }}</option>
-                    {% endfor %}
+                    <option value="None" selected>--- select preferred hospital ---</option>
+                    <option value="nairobi-hospital">The Nairobi Hospital (NH)</option>
+                    <option value="kenyatta-hospital">Kenyatta National Hospital (KNH)</option>
+                    <option value="moi-hospital">Moi Teaching and Referral Hospital (MTRH): </option>
+                    <option value="aga-khan-hospital">Aga Khan University Hospital (AKUH):</option>
                   </select>
                 </div>
 
@@ -98,7 +99,7 @@
                 <div class="form-group">
                   <label for="time">Preferred Time</label>
                   <select id="time" name="time" class="form-control">
-                    <option value="time0" selected>Select preferred time</option>
+                    <option value="time0" selected>--- Select preferred time ---</option>
                     <option value="09:00 to 10:00">09:00 to 10:00</option>
                     <option value="10:00 to 11:00">10:00 to 11:00</option>
                     <option value="12:00 to 13:00">12:00 to 13:00</option>

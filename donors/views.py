@@ -8,15 +8,8 @@ from email.mime.text import MIMEText
 from email.utils import COMMASPACE, formatdate
 import random
 from .models import DonationRequests, Appointments
-# from django.views.decorators.csrf import csrf_protect  ---> Not required for now
-# from django.contrib.auth.decorators import login_required  ---> Not required for now
-# import getpass  ---> Not required for now
-# from email.mime.base import MIMEBase  ---> Not usefull for now
-# from email import encoders  ---> Not required for now
-# import string  ---> Not required for now
-# import secrets  ---> Not required for now
-# import ast  ---> Not required for now
-# from django.http import HttpResponse  ---> Not required for now
+from django.contrib import messages
+import traceback
 
 
 # Create your views here.
@@ -218,26 +211,31 @@ def donor_home(request):
 
 
 def new_donation_request(request):
-    if request.POST:
-        donation_request = DonationRequests()
-        donation_request.donation_request = request.POST.get("newdonationreq", "")
-        donation_request.organ_type = request.POST.get("organ_type", "")
-        donation_request.blood_type = request.POST.get("blood_type", "")
-        donation_request.family_relation = request.POST.get("family_relation", "")
-        donation_request.family_relation_name = request.POST.get(
-            "family_relation_name", ""
-        )
-        donation_request.family_contact_number = request.POST.get(
-            "family_contact_number", ""
-        )
-        donation_request.donation_status = "Pending"
-        donation_request.donor = request.user
-        donation_request.upload_medical_doc = request.FILES.get("file", "")
-        donation_request.family_consent = request.POST.get("family_consent", "")
-        donation_request.donated_before = request.POST.get("donated_before", "")
-        donation_request.save()
-        return redirect("donor-home")
-
+    if request.method == "POST":
+        try:
+            donation_request = DonationRequests()
+            donation_request.donation_request = request.POST.get("newdonationreq", "")
+            donation_request.organ_type = request.POST.get("organ_type", "")
+            donation_request.blood_type = request.POST.get("blood_type", "")
+            donation_request.family_relation = request.POST.get("family_relation", "")
+            donation_request.family_relation_name = request.POST.get(
+                "family_relation_name", ""
+            )
+            donation_request.family_contact_number = request.POST.get(
+                "family_contact_number", ""
+            )
+            donation_request.donation_status = "Pending"
+            donation_request.donor = request.user
+            donation_request.upload_medical_doc = request.FILES.get("file", "")
+            donation_request.family_consent = request.POST.get("family_consent", "")
+            donation_request.donated_before = request.POST.get("donated_before", "")
+            donation_request.save()
+            return redirect("donor-home")
+        except Exception as e:
+            traceback.print_exc()
+            messages.error(request, "Error updating donation request.")
+            return redirect("donor-home")
+        
     return render(request, "new-donation-request.html")
 
 
