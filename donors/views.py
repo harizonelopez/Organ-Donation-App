@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from hospitals.models import User
 from .models import DonationRequests
 from django.contrib.auth import login, logout, authenticate
@@ -232,16 +232,17 @@ def new_donation_request(request):
             donation_request.save()
             return redirect("donor-home")
         except Exception as e:
-            traceback.print_exc()
+            print(e)
             messages.error(request, "Error updating donation request.")
             return redirect("donor-home")
         
     return render(request, "new-donation-request.html")
 
 
+"""
 def book_appointment(request):
-    if request.POST:
-        print(request.POST.get("hospital-name", ""))
+    if request.method == "POST":
+        # print(request.POST.get("hospital-name", ""))
         apmt = Appointments()
         apmt.donation_request = DonationRequests.objects.get(
             id=int(request.POST.get("dreq", ""))
@@ -257,5 +258,43 @@ def book_appointment(request):
 
     donors = DonationRequests.objects.filter(donor=request.user.id)
     users = User.objects.filter(is_staff=True)
+    return render(request, "book-appointment.html", {"users": users, "donors": donors})"""
+
+
+def book_appointment(request):
+    if request.method == "POST":
+        try:
+            hospital_name = request.POST.get("hospital-name", "").strip()
+            donation_request_id = request.POST.get("dreq", "").strip()
+
+            if not donation_request_id or not hospital_name:
+                messages.error(request, "Donation request and hospital are required.")
+                return redirect("donor-home")
+
+            # Fetch related objects
+            donation_request = get_object_or_404(DonationRequests, id=int(donation_request_id))
+            hospital_user = get_object_or_404(User, hospital_name=hospital_name)
+
+            # Create appointment
+            apmt = Appointments(
+                donation_request=donation_request,
+                hospital=hospital_user,
+                date=request.POST.get("date", ""),
+                time=request.POST.get("time", ""),
+                appointment_status="Pending"
+            )
+            apmt.save()
+            messages.success(request, "Appointment booked successfully.")
+            return redirect("donor-home")
+
+        except Exception as e:
+            traceback.print_exc()
+            messages.error(request, "An error occurred while booking the appointment.")
+            return redirect("donor-home")
+
+    # GET request - show form
+    donors = DonationRequests.objects.filter(donor=request.user.id)
+    users = User.objects.filter(is_staff=True)
     return render(request, "book-appointment.html", {"users": users, "donors": donors})
+
 
