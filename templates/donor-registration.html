@@ -55,6 +55,28 @@
                     <h4 align="Center" class="card-title mt-2"> <b>Donor Dashboard</b><br>
                         <i>Register for a new account</i></h4>
                 </header>
+                <!-- Show messages -->
+                {% if messages %}
+                  <div class="container mt-4">
+                    {% for message in messages %}
+                      <div class="alert alert-{{ message.tags }} alert-dismissible fade show auto-dismiss-alert shadow-sm rounded-3" role="alert">
+                        <div class="d-flex align-items-center">
+                          {% if message.tags == 'success' %}
+                            <i class="bi bi-check-circle-fill text-success me-2 fs-5"></i>
+                          {% elif message.tags == 'error' %}
+                            <i class="bi bi-x-circle-fill text-danger me-2 fs-5"></i>
+                          {% elif message.tags == 'warning' %}
+                            <i class="bi bi-exclamation-triangle-fill text-warning me-2 fs-5"></i>
+                          {% elif message.tags == 'info' %}
+                            <i class="bi bi-info-circle-fill text-primary me-2 fs-5"></i>
+                          {% endif %}
+                          <span>{{ message }}</span>
+                        </div>
+                      </div>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+
                 <div class="card-content">
                   <div class="form-group">
                     <span class="input-group-addon"><i class="fa fa-user"></i></span>
@@ -192,7 +214,7 @@
     </footer>
 
     <!-- Custom JS script file URL -->
-    <script src="{% static 'js/donor-registration.js' %}"></script>
+    <script src="{% static 'js/extra_scripts.js' %}"></script>
 
     <!-- Optional JavaScript -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
