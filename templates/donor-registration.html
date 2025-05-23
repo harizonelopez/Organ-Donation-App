@@ -32,7 +32,16 @@
             <p id="company_name" class="push_this_left"><a href="hospital-main-page.html"> Donor's Registration</a></p>
         </div>
     </header>
-
+    {% if messages %}
+      <div class="container mt-3">
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
     <!-- Registration Form -->
     <div class="overlay">
       <form method="POST" action="{% url 'donor-register' %}">
@@ -45,7 +54,6 @@
                     <h4 align="Center" class="card-title mt-2"> <b>Donor Dashboard</b><br>
                         <i>Register for a new account</i></h4>
                 </header>
-
                 <div class="card-content">
                   <div class="form-group">
                     <span class="input-group-addon"><i class="fa fa-user"></i></span>

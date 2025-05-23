@@ -21,37 +21,66 @@ def wedonate(request):
 
 
 def donor_register(request):
-    if request.POST:
-        user = User()
-        user.username = request.POST.get("username", "")
-        user.set_password(request.POST.get("password", ""))
-        user.email = request.POST.get("email", "")
-        user.first_name = request.POST.get("donor_name", "")
-        user.city = request.POST.get("city", "")
-        user.province = request.POST.get("province", "")
-        user.country = request.POST.get("country", "")
-        user.contact_number = request.POST.get("contact_number", "")
-        user.is_staff = False
-        user.save()
-        return redirect("donor-login")
+    if request.method == "POST":
+        try:
+            username = request.POST.get("username", "")
+            raw_password = request.POST.get("password", "")
+            email = request.POST.get("email", "")
+            donor_name = request.POST.get("donor_name", "")
+            city = request.POST.get("city", "")
+            province = request.POST.get("province", "")
+            country = request.POST.get("country", "")
+            contact_number = request.POST.get("contact_number", "")
+
+            user = User.objects.create_user(
+                username=username,
+                password=raw_password,
+                email=email,
+                first_name=donor_name
+            )
+            user.city = city
+            user.province = province
+            user.country = country
+            user.contact_number = contact_number
+            user.is_staff = False
+            user.save()
+
+            #  Auto-login 
+            user = authenticate(request, username=username, password=raw_password)
+            if user is not None:
+                login(request, user)
+                messages.success(request, "Registration successful. You are now logged in.")
+                return redirect("donor-home")
+
+            messages.error(request, "Could not log you in after registration.")
+            return redirect("donor-login")
+
+        except Exception as e:
+            traceback.print_exc()
+            messages.error(request, "Registration failed. Please try again.")
+            return redirect("donor-register")
 
     return render(request, "donor-registration.html")
 
+
 def donor_login(request):
-    if request.POST:
+    if request.method == "POST":
         username = request.POST.get("username", "")
         password = request.POST.get("password", "")
         user = authenticate(username=username, password=password)
+
         if user is not None:
             if user.is_active:
                 if not user.is_staff:
                     login(request, user)
-                    print(request.user, "Hello, Welcome Abord.")
+                    messages.success(request, f"Welcome aboard, {user.first_name}!")
                     return redirect(request.POST.get("next", "donor-landing-page"))
+                else:
+                    messages.error(request, "Access denied. You are not a donor.")
+            else:
+                messages.error(request, "Your account is inactive.")
         else:
-            msg = "Invalid password!"
-            fail = 1
-            return render(request, "donor-login.html", {"fail": fail, "msg": msg})
+            messages.error(request, "Incorrect username or password.")
 
     return render(request, "donor-login.html")
 
@@ -262,44 +291,3 @@ def book_appointment(request):
 
     donors = DonationRequests.objects.filter(donor=request.user)
     return render(request, "book-appointment.html", {"donors": donors})
-
-
-"""
-def book_appointment(request):
-    if request.method == "POST":
-        try:
-            hospital_name = request.POST.get("hospital-name").strip()
-            donation_request_id = request.POST.get("dreq").strip()
-
-            if not donation_request_id or not hospital_name:
-                messages.error(request, "Donation request and hospital are required.")
-                return redirect("donor-home")
-
-            # Fetch related objects
-            donation_request = get_object_or_404(DonationRequests, id=int(donation_request_id))
-            hospital_user = get_object_or_404(User, hospital_name=hospital_name)
-
-            # Create appointment
-            apmt = Appointments(
-                donation_request=donation_request,
-                hospital=hospital_user,
-                date=request.POST.get("date", ""),
-                time=request.POST.get("time", ""),
-                appointment_status="Pending"
-            )
-            apmt.save()
-
-            messages.success(request, "Appointment booked successfully.")
-            return redirect("donor-home")
-
-        except Exception as e:
-            traceback.print_exc()
-            messages.error(request, "An error occurred while booking the appointment.")
-            return redirect("donor-home")
-
-    # GET request - show form
-    donors = DonationRequests.objects.filter(donor=request.user)
-    users = User.objects.filter(is_staff=True)
-    return render(request, "book-appointment.html", {"users": users, "donors": donors})
-"""
-
