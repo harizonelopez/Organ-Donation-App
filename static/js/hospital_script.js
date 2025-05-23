@@ -1424,3 +1424,5 @@ function updatePasswordDetails(){
 function updateSuccess(){
   Swal.fire("Done","Profile details updated successfully!","success");
 }
+
+
