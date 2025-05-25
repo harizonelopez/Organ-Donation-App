@@ -45,7 +45,7 @@ def donor_register(request):
             user.is_staff = False
             user.save()
 
-            #  Auto-login 
+            # Auto-login 
             user = authenticate(request, username=username, password=raw_password)
             if user is not None:
                 login(request, user)
