@@ -72,15 +72,16 @@ def donor_login(request):
         if user is not None:
             if user.is_active:
                 if not user.is_staff:
-                    login(request, user)
                     messages.success(request, f"Welcome aboard, {user.first_name}!")
+                    login(request, user)
                     return redirect(request.POST.get("next", "donor-landing-page"))
                 else:
                     messages.error(request, "Access denied. You are not a donor.")
             else:
                 messages.error(request, "Your account is inactive.")
         else:
-            messages.error(request, "Incorrect username or password.")
+            # If authentication fails, show an error message
+            messages.warning(request, "Incorrect username or password.")
 
     return render(request, "donor-login.html")
 
@@ -216,6 +217,7 @@ def donor_forgot_password(request):
 
 def donor_logout(request):
     logout(request)
+    messages.info(request, "You have been logged out successfully.")
     return redirect("donor-login")
 
 

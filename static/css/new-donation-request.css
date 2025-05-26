@@ -90,6 +90,15 @@ body{
     background-color: #51EAEA;
 }
 
+.alert-position-top-right {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1055;
+  min-width: 300px;
+  max-width: 400px;
+}
+
 
 /* Responsiveness design */
 @media only screen and (max-width: 620px){
