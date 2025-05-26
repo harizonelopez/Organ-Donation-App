@@ -11,7 +11,6 @@ from .models import DonationRequests, Appointments
 from django.contrib import messages
 import traceback
 
-
 # Create your views here.
 
 def wedonate(request):
@@ -49,15 +48,15 @@ def donor_register(request):
             user = authenticate(request, username=username, password=raw_password)
             if user is not None:
                 login(request, user)
-                messages.success(request, "Registration successful. You are now logged in.")
-                return redirect("donor-home")
+                # messages.success(request, "Registration successful. You are now logged in.")
+                return redirect("donor-landing-page")
 
-            messages.error(request, "Could not log you in after registration.")
+            messages.info(request, "Could not log you in after registration.")
             return redirect("donor-login")
 
         except Exception as e:
             traceback.print_exc()
-            messages.error(request, "Registration failed. Please try again.")
+            messages.warning(request, "Registration failed. Please try again.")
             return redirect("donor-register")
 
     return render(request, "donor-registration.html")
@@ -72,9 +71,9 @@ def donor_login(request):
         if user is not None:
             if user.is_active:
                 if not user.is_staff:
-                    messages.success(request, f"Welcome aboard, {user.first_name}!")
+                    messages.success(request, f"Welcome back, {user.first_name}!")
                     login(request, user)
-                    return redirect(request.POST.get("next", "donor-landing-page"))
+                    return redirect(request.POST.get("next", "donor-home"))
                 else:
                     messages.error(request, "Access denied. You are not a donor.")
             else:
@@ -261,10 +260,11 @@ def new_donation_request(request):
             donation_request.family_consent = request.POST.get("family_consent", "")
             donation_request.donated_before = request.POST.get("donated_before", "")
             donation_request.save()
+            messages.success(request, "Donation request created successfully.")
             return redirect("donor-home")
         except Exception as e:
             print(e)
-            messages.error(request, "Error updating donation request.")
+            messages.warning(request, "Error updating donation request.")
             return redirect("donor-home")
         
     return render(request, "new-donation-request.html")
@@ -288,7 +288,7 @@ def book_appointment(request):
         except Exception as e:
             import traceback
             traceback.print_exc()
-            messages.error(request, "Error booking appointment.")
+            messages.warning(request, "Error booking appointment.")
             return redirect("book-appointment")
 
     donors = DonationRequests.objects.filter(donor=request.user)

@@ -40,7 +40,7 @@
     </header>
     <!-- Show messages -->
     {% if messages %}
-      <div class="container mt-4">
+      <div class="container mt-3">
         {% for message in messages %}
           <div class="alert alert-{{ message.tags }} alert-dismissible fade show auto-dismiss-alert shadow-sm rounded-3" role="alert">
             <div class="d-flex align-items-center">
@@ -57,7 +57,7 @@
             </div>
           </div>
         {% endfor %}
-      </div>
+      
     {% endif %}
 
     <!-- Registration Form -->
@@ -210,9 +210,6 @@
     </footer>
 
     <!-- Custom JS script file URL -->
-    <script src="{% static 'js/extra_scripts.js' %}"></script>
-
-    <!-- Optional JavaScript -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
             integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
             crossorigin="anonymous"></script>
@@ -222,5 +219,19 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        setTimeout(() => {
+          const alerts = document.querySelectorAll(".auto-dismiss-alert");
+          alerts.forEach(alert => {
+            alert.classList.remove("show"); // triggers fade-out
+            setTimeout(() => {
+              let bsAlert = bootstrap.Alert.getOrCreateInstance(alert);
+              bsAlert.close();
+            }, 300); // allow fade transition to complete (~0.3s)
+          });
+        }, 4000); // wait 4s before starting fade
+      });
+    </script>
   </body>
 </html>

@@ -5,14 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap , Fonts & Custom CSS links-->
-     <link 
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" 
-        rel="stylesheet">
-    <!-- Booststrap Icons link -->
-    <link 
-        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" 
-        rel="stylesheet">
+    <!-- Bootstrap & Custom CSS links -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -22,27 +15,6 @@
 
     <title> 🛡 DNI - Donor Alliance Center </title>
   </head>
-    {% if messages %}
-        {% for message in messages %}
-          <div class="alert alert-{{ message.tags }} alert-dismissible fade show auto-dismiss-alert shadow-sm rounded-3 alert-position-top-right" role="alert">
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="d-flex align-items-center">
-                {% if message.tags == 'success' %}
-                  <i class="bi bi-check-circle-fill text-success me-2 fs-5"></i>
-                {% elif message.tags == 'error' %}
-                  <i class="bi bi-x-circle-fill text-danger me-2 fs-5"></i>
-                {% elif message.tags == 'warning' %}
-                  <i class="bi bi-exclamation-triangle-fill text-warning me-2 fs-5"></i>
-                {% elif message.tags == 'info' %}
-                  <i class="bi bi-info-circle-fill text-primary me-2 fs-5"></i>
-                {% endif %}
-                <span>{{ message }}</span>
-              </div>
-              <button type="button" class="btn-close ms-3" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-          </div>
-        {% endfor %}
-    {% endif %}
   <body>
 
     <!-- Navbar -->
@@ -133,21 +105,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
-    <!-- Auto-dismiss alerts after 4 seconds -->
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        setTimeout(() => {
-          const alerts = document.querySelectorAll(".auto-dismiss-alert");
-          alerts.forEach(alert => {
-            alert.classList.remove("show"); // triggers fade-out
-            setTimeout(() => {
-              let bsAlert = bootstrap.Alert.getOrCreateInstance(alert);
-              bsAlert.close();
-            }, 300); // allow fade transition to complete (~0.3s)
-          });
-        }, 4000); // wait 4s before starting fade
-      });
-    </script>
 
   </body>
 </html>
