@@ -42,10 +42,13 @@
         <div class="card-content">
           <form action="{% url 'hospital-login' %}" method="POST">
             {% csrf_token %}
-            {% if success %} 
-            <div class="form-group">
-              {{ msg }}
-            </div>
+            <!-- Show messages -->
+            {% if messages %}
+              {% for message in messages %}
+                <div class="alert alert-warning">
+                  {{ message }}
+                </div>
+              {% endfor %}
             {% endif %}
             <div class="form-group">
               <span class="input-group-addon">
@@ -54,6 +57,7 @@
               <label for="username">Username:</label>
               <input 
                 type="text" 
+                name="username"
                 class="form-control increase-width" 
                 id="username"
                 placeholder="   -----  user-name  -----" required>
@@ -61,9 +65,7 @@
             <div class="form-group">
               <label for="pwd">Password:</label>
               <div class="input-group">
-                <span class="input-group-text">
-                  <i class="fa fa-lock"></i>
-                </span>
+                <span class="input-group-text"><i class="fa fa-lock"></i></span>
                 <input 
                   type="password" 
                   name="password" 

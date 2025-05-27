@@ -31,7 +31,7 @@
             <p id="company_name" class="push_this_left"><a href="hospital-main-page.html"> Doctor's Registration</a></p>
         </div>
     </header>
-    <!-- Registration form -->      
+    <!-- Registration form -->     
     <div class="overlay">
         <div class="container">
             <div class="row justify-content-center">
@@ -56,6 +56,7 @@
                                     <label>Email address</label>
                                     <input 
                                         type="email" 
+                                        name="email"
                                         class="form-control"
                                         placeholder="   ----- email address -----   " required>
                                 </div>
@@ -72,6 +73,7 @@
                                         <label>City</label>
                                         <input 
                                             type="text" 
+                                            name="city"
                                             class="form-control"
                                             placeholder="   ----- city name -----   " required>
                                     </div>
@@ -79,6 +81,7 @@
                                         <label>province</label> <!-- A feature to be put to scan all cities in home country. Just leave the province name for the time being (: -->
                                         <input 
                                             type="text"
+                                            name="province"
                                             id="input-province" 
                                             class="form-control"
                                             placeholder="   ---residence province---">
@@ -89,6 +92,7 @@
                                         <label>Contact no. (+254)</label>
                                         <input 
                                             type="text" 
+                                            name="contact_number"
                                             class="form-control" 
                                             maxlength="10" 
                                             minlength="10" 
@@ -98,7 +102,7 @@
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label>Country</label>
-                                        <select id="input-country" class="form-control">
+                                        <select id="input-country" name="country" class="form-control">
                                             <option selected align="Center">---------------</option>
                                             <option value="Kenya">Kenya</option>
                                             <option value="Uganda">Uganda</option>
@@ -115,6 +119,7 @@
                                     <label>Create password</label>
                                     <input 
                                         type="password" 
+                                        name="password1"
                                         id="password1" 
                                         class="form-control" 
                                         minlength="6" 
@@ -126,6 +131,7 @@
                                     <label>Confirm password</label>
                                     <input 
                                         type="password" 
+                                        name="password2"
                                         id="password2" 
                                         class="form-control" 
                                         oninput="checkPassword();" 

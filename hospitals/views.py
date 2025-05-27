@@ -20,20 +20,12 @@ from donors.models import DonationRequests, Appointments
 from django.http import HttpResponse
 from io import BytesIO, StringIO
 from PyPDF2 import PdfFileMerger, PdfFileReader
-# from django.views.decorators.csrf import csrf_protect   --->  Not required for now
-# from django.contrib.auth.decorators import login_required   --->  Not required for now
-# from django.template import RequestContext   --->  Not required for now
-# import getpass   --->  Not required for now
-# from email.mime.base import MIMEBase   --->  Not required for now
-# from email import encoders   --->  Not required for now
-# import string   --->  Not required for now
-# import secrets   --->  Not required for now
-# import ast   --->  Not required for now
-# from django.core.files.storage import FileSystemStorage   --->  Not required for now
-# from django.template.loader import render_to_string   --->  Not required for now
-# from xhtml2pdf import pisa   --->  Not required for now
+from django.contrib import messages
+from django.contrib.auth import get_user_model
 
 # Create your views here.
+
+User = get_user_model()
 
 def home(request):
     if request.POST:
@@ -159,100 +151,70 @@ def fetch_donations(request):
         appointment_details = json.dumps(appointment_list)
 
         return HttpResponse(appointment_details)
-
+    
 
 def hospital_register(request):
     if request.method == "POST":
-        user = User()
-        user.username = request.POST.get("username", "")
-        user.set_password(request.POST.get("password", ""))
-        user.email = request.POST.get("email", "")
-        user.first_name = request.POST.get("hospital_name", "")
-        user.city = request.POST.get("city", "")
-        user.province = request.POST.get("province", "")  
-        user.country = request.POST.get("country", "")
-        user.contact_number = request.POST.get("contact_number", "")
-        user.is_active = True
-        user.is_staff = True
-        user.save()
-        return redirect('hospital-login')
+        username = request.POST.get("username")
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+        confirm_password = request.POST.get("confirm_password")
+
+        if password != confirm_password:
+            messages.error(request, "Passwords do not match.")
+            return redirect('hospital-register')
+
+        try:
+            user = User(
+                username=username,
+                email=email,
+                hospital_name=request.POST.get("hospital_name"),
+                city=request.POST.get("city"),
+                province=request.POST.get("province"),
+                country=request.POST.get("country"),
+                contact_number=request.POST.get("contact_number"),
+                is_active=True,
+                is_staff=True
+            )
+            user.set_password(password)
+            user.save()
+
+            # Authenticate and log the user in
+            authenticated_user = authenticate(username=username, password=password)
+            if authenticated_user is not None:
+                login(request, authenticated_user)
+                return redirect('home')  # Change this to your actual dashboard URL name
+            else:
+                messages.error(request, "Authentication failed after registration.")
+                return redirect('hospital-login')
+
+        except Exception as e:
+            messages.error(request, f"An error occurred: {str(e)}")
+            return redirect('hospital-register')
 
     return render(request, "hospital-registration.html")
 
-
 def hospital_login(request):
-    if request.POST:
-        username = request.POST.get("username", "")
-        password = request.POST.get("password", "")
-        user = authenticate(username=username, password=password)
+    try:
+        if request.method == "POST":
+            username = request.POST.get("username", "")
+            password = request.POST.get("password", "")
+            user = authenticate(request, username=username, password=password)
 
-        if user is not user:
-            if user.is_active and user.is_staff:
-                login(request, user)
-                return redirect("home")
+            if user:
+                if user.is_active and user.is_staff:
+                    login(request, user)
+                    return redirect("home")
+                else:
+                    messages.error(request, "Inactive account or unauthorized user!")
             else:
-                msg = "Inactive account or unauthorized user!"
-                success = 0
-        else:        
-            msg = "Password or username mismatch!"
-            success = 1
+                messages.error(request, "Invalid username or password!")
 
-        return render(request, "hospital-login.html", {"success": success, "msg": msg})
+        return render(request, "hospital-login.html")
 
-    return render(request, "hospital-login.html") 
-
-
-"""
-def hospital_login(request):
-    if request.POST:
-        username = request.POST.get("username", "")
-        password = request.POST.get("password", "")
-        user = authenticate(username=username, password=password)
-        
-        if user is not None:
-            if user.is_active and user.is_staff:
-                login(request, user)
-                # return render(request, "hospital-main-page.html")
-                return redirect('home')  # Directly redirect to hospital dashboard after login
-            else:
-                msg = "Your account is either inactive or unauthorized."
-                success = False
-        else:
-            msg = "Invalid username or password."
-            success = False
-
-        return render(request, "hospital-login.html", {"success": success, "msg": msg})
-
-    return render(request, "hospital-login.html")
-
-
-
-def hospital_login(request):
-    if request.POST:
-        username = request.POST.get("username", "")
-        password = request.POST.get("password", "")
-        user = authenticate(username=username, password=password)
-        
-        if user is not None:
-            if user.is_active and user.is_staff:
-                login(request, user)
-                
-                # Redirect to 'next' if available, otherwise home
-                next_url = request.POST.get("next") or request.GET.get("next")
-                if next_url:
-                    return redirect(next_url)
-                return redirect('home')  # Default home redirection
-            else:
-                msg = "Your account is either inactive or unauthorized."
-                success = False
-        else:
-            msg = "Invalid username or password."
-            success = False
-
-        return render(request, "hospital-login.html", {"success": success, "msg": msg})
-
-    return render(request, "hospital-login.html")
-"""
+    except Exception as e:
+        messages.error(request, f"An unexpected error occurred: {str(e)}")
+        return render(request, "hospital-login.html")
 
 
 def fetch_appointment_details(request):
