@@ -31,32 +31,33 @@
                 Life’s true value lies not in its duration, but in its donation.  
                 Join us and become an organ donor—give the gift of life to someone in need.
             </p>
-            <div class="details-grid-container" id="donorCard">
-                <!-- Donor Card -->
-                <div class="card details-grid-item" style="width: 25rem;">
-                    <img src="{% static 'images/donors.jpg' %}" class="card-img-top" alt="Donor image">
-                    <div class="card-body">
-                        <h5 class="card-title">Donor Module</h5>
-                        <p class="card-text Details">
-                            Register as a donor, submit donation requests, and book an appointment for approval.  
-                            Take the first step in saving lives today!
-                        </p>
-                        <a href="{% url 'donor-login' %}" class="btn btn-primary">Become a Donor</a>
-                    </div>
-                </div>
-                <!-- Hospital Card -->
-                <div class="card details-grid-item" style="width: 25rem;">
-                    <img src="{% static 'images/hospital.jpg' %}" class="card-img-top" alt="Hospital image">
-                    <div class="card-body">
-                        <h5 class="card-title">Hospital Module</h5>
-                        <p class="card-text Details">
-                            Manage donation appointments, approve or decline requests,  
-                            and access a centralized repository of approved donations.
-                        </p>
-                        <a href="{% url 'hospital-login' %}" class="btn btn-primary">Hospital Portal</a>
-                    </div>
-                </div>
-            </div>
+            <div class="details-grid-container d-flex justify-content-center gap-4 flex-wrap" id="donorCard">
+              <!-- Donor Card -->
+              <div class="card details-grid-item text-center" style="width: 25rem;">
+                  <img src="{% static 'images/donors.jpg' %}" class="card-img-top" alt="Donor image">
+                  <div class="card-body">
+                      <h5 class="card-title">Donor Module</h5>
+                      <p class="card-text Details">
+                          Register as a donor, submit donation requests, and book an appointment for approval.  
+                          Take the first step in saving lives today!
+                      </p>
+                      <a href="{% url 'donor-login' %}" class="btn btn-primary">Become a Donor</a>
+                  </div>
+              </div>
+
+              <!-- Hospital Card -->
+              <div class="card details-grid-item text-center" style="width: 25rem;">
+                  <img src="{% static 'images/hospital.jpg' %}" class="card-img-top" alt="Hospital image">
+                  <div class="card-body">
+                      <h5 class="card-title">Hospital Module</h5>
+                      <p class="card-text Details">
+                          Manage donation appointments, approve or decline requests,  
+                          and access a centralized repository of approved donations.
+                      </p>
+                      <a href="{% url 'hospital-login' %}" class="btn btn-primary">Hospital Portal</a>
+                  </div>
+              </div>
+          </div>
         </div>
     </div>
   </div>
