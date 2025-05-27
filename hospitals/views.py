@@ -1,10 +1,7 @@
-from django.shortcuts import render
 import pdfkit
 from django.conf import settings
 from django.db.models import Q
-from donors.models import DonationRequests, Appointments
 import json
-from django.http import HttpResponse, FileResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404
 from django.template.loader import get_template
@@ -18,14 +15,17 @@ from email.utils import formatdate, COMMASPACE
 import random
 from donors.models import DonationRequests, Appointments
 from django.http import HttpResponse
-from io import BytesIO, StringIO
+from io import BytesIO
 from PyPDF2 import PdfFileMerger, PdfFileReader
 from django.contrib import messages
 from django.contrib.auth import get_user_model
+import logging
 
 # Create your views here.
 
 User = get_user_model()
+logger = logging.getLogger(__name__)
+
 
 def home(request):
     if request.POST:
@@ -194,6 +194,7 @@ def hospital_register(request):
 
     return render(request, "hospital-registration.html")
 
+
 def hospital_login(request):
     try:
         if request.method == "POST":
@@ -202,20 +203,40 @@ def hospital_login(request):
             user = authenticate(request, username=username, password=password)
 
             if user:
-                if user.is_active and user.is_staff:
-                    login(request, user)
-                    return redirect("home")
-                else:
-                    messages.error(request, "Inactive account or unauthorized user!")
+                login(request, user)
+                return redirect("home")
             else:
                 messages.error(request, "Invalid username or password!")
 
-        return render(request, "hospital-login.html")
+    except Exception as e:
+        logger.error(f"Login error: {e}")
+        messages.error(request, "An unexpected error occurred. Please try again.")
+
+    return render(request, "hospital-login.html")
+
+
+"""
+def hospital_login(request):
+    try:
+        if request.method == "POST":
+            username = request.POST.get("username", "")
+            password = request.POST.get("password", "")
+            user = authenticate(request, username=username, password=password)
+
+            if user and user.is_active and user.is_staff:
+                login(request, user)
+                return redirect("home")
+            elif user and not (user.is_active and user.is_staff):
+                messages.error(request, "Inactive account or unauthorized user!")
+            else:
+                messages.error(request, "Invalid username or password!")
 
     except Exception as e:
-        messages.error(request, f"An unexpected error occurred: {str(e)}")
-        return render(request, "hospital-login.html")
+        logger.error(f"Login error: {e}")
+        messages.error(request, "An unexpected error occurred. Please try again.")
 
+    return render(request, "hospital-login.html")
+"""
 
 def fetch_appointment_details(request):
     if request.POST:
