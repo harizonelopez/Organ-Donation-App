@@ -161,19 +161,21 @@ def hospital_register(request):
         password = request.POST.get("password1")
         confirm_password = request.POST.get("password2")
 
-        if password != confirm_password:
-            messages.warning(request, "Passwords do not match.")
+        # Validating user input details
+        if User.objects.filter(username=username).exists() and User.objects.filter(email=email).exists():
+            messages.warning(request, " That username and email are already in use. Please log in or choose different details to register.")
+            return redirect('hospital-register')
+
+        elif User.objects.filter(username=username).exists():
+            messages.warning(request, " The username you entered is already taken. Please choose a different one.")
+            return redirect('hospital-register')
+
+        elif User.objects.filter(email=email).exists():
+            messages.warning(request, " An account with that email already exists. Try logging in or use another email.")
             return redirect('hospital-register')
         
-        # Checks if username or email already exists
-        if User.objects.filter(username=username).exists() and User.objects.filter(email=email).exists():
-            messages.warning(request, " Username and Email are already taken. Login or try again.")
-            return redirect('hospital-register')
-        if User.objects.filter(username=username).exists():
-            messages.warning(request, f" Username '{username}' is already taken.")
-            return redirect('hospital-register')
-        if User.objects.filter(email=email).exists():
-            messages.warning(request, f" Email '{email}' is already registered.")
+        elif password != confirm_password:
+            messages.warning(request, "Passwords do not match !")
             return redirect('hospital-register')
 
         try:
