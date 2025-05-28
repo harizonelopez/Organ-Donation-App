@@ -31,6 +31,14 @@
             <p id="company_name" class="push_this_left"><a href="hospital-main-page.html"> Doctor's Registration</a></p>
         </div>
     </header>
+    <!-- Show messages -->
+    {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-warning">
+            {{ message }}
+        </div>
+        {% endfor %}
+    {% endif %}
     <!-- Registration form -->     
     <div class="overlay">
         <div class="container">

@@ -31,6 +31,14 @@
       <p id = "company_name" class = "push_this_left"> Doctor's Login</p>
     </div>
   </header>
+  <!-- Show messages -->
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-warning">
+        {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
   <!-- Login form for hospital personel -->
   <div class="overlay">
     <div class="container">
@@ -42,14 +50,6 @@
         <div class="card-content">
           <form action="{% url 'hospital-login' %}" method="POST">
             {% csrf_token %}
-            <!-- Show messages -->
-            {% if messages %}
-              {% for message in messages %}
-                <div class="alert alert-warning">
-                  {{ message }}
-                </div>
-              {% endfor %}
-            {% endif %}
             <div class="form-group">
               <span class="input-group-addon">
                 <i class="fa fa-user"></i>

@@ -157,17 +157,19 @@ def hospital_register(request):
     if request.method == "POST":
         username = request.POST.get("username")
         email = request.POST.get("email")
-        password = request.POST.get("password")
-        confirm_password = request.POST.get("confirm_password")
+        password = request.POST.get("password1")
+        confirm_password = request.POST.get("password2")
 
         if password != confirm_password:
             messages.error(request, "Passwords do not match.")
             return redirect('hospital-register')
 
         try:
-            user = User(
+            # Create user
+            user = User.objects.create_user(
                 username=username,
                 email=email,
+                password=password,
                 hospital_name=request.POST.get("hospital_name"),
                 city=request.POST.get("city"),
                 province=request.POST.get("province"),
@@ -176,17 +178,10 @@ def hospital_register(request):
                 is_active=True,
                 is_staff=True
             )
-            user.set_password(password)
-            user.save()
 
-            # Authenticate and log the user in
-            authenticated_user = authenticate(username=username, password=password)
-            if authenticated_user is not None:
-                login(request, authenticated_user)
-                return redirect('home')  # Change this to your actual dashboard URL name
-            else:
-                messages.error(request, "Authentication failed after registration.")
-                return redirect('hospital-login')
+            # Auto-login the user
+            login(request, user)
+            return redirect('home')
 
         except Exception as e:
             messages.error(request, f"An error occurred: {str(e)}")
@@ -196,23 +191,23 @@ def hospital_register(request):
 
 
 def hospital_login(request):
-    try:
-        if request.method == "POST":
-            username = request.POST.get("username", "")
-            password = request.POST.get("password", "")
+    if request.method == "POST":
+        username = request.POST.get("username", "")
+        password = request.POST.get("password", "")
+        try:
             user = authenticate(request, username=username, password=password)
+            print(f"Username: {username}, Password: {password}, Authenticated User: {user}")
 
             if user:
                 login(request, user)
                 return redirect("home")
             else:
                 messages.error(request, "Invalid username or password!")
-
-    except Exception as e:
-        logger.error(f"Login error: {e}")
-        messages.error(request, "An unexpected error occurred. Please try again.")
+        except Exception as e:
+            messages.error(request, f"Login error: {e}")
 
     return render(request, "hospital-login.html")
+
 
 
 """
