@@ -20,6 +20,7 @@ from PyPDF2 import PdfFileMerger, PdfFileReader
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 import logging
+from django.db import IntegrityError
 
 # Create your views here.
 
@@ -161,7 +162,18 @@ def hospital_register(request):
         confirm_password = request.POST.get("password2")
 
         if password != confirm_password:
-            messages.error(request, "Passwords do not match.")
+            messages.warning(request, "Passwords do not match.")
+            return redirect('hospital-register')
+        
+        # Checks if username or email already exists
+        if User.objects.filter(username=username).exists() and User.objects.filter(email=email).exists():
+            messages.warning(request, " Username and Email are already taken. Login or try again.")
+            return redirect('hospital-register')
+        if User.objects.filter(username=username).exists():
+            messages.warning(request, f" Username '{username}' is already taken.")
+            return redirect('hospital-register')
+        if User.objects.filter(email=email).exists():
+            messages.warning(request, f" Email '{email}' is already registered.")
             return redirect('hospital-register')
 
         try:
@@ -181,10 +193,15 @@ def hospital_register(request):
 
             # Auto-login the user
             login(request, user)
+            messages.success(request, f"🎉 Welcome Aboard, {user.username}! Your account has been created.")
             return redirect('home')
+        
+        except IntegrityError:
+            messages.warning(request, " A user with those credentials already exists.")
+            return redirect('hospital-register')
 
-        except Exception as e:
-            messages.error(request, f"An error occurred: {str(e)}")
+        except Exception:
+            messages.warning(request, "An error occurred: Try again later.")
             return redirect('hospital-register')
 
     return render(request, "hospital-registration.html")
@@ -196,42 +213,19 @@ def hospital_login(request):
         password = request.POST.get("password", "")
         try:
             user = authenticate(request, username=username, password=password)
-            print(f"Username: {username}, Password: {password}, Authenticated User: {user}")
+            # print(f"Username: {username}, Password: {password}, Authenticated User: {user}")
 
             if user:
                 login(request, user)
+                messages.success(request, f"Welcome back {user.username} !")
                 return redirect("home")
             else:
-                messages.error(request, "Invalid username or password!")
+                messages.warning(request, "Invalid username or password !")
         except Exception as e:
-            messages.error(request, f"Login error: {e}")
+            messages.info(request, f"Login error: {e}")
 
     return render(request, "hospital-login.html")
 
-
-
-"""
-def hospital_login(request):
-    try:
-        if request.method == "POST":
-            username = request.POST.get("username", "")
-            password = request.POST.get("password", "")
-            user = authenticate(request, username=username, password=password)
-
-            if user and user.is_active and user.is_staff:
-                login(request, user)
-                return redirect("home")
-            elif user and not (user.is_active and user.is_staff):
-                messages.error(request, "Inactive account or unauthorized user!")
-            else:
-                messages.error(request, "Invalid username or password!")
-
-    except Exception as e:
-        logger.error(f"Login error: {e}")
-        messages.error(request, "An unexpected error occurred. Please try again.")
-
-    return render(request, "hospital-login.html")
-"""
 
 def fetch_appointment_details(request):
     if request.POST:
@@ -480,5 +474,6 @@ def update_pwd_details(request):
 
 def hospital_logout(request):
     logout(request)
+    messages.info(request, "Successfully logged out!")
     return redirect("hospital-login")
 
