@@ -60,20 +60,20 @@
         <div class="d-flex justify-content-center mt-3">
         <div class="w-25"> <!-- Change to regulate the width -->
             {% for message in messages %}
-            <div id="flash-message" class="alert alert-{{ message.tags }} alert-dismissible fade show text-center" role="alert">
-                {% if message.tags == "success" %}
-                <i class="fa fa-check-circle text-success mr-2"></i>
-                {% elif message.tags == "info" %}
-                <i class="fa fa-info-circle text-primary mr-2"></i>
-                {% elif message.tags == "warning" %}
-                <i class="fa fa-exclamation-triangle text-warning mr-2"></i>
-                {% elif message.tags == "error" %}
-                <i class="fa fa-times-circle text-danger mr-2"></i>
-                {% else %}
-                <i class="fa fa-bell text-secondary mr-2"></i>
-                {% endif %}
-                {{ message }}
-            </div>
+                <div id="flash-message" class="alert alert-{{ message.tags }} alert-dismissible fade show text-center" role="alert">
+                    {% if message.tags == "success" %}
+                        <i class="fa fa-check-circle text-success mr-2"></i>
+                    {% elif message.tags == "info" %}
+                        <i class="fa fa-info-circle text-primary mr-2"></i>
+                    {% elif message.tags == "warning" %}
+                        <i class="fa fa-exclamation-triangle text-warning mr-2"></i>
+                    {% elif message.tags == "error" %}
+                        <i class="fa fa-times-circle text-danger mr-2"></i>
+                    {% else %}
+                        <i class="fa fa-bell text-secondary mr-2"></i>
+                    {% endif %}
+                    {{ message }}
+                </div>
             {% endfor %}
         </div>
         </div>
@@ -289,6 +289,10 @@
     </div>
   </div>
 
+    <!-- External js file -->
+    <script 
+        src="{% static 'js/hospital_script.js' %}">
+    </script>
     <!-- Flash message auto-fade -->
     <script>
         window.setTimeout(function () {

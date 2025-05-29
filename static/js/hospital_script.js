@@ -21,6 +21,7 @@ donationLink.onclick = function(){
 
 var actionItemTab = document.getElementById("actionItemTab");
 
+
 function fetchCounts(){
 var xhttp = new XMLHttpRequest();
         var getObject;
@@ -386,30 +387,33 @@ var donorNameforDonation;
 donationTab.addEventListener("click", fetchDonations);
 
 function fetchDonations(){
-var xhttp = new XMLHttpRequest();
-var getObject;
-        const url = "http://localhost:8000/hospitals/fetch-donations";
-        //var searchParam = "?" + "keyword=" +searchInput;
-        console.log(url);
-        xhttp.onreadystatechange = function() {
-             if (this.readyState == 4 && this.status == 200) {
-                 getObject = JSON.parse(this.responseText);
-                 console.log("Number of donations: ",getObject.length);
-                 if(getObject.length <= 0){
-                     Swal.fire({
-                        type: 'info',
-                        title: 'No donations found',
-                      });
-                 }
-                 else{
-                   displayDonations(getObject);
-                 }
-             }
-        };
-        xhttp.open("GET",url, true);
-        xhttp.send();
+  var xhttp = new XMLHttpRequest();
+  var getObject;
+    const url = "http://localhost:8000/hospitals/fetch-donations";
+    //var searchParam = "?" + "keyword=" +searchInput;
+    console.log(url);
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            getObject = JSON.parse(this.responseText);
+            console.log("Number of donations: ",getObject.length);
+            if(getObject.length <= 0){
+                Swal.fire({
+                    type: 'info',
+                    title: 'No donations found',
+                  });
+            }
+            else{
+              displayDonations(getObject);
+            }
+        }
+    };
+    xhttp.open("GET",url, true);
+    xhttp.send();
 }
 
+// New declaration 
+let dIndex = undefined;
+let donorNameforDonation = "";
 
 function displayDonations(donations){
         var donationTable = document.getElementById("donationTable");
@@ -448,7 +452,7 @@ function displayDonations(donations){
             this.cells[0].childNodes[0].checked = false;
         }
         //highlighting the selected row and enabling the corresponding radio button
-              dIndex = this.rowIndex;
+              dIndex = this.sectionRowIndex;
               this.classList.toggle("blue");
               donorNameforDonation = this.cells[2].innerHTML;
               this.cells[0].childNodes[0].checked = true;
@@ -458,25 +462,6 @@ function displayDonations(donations){
 }
 
 
-/*//Row selection for donation approval table
-for(var i = 0; i < donationTable.rows.length; i++){
-    donationTable.rows[i].onclick=function(){
-        if(this.rowIndex !== 0){
-            //removing the highlighting colour for the unselected rows
-            if(typeof dIndex !== "undefined"){
-            donationTable.rows[dIndex].classList.toggle("blue");
-            this.cells[0].childNodes[0].checked = false;
-        }
-        //highlighting the selected row and enabling the corresponding radio button
-        dIndex = this.rowIndex;
-        this.classList.toggle("blue");
-        console.log(dIndex);
-        donorNameforDonation = this.cells[2].innerHTML;
-        console.log("donor: "+donorNameforDonation);
-        this.cells[0].childNodes[0].checked = true;
-    }
-    };
-}*/
 var donationDetailsBtn = document.getElementById("donationDtls");
 var donationAcceptBtn = document.getElementById("donationApprv");
 var donationDenyBtn = document.getElementById("donationDeny");
@@ -488,10 +473,10 @@ function isDonationRowSelected(){
      if(radiosDonation[i].type === "radio" && radiosDonation[i].checked){
            return true;
      }
-
  }
-   return false;
+ return false;
 }
+
 
 //Function to alert the user when donation is approved
 function acceptDonation(){
@@ -1424,5 +1409,6 @@ function updatePasswordDetails(){
 function updateSuccess(){
   Swal.fire("Done","Profile details updated successfully!","success");
 }
+
 
 
