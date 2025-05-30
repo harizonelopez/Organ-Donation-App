@@ -280,7 +280,13 @@ def book_appointment(request):
 
             # Assign default hospital directly
             default_hospital_name = "Nairobi Hospital"
-            hospital_user = User.objects.get(hospital_name__iexact=default_hospital_name)
+            # hospital_user = User.objects.get(hospital_name__iexact=default_hospital_name)
+            try:
+                hospital_user = User.objects.get(hospital_name="Nairobi Hospital")
+            except User.DoesNotExist:
+                messages.warning(request, "Default hospital not found.")
+                return redirect("book-appointment")  # or another fallback action
+
             apmt.hospital = hospital_user
 
             apmt.date = request.POST.get("date", "")
