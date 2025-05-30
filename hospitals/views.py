@@ -14,7 +14,7 @@ from email.mime.text import MIMEText
 from email.utils import formatdate, COMMASPACE
 import random
 from donors.models import DonationRequests, Appointments
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from io import BytesIO
 from PyPDF2 import PdfFileMerger, PdfFileReader
 from django.contrib import messages
@@ -128,30 +128,35 @@ def fetch_appointments(request):
 
 
 def fetch_donations(request):
-    if request.POST:
-        pass
-    else:
+    if request.method == "GET":
         donation_status = "Pending"
         appointment_status = "Approved"
-        appointments = Appointments.objects.filter(Q(hospital__id__iexact=request.user.id) & Q(appointment_status__iexact=appointment_status) & Q(donation_request__donation_status__iexact=donation_status))
+
+        appointments = Appointments.objects.filter(
+            Q(hospital=request.user) &
+            Q(appointment_status__iexact=appointment_status) &
+            Q(donation_request__donation_status__iexact=donation_status)
+        )
+
         appointment_list = []
         for appointment in appointments:
-            temp_dict = {}
-            temp_dict["first_name"] = appointment.donation_request.donor.first_name
-            temp_dict["last_name"] = appointment.donation_request.donor.last_name
-            # Donation details
-            temp_dict["organ"] = appointment.donation_request.organ_type
-            temp_dict["donation_id"] = appointment.donation_request.id
-            temp_dict["blood_group"] = appointment.donation_request.blood_type
-            # Appointment details
-            temp_dict["appointment_id"] = appointment.id
-            temp_dict["date"] = appointment.date
-            temp_dict["time"] = appointment.time
-            temp_dict["appointment_status"] = appointment.appointment_status
-            appointment_list.append(temp_dict)
-        appointment_details = json.dumps(appointment_list)
+            dr = appointment.donation_request
+            donor = dr.donor
+            appointment_list.append({
+                "donation_id": dr.id,
+                "first_name": donor.first_name,
+                "last_name": donor.last_name,
+                "organ": dr.organ_type,
+                "blood_group": dr.blood_type,
+                "appointment_id": appointment.id,
+                "date": appointment.date,
+                "time": appointment.time,
+                "appointment_status": appointment.appointment_status,
+            })
 
-        return HttpResponse(appointment_details)
+        return HttpResponse(json.dumps(appointment_list), content_type="application/json")
+
+
     
 
 def hospital_register(request):

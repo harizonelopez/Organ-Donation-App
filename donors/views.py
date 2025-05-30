@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from hospitals.models import User
 from .models import DonationRequests
 from django.contrib.auth import login, logout, authenticate
@@ -277,11 +277,18 @@ def book_appointment(request):
             apmt.donation_request = DonationRequests.objects.get(
                 id=int(request.POST.get("dreq", ""))
             )
-            apmt.hospital = request.POST.get("hospital-name", "") 
+
+            hospital_id = request.POST.get("hospital-name", "")
+            if not hospital_id:
+                raise ValueError("Hospital ID is missing")
+
+            hospital_user = get_object_or_404(User, id=int(hospital_id))
+            apmt.hospital = hospital_user
             apmt.date = request.POST.get("date", "")
             apmt.time = request.POST.get("time", "")
             apmt.appointment_status = "Pending"
             apmt.save()
+
             messages.success(request, "Appointment booked successfully.")
             return redirect("donor-home")
 
@@ -292,4 +299,10 @@ def book_appointment(request):
             return redirect("book-appointment")
 
     donors = DonationRequests.objects.filter(donor=request.user)
-    return render(request, "book-appointment.html", {"donors": donors})
+    hospitals = User.objects.exclude(hospital_name__isnull=True).exclude(hospital_name__exact="")
+
+    return render(request, "book-appointment.html", {
+        "donors": donors,
+        "hospitals": hospitals
+    })
+

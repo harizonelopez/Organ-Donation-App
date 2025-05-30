@@ -101,12 +101,11 @@
                 <!-- Hospital Name -->
                 <div class="form-group">
                   <label for="hospital-name">Hospital Name</label>
-                  <select id="hospital-name" name="hospital-name" class="form-control" required>
-                    <option value="" selected>--- select preferred hospital ---</option>
-                    <option value="nairobi-hospital">The Nairobi Hospital (NH)</option>
-                    <option value="kenyatta-hospital">Kenyatta National Hospital (KNH)</option>
-                    <option value="moi-hospital">Moi Teaching and Referral Hospital (MTRH): </option>
-                    <option value="aga-khan-hospital">Aga Khan University Hospital (AKUH):</option>
+                  <select id="hospital-name" name="hospital-name" required>
+                    <option value="" disabled selected>--- select preferred hospital ---</option>
+                      {% for hospital in hospitals %}
+                        <option value="{{ hospital.id }}">{{ hospital.hospital_name }}</option>
+                      {% endfor %}
                   </select>
                 </div>
 
