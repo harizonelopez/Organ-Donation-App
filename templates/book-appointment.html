@@ -100,13 +100,21 @@
 
                 <!-- Hospital Name -->
                 <div class="form-group">
-                  <label for="hospital-name">Hospital Name</label>
-                  <select id="hospital-name" name="hospital-name" required>
-                    <option value="" disabled selected>--- select preferred hospital ---</option>
-                      {% for hospital in hospitals %}
-                        <option value="{{ hospital.id }}">{{ hospital.hospital_name }}</option>
-                      {% endfor %}
-                  </select>
+                  <input 
+                    type="text" 
+                    name="hospital-name" 
+                    class="form-control"
+                    value="Nairobi Hospital" disabled>
+
+                  <!--<label for="hospital-id">Hospital Name</label>
+                  <select id="hospital-id" name="hospital-id" required>
+                    {% for hospital in hospitals %}
+                      <option value="{{ hospital.id }}"
+                        {% if hospital.hospital_name == default_hospital_name %}selected{% endif %}>
+                        {{ hospital.hospital_name }}
+                      </option>
+                    {% endfor %}
+                  </select>-->
                 </div>
 
                 <!-- Appointment Date -->

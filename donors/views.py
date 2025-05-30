@@ -278,17 +278,15 @@ def book_appointment(request):
                 id=int(request.POST.get("dreq", ""))
             )
 
-            hospital_id = request.POST.get("hospital-name", "")
-            if not hospital_id:
-                raise ValueError("Hospital ID is missing")
-
-            hospital_user = get_object_or_404(User, id=int(hospital_id))
+            # Assign default hospital directly
+            default_hospital_name = "Nairobi Hospital"
+            hospital_user = User.objects.get(hospital_name__iexact=default_hospital_name)
             apmt.hospital = hospital_user
+
             apmt.date = request.POST.get("date", "")
             apmt.time = request.POST.get("time", "")
             apmt.appointment_status = "Pending"
             apmt.save()
-
             messages.success(request, "Appointment booked successfully.")
             return redirect("donor-home")
 
@@ -299,10 +297,4 @@ def book_appointment(request):
             return redirect("book-appointment")
 
     donors = DonationRequests.objects.filter(donor=request.user)
-    hospitals = User.objects.exclude(hospital_name__isnull=True).exclude(hospital_name__exact="")
-
-    return render(request, "book-appointment.html", {
-        "donors": donors,
-        "hospitals": hospitals
-    })
-
+    return render(request, "book-appointment.html", {"donors": donors})
