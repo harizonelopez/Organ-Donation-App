@@ -79,7 +79,7 @@ def donor_login(request):
             else:
                 messages.error(request, "Your account is inactive.")
         else:
-            # If authentication fails, show an error message
+            # If authentication fails ---> Show an error message
             messages.warning(request, "Incorrect username or password.")
 
     return render(request, "donor-login.html")
@@ -117,7 +117,7 @@ def donor_profile_update(request):
             pscheck = 1
             msg = "Invalid password"
     donor = User.objects.get(id=request.user.id)
-    provinces = [  #  Future modifications to be done for the city names to dynamically be pulled from the database
+    provinces = [  # List of cities in Kenya
         "Nairobi",
         "Naivasha"
         "Mombasa",
