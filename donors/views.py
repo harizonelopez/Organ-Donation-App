@@ -151,7 +151,7 @@ def donor_profile_update(request):
     )
 
 
-def send_mail(  #  The email function to be worked on and its settings together with the {.env} file
+def send_mail(  #  The email function to be worked on and its settings together with the {.env} file ---> future upgrades
     send_from,
     send_to,
     subject,
@@ -280,12 +280,11 @@ def book_appointment(request):
 
             # Assign default hospital directly
             default_hospital_name = "Nairobi Hospital"
-            # hospital_user = User.objects.get(hospital_name__iexact=default_hospital_name)
             try:
                 hospital_user = User.objects.get(hospital_name="Nairobi Hospital")
             except User.DoesNotExist:
                 messages.warning(request, "Default hospital not found.")
-                return redirect("book-appointment")  # or another fallback action
+                return redirect("book-appointment")  # A fallback action
 
             apmt.hospital = hospital_user
 
