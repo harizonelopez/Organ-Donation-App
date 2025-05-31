@@ -278,7 +278,7 @@ def book_appointment(request):
                 id=int(request.POST.get("dreq", ""))
             )
 
-            # Assign default hospital directly
+            # Assign default hospital name directly
             default_hospital_name = "Nairobi Hospital"
             try:
                 hospital_user = User.objects.get(hospital_name="Nairobi Hospital")
