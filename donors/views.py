@@ -280,23 +280,22 @@ def book_appointment(request):
 
             # Assign default hospital name directly
             default_hospital_name = "Nairobi Hospital"
-            try:
-                hospital_user = User.objects.get(hospital_name="Nairobi Hospital")
-            except User.DoesNotExist:
-                messages.warning(request, "Default hospital not found.")
-                return redirect("book-appointment")  # A fallback action
+            hospital_user = User.objects.filter(hospital_name=default_hospital_name).first()
+
+            if not hospital_user:
+                messages.warning(request, "User not found.")
+                return redirect("book-appointment")
 
             apmt.hospital = hospital_user
-
             apmt.date = request.POST.get("date", "")
             apmt.time = request.POST.get("time", "")
             apmt.appointment_status = "Pending"
             apmt.save()
+
             messages.success(request, "Appointment booked successfully.")
             return redirect("donor-home")
 
         except Exception as e:
-            import traceback
             traceback.print_exc()
             messages.warning(request, "Error booking appointment.")
             return redirect("book-appointment")
