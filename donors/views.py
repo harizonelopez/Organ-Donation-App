@@ -273,25 +273,33 @@ def new_donation_request(request):
 def book_appointment(request):
     if request.method == "POST":
         try:
+            # Validate donation request ID
+            dreq_id = request.POST.get("dreq")
+            if not dreq_id or not dreq_id.isdigit():
+                messages.warning(request, "Invalid donation request.")
+                return redirect("book-appointment")
+
+            # Create appointment object
             apmt = Appointments()
-            apmt.donation_request = DonationRequests.objects.get(
-                id=int(request.POST.get("dreq", ""))
-            )
+            apmt.donation_request = DonationRequests.objects.get(id=int(dreq_id))
 
-            # Assign default hospital name directly
+            # Default hospital setup
             default_hospital_name = "Nairobi Hospital"
-            hospital_user = User.objects.filter(hospital_name=default_hospital_name).first()
 
+            hospital_user = User.objects.filter(
+                hospital_name__iexact=default_hospital_name
+            ).first()
+
+            # Auto-create the hospital user if not found
             if not hospital_user:
                 hospital_user = User.objects.create_user(
                     username="nairobi_hospital",
-                    password="securepassword123",
+                    password="securepassword123",  # You can change or randomize this
                     hospital_name=default_hospital_name
                 )
-                # messages.warning(request, "User not found.")
-                return redirect("book-appointment")
 
-            apmt.hospital = hospital_user
+            # Assign hospital to appointment
+            apmt.hospital = hospital_user  # ForeignKey field
             apmt.date = request.POST.get("date", "")
             apmt.time = request.POST.get("time", "")
             apmt.appointment_status = "Pending"
@@ -302,8 +310,10 @@ def book_appointment(request):
 
         except Exception as e:
             traceback.print_exc()
-            messages.warning(request, "Error booking appointment.")
+            messages.warning(request, f"Error booking appointment: {str(e)}")
             return redirect("book-appointment")
 
+    # GET request - show donation requests for current donor
     donors = DonationRequests.objects.filter(donor=request.user)
     return render(request, "book-appointment.html", {"donors": donors})
+
