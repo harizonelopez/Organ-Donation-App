@@ -200,7 +200,7 @@ def hospital_register(request):
 
             # Auto-login the user
             login(request, user)
-            messages.success(request, f"🎉 Welcome Aboard, Mr.{user.username}! Your account has been created.")
+            messages.success(request, f"🎉 Welcome Aboard, Dr.{user.username}! Your account has been created.")
             return redirect('home')
         
         except IntegrityError:
