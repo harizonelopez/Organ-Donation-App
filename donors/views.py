@@ -283,7 +283,12 @@ def book_appointment(request):
             hospital_user = User.objects.filter(hospital_name=default_hospital_name).first()
 
             if not hospital_user:
-                messages.warning(request, "User not found.")
+                hospital_user = User.objects.create_user(
+                    username="nairobi_hospital",
+                    password="securepassword123",
+                    hospital_name=default_hospital_name
+                )
+                # messages.warning(request, "User not found.")
                 return redirect("book-appointment")
 
             apmt.hospital = hospital_user
