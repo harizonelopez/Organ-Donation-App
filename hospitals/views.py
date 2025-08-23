@@ -157,8 +157,6 @@ def fetch_donations(request):
         return HttpResponse(json.dumps(appointment_list), content_type="application/json")
 
 
-    
-
 def hospital_register(request):
     if request.method == "POST":
         username = request.POST.get("username")
