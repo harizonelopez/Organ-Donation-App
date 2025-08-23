@@ -40,13 +40,13 @@ def search_donations(request):
     else:
         search_keyword = request.GET.get('keyword', '')
         status = "Approved"
-        # Search for donations based on organ type, blood type or donor name
+        # Search for donations --> based on organ type, blood type or donor name
         donations = DonationRequests.objects.filter((Q(organ_type__iexact=search_keyword) | 
                                                      Q(blood_type__startswith=search_keyword) | 
                                                      Q(donor__first_name__iexact=search_keyword) | 
                                                      Q(donor__last_name__iexact=search_keyword)) & 
                                                      Q(donation_status__iexact=status))
-        print(donations)  # Debigging purpose
+        print(donations)
         # Search for donations based on donation id
         if not donations:
             if search_keyword.isdigit():
