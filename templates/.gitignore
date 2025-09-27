@@ -1,3 +1,0 @@
-#  Files to Ignore while committing the data to github
-db.sqlite3
-.env

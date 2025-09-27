@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+env/
+venv/
+
+# Django
+*.log
+*.sqlite3
+media/
+staticfiles/
+*/migrations/*.py
+!*/migrations/__init__.py
+
+# IDEs
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Others
+wkhtmltopdf/
+*.pem
