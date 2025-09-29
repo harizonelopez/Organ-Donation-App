@@ -5,9 +5,12 @@ from hospitals.models import User
 
 class DonationRequests(models.Model):
 
-	STATUS = [("Pending", "Pending"), ("Not Booked", "Not Booked"),
-	("Booked", "Booked"), ("Approved", "Approved"),
-	("Denied", "Denied")
+	STATUS = [
+		   ("Pending", "Pending"), 
+           ("Not Booked", "Not Booked"),
+           ("Booked", "Booked"), 
+           ("Approved", "Approved"),
+           ("Denied", "Denied")
 	]
 	class Meta: 
 		verbose_name_plural = "Donation Requests"
