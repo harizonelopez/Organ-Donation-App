@@ -14,7 +14,7 @@ import traceback
 
 def wedonate(request):
     if request.POST:
-        pass  # Skip for the time being
+        pass  
     return render(request, "index.html")
 
 
@@ -43,7 +43,7 @@ def donor_register(request):
             user.is_staff = False
             user.save()
 
-            # Auto-login 
+            # Auto-login feature after registration
             user = authenticate(request, username=username, password=raw_password)
             if user is not None:
                 login(request, user)
@@ -116,9 +116,9 @@ def donor_profile_update(request):
             pscheck = 1
             msg = "Invalid password"
     donor = User.objects.get(id=request.user.id)
-    provinces = [  # List of cities in Kenya
+    provinces = [  # [List of cities in Kenya] to be used as provinces for the donor profile
         "Nairobi",
-        "Naivasha"
+        "Naivasha",
         "Mombasa",
         "Kisumu",
         "Nakuru",

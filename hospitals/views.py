@@ -54,7 +54,7 @@ def search_donations(request):
 
         donation_list = []
         for donation in donations:
-            print(donation.donation_status)  # Debbuging purpose
+            print(donation.donation_status)  # ----> Debugging reason
             temp_dict = {}
             temp_dict["donor"] = f"{donation.donor.first_name} {donation.donor.last_name}"
             temp_dict["organ"] = donation.organ_type
@@ -62,7 +62,7 @@ def search_donations(request):
             temp_dict["blood_group"] = donation.blood_type
             donation_list.append(temp_dict)
         search_list = json.dumps(donation_list)
-        print("Hy", search_list)  # Debbuging purpose
+        print("Hy", search_list)  # ----> Debugging reason
         return HttpResponse(search_list)
 
 
@@ -104,7 +104,7 @@ def fetch_appointments(request):
     if request.method == "POST":
         pass
     else:
-        print("Fetching appointments from db...")  # For debugging purpose
+        print("Fetching appointments from db...")  # ----> Debugging reason
         status = "Pending"
         appointments = Appointments.objects.filter(Q(hospital__id__iexact=request.user.id) & Q(appointment_status__iexact=status))
         
@@ -238,7 +238,7 @@ def fetch_appointment_details(request):
     else:
         # Fetching appointment details
         appointment_id_from_UI = request.GET.get('appointment_id', '')
-        print('Appointment id', appointment_id_from_UI)  # Debbuging purpose
+        print('Appointment id', appointment_id_from_UI)  # ----> Debugging reason
         appointments = Appointments.objects.filter(Q(id=int(appointment_id_from_UI)))
         appointment_list = []
         for appointment in appointments:
@@ -307,8 +307,8 @@ def approve_appointments(request):
     if request.POST:
         appointment_id_from_UI = request.POST.get('ID', '')
         actionToPerform = request.POST.get('action', '')
-        print('Appointment id', appointment_id_from_UI)  # Debbuging purposes
-        print('ActionToPerform', actionToPerform)  # Debbuging purposes
+        print('Appointment id', appointment_id_from_UI)  # ----> Debugging reason
+        print('ActionToPerform', actionToPerform)  # ----> Debugging reason
         appointments = get_object_or_404(Appointments, id=appointment_id_from_UI)
         appointments.appointment_status = actionToPerform
         appointments.save(update_fields=["appointment_status"])
@@ -320,8 +320,8 @@ def approve_donations(request):
     if request.POST:
         donation_id_from_UI = request.POST.get('ID', '')
         actionToPerform = request.POST.get('action', '')
-        print('Donation id', donation_id_from_UI)  # Debbuging purpose
-        print('ActionToPerform', actionToPerform)  # Debbuging purpose
+        print('Donation id', donation_id_from_UI)  # ----> Debugging reason
+        print('ActionToPerform', actionToPerform)  # ----> Debugging reason
         donation = get_object_or_404(DonationRequests, id=donation_id_from_UI)
         donation.donation_status = actionToPerform
         donation.save(update_fields=["donation_status"])
@@ -332,13 +332,13 @@ def fetch_counts(request):
     if request.POST:
         pass
     else:
-        print(request.user.hospital_name)  # Debbuging purpose
+        print(request.user.hospital_name)  # ----> Debugging reason
         appointment_count = Appointments.objects.filter(Q(hospital__hospital_name__iexact=request.user.hospital_name) & Q(appointment_status__iexact="Pending")).count()
-        print("Appointment count", appointment_count)  # Debbuging purpose
+        print("Appointment count", appointment_count)  # ----> Debugging reason
         donation_status = "Pending"
         appointment_status = "Approved"
         donation_count = Appointments.objects.filter(Q(hospital__hospital_name__iexact=request.user.hospital_name) & Q(appointment_status__iexact=appointment_status) & Q(donation_request__donation_status__iexact=donation_status)).count()
-        print("Donation count", donation_count)  # Debbuging purpose
+        print("Donation count", donation_count)  # ----> Debugging reason
         dummy_list = []
         temp_dict = {}
         temp_dict["appointment_count"] = appointment_count
@@ -406,7 +406,7 @@ def form_to_PDF(request, donor_id=1):
     try:
         pdf = pdfkit.from_string(html, False, configuration=config)
     except Exception as e:
-        print(e)  # Debbuging reason
+        print(e)  # ----> Debugging reason
         pass
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'inline; filename="report.pdf"'
@@ -461,7 +461,7 @@ def update_user_details(request):
         user.city = request.POST.get('city', '')
         user.province = request.POST.get('province', '')  # To be ommitted sooner
         user.contact_number = request.POST.get('contact', '')
-        print("About to save..!")  # Debbuging purpose
+        print("About to save..!")  # ----> Debugging reason
         user.save()
     return HttpResponse("success")
 
@@ -472,7 +472,7 @@ def update_pwd_details(request):
         user = authenticate(username=request.user.username, password=request.POST.get("old_password", ""))
         if user is not None:
             user.set_password(request.POST.get("new_password", ""))
-            print("About to save password..!")  # Debbuging purpose
+            print("About to save password..!")  # ----> Debugging reason
             user.save(update_fields=["password"])
     return HttpResponse("success")
 
