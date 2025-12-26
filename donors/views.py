@@ -11,7 +11,6 @@ from .models import DonationRequests, Appointments
 from django.contrib import messages
 import traceback
 
-# Create your views here.
 
 def wedonate(request):
     if request.POST:
@@ -79,7 +78,7 @@ def donor_login(request):
             else:
                 messages.error(request, "Your account is inactive.")
         else:
-            # If authentication fails ---> Show an error message
+            # If authentication fails => Show an error message
             messages.warning(request, "Incorrect username or password.")
 
     return render(request, "donor-login.html")
