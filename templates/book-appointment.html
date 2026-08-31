@@ -1,0 +1,193 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link 
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" 
+        rel="stylesheet">
+    <!-- Booststrap Icons link -->
+    <link 
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" 
+        rel="stylesheet">
+    <link 
+      rel="stylesheet" 
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- Custom CSS-->
+    <link rel="stylesheet" href="{% static 'css/header-footer.css' %}">
+    <link rel="stylesheet" href="{% static 'css/new-donation-request.css' %}">
+
+    <title> 🛡 DNI - Donor Alliance Center </title>
+  </head>
+  <body>
+
+    <!-- Navbar -->
+    <nav class="navbar fixed-top navbar-dark navbar-expand-sm bg-primary" id="navbar">
+        <div class="nav-bar">
+            <p id="company_name" class="push_this_left"><a href="hospital-main-page.html"> 🩺 LifeGiver – Matching organs, saving lives </a></p>
+        </div>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTop" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarTop">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item"><a class="nav-link" href="{% url 'donor-landing-page' %}">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'donor-home' %}">Donation history</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'book-appointment' %}">Book an appointment</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'new-donation-request' %}">New donation request</a></li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Settings</a>
+            <div class="dropdown-menu custom-dropdown">
+              <a class="dropdown-item" href="{% url 'donor-profile-update' %}">User profile</a>
+              <a class="dropdown-item" href="{% url 'donor-profile-update' %}">Change password</a>
+              <a class="dropdown-item" href="{% url 'donor-logout' %}">Log out</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <!-- Show messages -->
+    {% if messages %}
+      <div class="container mt-4">
+          {% for message in messages %}
+              <div class="alert alert-{{ message.tags }} alert-dismissible fade show auto-dismiss-alert shadow-sm rounded-3" role="alert">
+                  <div class="d-flex align-items-center">
+                      {% if message.tags == 'success' %}
+                          <i class="bi bi-check-circle-fill text-success me-2 fs-5"></i>
+                      {% elif message.tags == 'error' %}
+                          <i class="bi bi-x-circle-fill text-danger me-2 fs-5"></i>
+                      {% elif message.tags == 'warning' %}
+                          <i class="bi bi-exclamation-triangle-fill text-warning me-2 fs-5"></i>
+                      {% elif message.tags == 'info' %}
+                          <i class="bi bi-info-circle-fill text-primary me-2 fs-5"></i>
+                      {% endif %}
+                      <span>{{ message }}</span>
+                  </div>
+              </div>
+          {% endfor %}
+      </div>
+    {% endif %}
+
+    <!-- Appointment Form -->
+    <div class="container mt-5 pt-5">
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <div class="card">
+            <header class="card-header bg-light mb-3">
+              <h4 class="card-title mb-0">New Appointment Request</h4>
+            </header>
+            <div class="card-body">
+              <form method="POST" enctype="multipart/form-data" action="{% url 'book-appointment' %}">
+                {% csrf_token %}
+                
+                <!-- Donation ID -->
+                <div class="form-group">
+                  <label for="don-id">Donation ID</label>
+                  <select id="don-id" name="dreq" class="form-control">
+                    <option value="None">--- select donation id ---</option>
+                    {% for donor in donors %}
+                      <option value="{{ donor.id }}">{{ donor.id }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+
+                <!-- Hospital Name -->
+                <div class="form-group">
+                  <input 
+                    type="text" 
+                    name="hospital-name" 
+                    class="form-control"
+                    value="Nairobi Hospital" disabled>
+
+                  <!--<label for="hospital-id">Hospital Name</label>
+                  <select id="hospital-id" name="hospital-id" required>
+                    {% for hospital in hospitals %}
+                      <option value="{{ hospital.id }}"
+                        {% if hospital.hospital_name == default_hospital_name %}selected{% endif %}>
+                        {{ hospital.hospital_name }}
+                      </option>
+                    {% endfor %}
+                  </select>-->
+                </div>
+
+                <!-- Appointment Date -->
+                <div class="form-group">
+                  <label for="appointment-date">Appointment Date</label>
+                  <input 
+                    type="date" 
+                    id="appointment-date" 
+                    name="date" 
+                    class="form-control"
+                    value="2027-04-01" 
+                    min="2025-04-01" 
+                    max="2027-04-01">
+                </div>
+
+                <!-- Preferred Time -->
+                <div class="form-group">
+                  <label for="time">Preferred Time</label>
+                  <select id="time" name="time" class="form-control">
+                    <option value="time0" selected>--- Select preferred time ---</option>
+                    <option value="09:00 to 10:00">09:00 to 10:00</option>
+                    <option value="10:00 to 11:00">10:00 to 11:00</option>
+                    <option value="12:00 to 13:00">12:00 to 13:00</option>
+                    <option value="13:00 to 14:00">13:00 to 14:00</option>
+                    <option value="14:00 to 15:00">14:00 to 15:00</option>
+                    <option value="15:00 to 16:00">15:00 to 16:00</option>
+                  </select>
+                </div>
+
+                <!-- Submit -->
+                <div class="form-group">
+                  <button type="submit" class="btn btn-info btn-block">Book</button>  <!-- Booking - Disabled -->
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="custom-footer bg-primary text-white text-center mt-5 py-3">
+      &copy; 2025 Dev Aladinh Production. We Donate Inc. All rights reserved. |
+      <a href="#" class="text-white"> About us </a> |
+      <a href="#" class="text-white"> Contact us </a>
+    </footer>
+
+    <!-- Scripts -->
+    <script 
+      src="{% static 'js/new-donation-request.js' %}"></script>
+    <script 
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js" 
+      crossorigin="anonymous"></script>
+    <script 
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" 
+      crossorigin="anonymous"></script>
+    <script 
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" 
+      crossorigin="anonymous"></script>
+    <!-- Show messages -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        setTimeout(() => {
+          const alerts = document.querySelectorAll(".auto-dismiss-alert");
+          alerts.forEach(alert => {
+            alert.classList.remove("show"); // triggers fade-out
+            setTimeout(() => {
+              let bsAlert = bootstrap.Alert.getOrCreateInstance(alert);
+              bsAlert.close();
+            }, 300); // allow fade transition to complete (~0.3s)
+          });
+        }, 4000); // wait 4s before starting fade
+      });
+    </script>  
+  </body>
+</html>

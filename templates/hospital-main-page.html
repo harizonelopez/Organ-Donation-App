@@ -1,0 +1,308 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <!-- Bootstrap 4.6.2 CSS -->
+    <link 
+        rel="stylesheet" 
+        href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" 
+        crossorigin="anonymous">
+
+    <!-- Google Fonts -->
+    <link 
+        href="https://fonts.googleapis.com/css?family=Sofia" 
+        rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link 
+        rel="stylesheet" 
+        href="{% static 'css/style_hospital_homepage.css' %}">
+
+    <!-- jQuery {required for Bootstrap JS} -->
+    <script 
+        src="https://code.jquery.com/jquery-3.6.0.min.js" 
+        crossorigin="anonymous"></script>
+
+    <!-- Bootstrap 4.6.2 Bundle {includes Popper.js} -->
+    <script 
+        src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" 
+        crossorigin="anonymous"></script>
+    
+    <title> 🛡 DNI - Donor Alliance Center </title>
+</head>
+<body id="body">
+  <header class="zone blue">
+    <div class="nav-bar">
+        <p id="company_name" class="push_this_left">
+            <a href="{% url 'home' %}">We Donate</a>
+        </p>
+    </div>
+  </header>
+  <ul class="nav nav-tabs" role="tablist">
+    <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#home">Dashboard</a></li>
+    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#appointment_approvals">Appointments</a></li>
+    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#donation_approvals">Donations</a></li>
+    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#search_donation">Search</a></li>
+    <li class="nav-item dropdown ml-auto">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Settings
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#update_profile">Update Profile</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{% url 'hospital-logout' %}">Log Out</a>
+        </div>
+    </li>
+  </ul>
+    <!-- Show messages -->
+    {% if messages %}
+        <div class="d-flex justify-content-center mt-3">
+        <div class="w-25"> <!-- Change to regulate the width -->
+            {% for message in messages %}
+                <div id="flash-message" class="alert alert-{{ message.tags }} alert-dismissible fade show text-center" role="alert">
+                    {% if message.tags == "success" %}
+                        <i class="fa fa-check-circle text-success mr-2"></i>
+                    {% elif message.tags == "info" %}
+                        <i class="fa fa-info-circle text-primary mr-2"></i>
+                    {% elif message.tags == "warning" %}
+                        <i class="fa fa-exclamation-triangle text-warning mr-2"></i>
+                    {% elif message.tags == "error" %}
+                        <i class="fa fa-times-circle text-danger mr-2"></i>
+                    {% else %}
+                        <i class="fa fa-bell text-secondary mr-2"></i>
+                    {% endif %}
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        </div>
+    {% endif %}
+    
+  <div class="tab-content">
+    <div id="home" class="tab-pane active">
+        <div class="flex_container">
+            <div class="top summary">
+                <h3>Summary of Action Items</h3>
+            </div>
+            <div class="card_container top details-grid-container">
+                <div class="card text-white bg-primary mb-3 details-grid-item2" style="max-width: 18rem;" id="appointDiv">
+                    <div class="card-header bg-light mb-3 text-dark">Pending Appointments</div>
+                    <div class="card-body">
+                        <p class="card-text">You have <strong id="appointmentCount"></strong> appointments pending approval.</p>
+                    </div>
+                </div>
+                <div class="card text-white bg-primary mb-3 details-grid-item2" style="max-width: 18rem;" id="donationsDiv">
+                    <div class="card-header bg-light mb-3 text-dark">Pending Donations</div>
+                    <div class="card-body">
+                        <p class="card-text">You have <strong id="donationCount"></strong> donations pending approval.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="appointment_approvals" class="tab-pane fade">
+        <div class="container top">
+            <h3>Pending Appointments</h3>
+            <table class="table table-bordered" id="appointmentTable">
+                <thead>
+                    <tr>
+                        <th>Selection</th>
+                        <th>Appointment ID</th>
+                        <th>Donor</th>
+                        <th>Organ</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                <tbody id="appointmentsTableBody"></tbody>
+            </table>
+            <div>
+                <button id="appointmentDtls" class="btn btn-info">Details</button>
+                <button id="appointmentApprv" class="btn btn-success">Approve</button>
+                <button id="appointmentDeny" class="btn btn-danger">Deny</button>
+            </div>
+        </div>
+    </div>
+    <div id="donation_approvals" class="tab-pane fade">
+        <div class="container top">
+            <h3>Pending Donations</h3>
+            <table class="table table-bordered" id="donationTable">
+                <thead>
+                    <tr>
+                        <th>Selection</th>
+                        <th>Donation ID</th>
+                        <th>Donor</th>
+                        <th>Organ</th>
+                        <th>Blood Group</th>
+                    </tr>
+                </thead>
+                <tbody id="donationTableBody"></tbody>
+            </table>
+            <div>
+                <button id="donationDtls" class="btn btn-info">Details</button>
+                <button id="donationApprv" class="btn btn-success">Approve</button>
+                <button id="donationDeny" class="btn btn-danger">Deny</button>
+            </div>
+        </div>
+    </div>
+    <div id="search_donation" class="tab-pane fade">
+        <div class="container top">
+            <input 
+                type="text" 
+                class="form-control mb-2" 
+                id="searchInput" 
+                placeholder="Search by Organ / Donor / Donation ID / Blood Group">
+            <button id="search_btn" class="btn btn-primary mb-3">Search</button>
+            <h5>Search Results:</h5>
+            <table class="table table-bordered" id="donationSearchTable">
+                <thead>
+                    <tr>
+                        <th>Selection</th>
+                        <th>Donation ID</th>
+                        <th>Donor</th>
+                        <th>Organ</th>
+                        <th>Blood Group</th>
+                    </tr>
+                </thead>
+                <tbody id="searchTableBody"></tbody>
+            </table>
+            <button id="searchDtls" class="btn btn-info">Details</button>
+            <button id="searchEmail" class="btn btn-secondary">Email Donor</button>
+        </div>
+    </div>
+    <div id="update_profile" class="tab-pane fade">
+        <div class="container mt-4">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">Profile</h5>
+                            <button class="btn btn-warning btn-sm" onclick="enableedituserprofile();">Edit</button>
+                        </div>
+                        <div class="card-body">
+                            <form id="updateDetailsForm">
+                                <div class="form-group">
+                                    <label>Hospital Name</label>
+                                    <input 
+                                        type="text" 
+                                        id="hospitalName" 
+                                        class="form-control"
+                                        placeholder="Enter facility name !" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input 
+                                        type="email" 
+                                        id="emailHospital" 
+                                        class="form-control"
+                                        placeholder="Enter email address !" required> 
+                                </div>
+                                <div class="form-group">
+                                    <label>City</label>
+                                    <input 
+                                        type="text" 
+                                        id="city" 
+                                        class="form-control"
+                                        placeholder="Enter city name !" required>  
+                                </div>
+                                <div class="form-group">
+                                    <label>Province</label>
+                                    <input 
+                                        type="text"
+                                        id="input-province" 
+                                        class="form-control"
+                                        placeholder="Enter residence province !">
+                                </div>
+                                <div class="form-group">
+                                    <label>Contact No. (+254)</label>
+                                    <input 
+                                        type="text" 
+                                        id="hospitalContact" 
+                                        class="form-control" 
+                                        maxlength="10" 
+                                        minlength="10"
+                                        placeholder="Enter phone number !">
+                                </div>
+                                <div class="form-group">
+                                    <label>Country</label>
+                                    <select id="input-country" class="form-control">
+                                        <option selected align="Center">---------------</option>
+                                        <option value="Kenya">Kenya</option>
+                                        <option value="Uganda">Uganda</option>
+                                        <option value="Tanzania">Tanzania</option>
+                                        <option value="Somalia">Somalia</option>
+                                        <option value="Ethiopia">Ethiopia</option>
+                                        <option value="Sudan">Sudan</option>
+                                        <option value="Madagascar">Madagascar</option>
+                                        <option align="Center">---------------</option>
+                                    </select>
+                                </div>
+                                <button type="submit" id="submitUpdateProf" class="btn btn-primary" disabled>Update</button>  <!-- disabled -->
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">Password</h5>
+                            <button class="btn btn-warning btn-sm" onclick="enableeditpasswords();">Edit</button>
+                        </div>
+                        <div class="card-body">
+                            <form>
+                                <div class="form-group">
+                                    <label>Old Password</label>
+                                    <input 
+                                        type="password" 
+                                        id="password1" 
+                                        class="form-control" 
+                                        placeholder="Enter current password !" required>  
+                                </div>
+                                <div class="form-group">
+                                    <label>New Password</label>
+                                    <input 
+                                        type="password" 
+                                        id="password2" 
+                                        class="form-control" 
+                                        placeholder="Enter new password !" required>   
+                                </div>
+                                <div class="form-group">
+                                    <label>Confirm Password</label>
+                                    <input 
+                                        type="password" 
+                                        id="password3" 
+                                        class="form-control" 
+                                        oninput="checkpassword();" 
+                                        placeholder="Re-enter new password !" required>  
+                                </div>
+                                <div class="form-group">
+                                    <span id="password-validation-msg"></span>
+                                </div>
+                                <button type="submit" id="update-password" class="btn btn-primary" disabled>Update</button>  <!-- disabled  -->
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+
+    <!-- External js file -->
+    <script 
+        src="{% static 'js/hospital_script.js' %}">
+    </script>
+    <!-- Flash message auto-fade -->
+    <script>
+        window.setTimeout(function () {
+            const alert = document.getElementById('flash-message');
+            if (alert) {
+                alert.classList.remove('show');
+                alert.classList.add('fade');
+                setTimeout(() => alert.remove(), 500);
+            }
+        }, 4000); // 4 seconds for auto-fade
+    </script>
+</body>
+</html>

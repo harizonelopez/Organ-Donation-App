@@ -1,0 +1,172 @@
+/* Base Styles */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: url('../images/background.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+
+/* Navigation Bar */
+.nav-bar {
+    display: flex;
+    font-size: 1rem;
+}
+
+#company_name {
+    margin-left: 1%;
+    font-family: 'Sofia', cursive;
+    font-weight: bold;
+    color: brown;
+    font-size: 1rem;
+}
+
+#company_name > a {
+    color: brown;
+    text-decoration: none;
+}
+
+/* Overlay and Content Centering */
+.overlay {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 120px);
+    text-align: center;
+}
+
+.description {
+    width: 100%;
+}
+
+.description h1 {
+    color: brown;
+    font-size: 2.5rem;
+}
+
+.description p {
+    color: #333;
+    font-size: 1.25rem;
+    width: 50%;
+    margin: auto;
+    line-height: 1.6;
+}
+
+#aboutCompany {
+    color: black;
+}
+
+/* Grid Cards */
+.details-grid-container {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+}
+
+.card.details-grid-item {
+    width: 25rem;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Card Text */
+.Details {
+    font-size: 0.9rem;
+    font-style: italic;
+    color: #444;
+}
+
+/* Footer */
+.footer_style {
+    background-color: #7abcff;
+    color: white;
+    text-align: center;
+    font-size: 0.9rem;
+    padding: 0.8rem 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+footer a {
+    color: white;
+    text-decoration: none;
+    margin: 0 5px;
+}
+
+/* Utility Classes */
+.push_this {
+    margin-left: auto;
+}
+
+.push_this_left {
+    margin-right: auto;
+}
+
+/* Button Style */
+.description button,
+.card .btn {
+    background: #F97300;
+    color: white;
+    border: 1px solid #F97300;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+/* Gradient Background */
+.blue {
+    background: linear-gradient(to top, #7abcff 0%, #60abf8 44%, #4096ee 100%);
+}
+
+.zone {
+    cursor: pointer;
+    font-size: 2em;
+    border-radius: 4px;
+    border: 1px solid #bbb;
+    transition: all 0.3s ease;
+}
+
+.zone:hover {
+    box-shadow: rgba(0,0,0,0.8) 0px 5px 15px, inset rgba(0,0,0,0.15) 0px -10px 20px;
+}
+
+/* Responsive Design */
+@media only screen and (max-width: 1000px) {
+    .footer_style {
+        font-size: 0.8rem;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .card {
+        width: 90%;
+    }
+
+    .footer_style {
+        font-size: 0.6rem;
+    }
+
+    .description p {
+        width: 90%;
+    }
+}
+
+@media only screen and (max-width: 620px) {
+    .nav-bar {
+        font-size: 0.8rem;
+    }
+
+    .description h1 {
+        font-size: 1.5rem;
+    }
+
+    .description p {
+        font-size: 1rem;
+    }
+
+    .card {
+        width: 80%;
+    }
+}

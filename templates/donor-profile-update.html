@@ -1,0 +1,212 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <!-- Bootstrap & Custom CSS links -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'css/header-footer.css' %}">
+    <link rel="stylesheet" href="{% static 'css/new-donation-request.css' %}">
+    
+    <title> 🛡 DNI - Donor Alliance Center </title>
+  </head>
+  <body>
+
+  <!-- Navbar -->
+  <nav class="navbar fixed-top navbar-dark navbar-expand-sm bg-primary" id="navbar">
+    <div class="nav-bar">
+        <p id="company_name" class="push_this_left"><a href="hospital-main-page.html"> 🩺 LifeGiver – Matching organs, saving lives </a></p>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTop" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTop">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item"><a class="nav-link" href="{% url 'donor-landing-page' %}">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'donor-home' %}">Donation history</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'book-appointment' %}">Book an appointment</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'new-donation-request' %}">New donation request</a></li>
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Settings</a>
+          <div class="dropdown-menu custom-dropdown">
+            <a class="dropdown-item" href="{% url 'donor-profile-update' %}">User profile</a>
+            <a class="dropdown-item" href="{% url 'donor-profile-update' %}">Change password</a>
+            <a class="dropdown-item" href="{% url 'donor-logout' %}">Log out</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main content -->
+  <div class="container mt-5 pt-5">
+    <div class="row">
+      
+      <!-- Profile Update Form -->
+      <div class="col-md-6">
+        <div class="card">
+          <header class="card-header bg-light mb-3">
+            <button class="btn btn-warning float-right mt-1" type="reset" onclick="enableedituserprofile();">
+              <i class="fa fa-edit"></i> Edit
+            </button>
+            <h4 class="card-title">User profile</h4>
+          </header>
+          <div class="card-content">
+            <form method="POST" action="{% url 'donor-profile-update' %}">
+              {% csrf_token %}
+              {% if success and pfcheck %}<div class="form-group">{{ msg }}</div>{% endif %}
+              
+              <div class="form-group">
+                <label><i class="fa fa-user"></i> Donor name</label>
+                <input 
+                  type="text" 
+                  name="donor_name" 
+                  value="{{ donor.first_name }}" 
+                  id="fn" class="form-control" required disabled>  <!-- Disabled for the moment -->
+              </div>
+              <div class="form-group">
+                <label><i class="fa fa-at"></i> Email address</label>
+                <input 
+                  type="email" 
+                  name="email" 
+                  value="{{ donor.email }}" 
+                  id="email" 
+                  class="form-control" required disabled> <!-- Disabled for the moment -->
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label><i class="fa fa-building"></i> City</label>
+                  <input 
+                    type="text" 
+                    name="city" 
+                    value="{{ donor.city }}" 
+                    id="city" 
+                    class="form-control" disabled>  <!-- Disabled for the moment -->
+                </div>
+                <div class="form-group col-md-6">
+                  <label><i class="fa fa-building"></i> Province</label>
+                  <select name="province" id="input-province" class="form-control" disabled>
+                    <option value="Nova Scotia"{% if provinces.0 %} selected{% endif %}>Nova Scotia</option>
+                    <option value="British Columbia"{% if provinces.1 %} selected{% endif %}>British Columbia</option>
+                    <option value="Ontario"{% if provinces.2 %} selected{% endif %}>Ontario</option>
+                    <option value="Quebec"{% if provinces.3 %} selected{% endif %}>Quebec</option>
+                    <option value="Alberta"{% if provinces.4 %} selected{% endif %}>Alberta</option>
+                    <option value="New Brunswick"{% if provinces.5 %} selected{% endif %}>New Brunswick</option>
+                    <option value="Manitoba"{% if provinces.6 %} selected{% endif %}>Manitoba</option>
+                    <option value="Saskatchewan"{% if provinces.7 %} selected{% endif %}>Saskatchewan</option>
+                    <option value="Newfoundland and Labrador"{% if provinces.8 %} selected{% endif %}>Newfoundland and Labrador</option>
+                    <option value="Prince Edward Island"{% if provinces.9 %} selected{% endif %}>Prince Edward Island</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label><i class="fa fa-mobile"></i> Contact no. (+254)</label>
+                  <input 
+                    type="text" 
+                    name="contact" 
+                    value="{{ donor.contact_number }}" 
+                    maxlength="10" 
+                    minlength="10" 
+                    class="form-control" 
+                    id="contact" disabled>  <!-- Disabled for the moment -->
+                </div>
+                <div class="form-group col-md-6">
+                  <label><i class="fa fa-globe"></i> Country</label>
+                  <select name="country" id="input-country" class="form-control" disabled>  <!-- Disabled -->
+                    <option selected>Canada</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <button name="profile" type="submit" class="btn btn-info btn-block" id="submit" disabled>Update</button>  <!-- Disabled -->
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Password Change Form -->
+      <div class="col-md-6">
+        <div class="card">
+          <header class="card-header bg-light mb-3">
+            <button class="btn btn-warning float-right mt-1" type="reset" onclick="enableeditpasswords();">
+              <i class="fa fa-edit"></i> Edit
+            </button>
+            <h4 class="card-title text-center">Password details</h4>
+          </header>
+          <div class="card-content">
+            <form method="POST" action="{% url 'donor-profile-update' %}">
+              {% csrf_token %}
+              {% if success and pscheck %}<div class="form-group">{{ msg }}</div>{% endif %}
+              
+              <div class="form-group">
+                <label><i class="fa fa-lock"></i> Old password</label>
+                <input 
+                  type="password" 
+                  name="old_password" 
+                  id="password1" 
+                  class="form-control"
+                  placeholder=" current password " disabled required>  <!-- Disabled -->
+              </div>
+              <div class="form-group">
+                <label><i class="fa fa-lock"></i> New password</label>
+                <input 
+                  type="password" 
+                  name="new_password" 
+                  id="password2" 
+                  class="form-control" 
+                  minlength="6"
+                  pattern="(?=.*[a-z])(?=.*\d).{6,}"
+                  title="Include at least 1 lowercase letter and 1 digit"
+                  placeholder=" enter new password " disabled required>  <!-- Disabled -->
+              </div>
+              <div class="form-group">
+                <label><i class="fa fa-lock"></i> Confirm password</label>
+                <input 
+                  type="password" 
+                  id="password3" 
+                  class="form-control" 
+                  oninput="checkpassword();"
+                  placeholder=" re-enter new password " disabled required>  <!-- Disabled -->
+              </div>
+              <div class="form-group">
+                <span id="password-validation-msg"></span>
+              </div>
+              <div class="form-group">
+                <button name="password" type="submit" class="btn btn-info btn-block" id="update-password" disabled>Update</button>  <!-- Disabled -->
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="custom-footer bg-primary text-white text-center py-3 mt-4">
+    &copy; 2025 Dev Aladinh Production. We Donate Inc. All rights reserved. |
+    <a href="#" class="text-white">About us</a> |
+    <a href="#" class="text-white">Contact us</a>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="{% static 'js/user-profile-update.js' %}"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+          integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+          crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+          integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+          crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+          integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+          crossorigin="anonymous"></script>
+  </body>
+</html>

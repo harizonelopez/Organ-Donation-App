@@ -1,0 +1,223 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS & Custom CSS links-->
+    <link 
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" 
+        rel="stylesheet">
+    <!-- Booststrap Icons link -->
+    <link 
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" 
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'css/header-footer.css' %}">
+    <link rel="stylesheet" href="{% static 'css/new-donation-request.css' %}">
+
+    <title> 🛡 DNI - Donor Alliance Center </title>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar fixed-top navbar-dark navbar-expand-sm bg-primary" id="navbar">
+      <div class="nav-bar">
+        <p id="company_name" class="push_this_left"><a> 🩺 LifeGiver – Matching organs, saving lives </a></p>
+      </div>      
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTop">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarTop">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item"><a class="nav-link" href="{% url 'donor-landing-page' %}">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'donor-home' %}">Donation history</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'book-appointment' %}">Book an appointment</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'new-donation-request' %}">New donation request</a></li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Settings</a>
+            <div class="dropdown-menu custom-dropdown">
+              <a class="dropdown-item" href="{% url 'donor-profile-update' %}">User profile</a>
+              <a class="dropdown-item" href="{% url 'donor-profile-update' %}">Change password</a>
+              <a class="dropdown-item" href="{% url 'donor-logout' %}">Log out</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <!-- Show messages -->
+    {% if messages %}
+      <div class="container mt-4">
+          {% for message in messages %}
+              <div class="alert alert-{{ message.tags }} alert-dismissible fade show auto-dismiss-alert shadow-sm rounded-3" role="alert">
+                  <div class="d-flex align-items-center">
+                      {% if message.tags == 'success' %}
+                          <i class="bi bi-check-circle-fill text-success me-2 fs-5"></i>
+                      {% elif message.tags == 'error' %}
+                          <i class="bi bi-x-circle-fill text-danger me-2 fs-5"></i>
+                      {% elif message.tags == 'warning' %}
+                          <i class="bi bi-exclamation-triangle-fill text-warning me-2 fs-5"></i>
+                      {% elif message.tags == 'info' %}
+                          <i class="bi bi-info-circle-fill text-primary me-2 fs-5"></i>
+                      {% endif %}
+                      <span>{{ message }}</span>
+                  </div>
+              </div>
+          {% endfor %}
+      </div>
+    {% endif %}
+
+    <!-- Donation Form -->
+    <div class="container mt-5 pt-5">
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <div class="card">
+            <header class="card-header bg-light mb-3">
+              <h4 class="card-title">New Donation Request</h4>
+            </header>
+            <div class="card-content p-3">
+              <form method="POST" enctype="multipart/form-data" action="{% url 'new-donation-request' %}">
+                {% csrf_token %}
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="organ_type">Organ Type</label>
+                    <input 
+                      type="text" 
+                      name="organ_type" 
+                      class="form-control" 
+                      id="organ_type" 
+                      placeholder="e.g. Kidney"required>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="blood_type">Blood Type</label>
+                    <input 
+                      type="text" 
+                      name="blood_type" 
+                      class="form-control" 
+                      id="blood_type" 
+                      placeholder="e.g. A+" required>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="family_relation">Family Relation</label>
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        name="family_relation" 
+                        id="family_relation" 
+                        placeholder="e.g. Brother" required>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="family_relation_name">Family Relation Name</label>
+                    <input 
+                      type="text" 
+                      class="form-control" 
+                      name="family_relation_name" 
+                      id="family_relation_name" 
+                      placeholder="e.g. Marko Rumarnoz" required>
+                  </div>
+                  <div class="form-group col-md-12">
+                    <label for="family_contact_number">Donor's Contact Number</label>
+                    <input 
+                      type="text" 
+                      class="form-control" 
+                      name="family_contact_number" 
+                      id="family_contact_number" 
+                      maxlength="10" 
+                      minlength="10"
+                      placeholder="e.g. (+254 _ _ _ )" required>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group col-md-12">
+                    <div class="custom-file">
+                      <input 
+                        id="logo" 
+                        type="file" 
+                        class="custom-file-input" 
+                        name="file" 
+                        onchange="setName(this.value);">
+                      <label for="logo" class="custom-file-label text-truncate" id="customfield">Upload medical report..</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>Has the above donor donated before?</label><br>
+                  <div class="form-check form-check-inline">
+                    <input 
+                      class="form-check-input" 
+                      type="radio" 
+                      name="donated_before" 
+                      value="True" 
+                      id="donated_yes">
+                    <label class="form-check-label" for="donated_yes">Yes</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input 
+                      class="form-check-input" 
+                      type="radio" 
+                      name="donated_before" 
+                      value="False" 
+                      id="donated_no">
+                    <label class="form-check-label" for="donated_no">No</label>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>Is your family okay with donating your organ?</label><br>
+                  <div class="form-check form-check-inline">
+                    <input 
+                      class="form-check-input" 
+                      type="radio" 
+                      name="family_consent" 
+                      value="True" 
+                      id="consent_yes">
+                    <label class="form-check-label" for="consent_yes">Yes</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input 
+                      class="form-check-input" 
+                      type="radio" 
+                      name="family_consent" 
+                      value="False" 
+                      id="consent_no">
+                    <label class="form-check-label" for="consent_no">No</label>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <button type="submit" id="submit" class="btn btn-info btn-block">Create</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer section -->
+    <footer class="custom-footer bg-primary text-white text-center mt-5 p-3">
+      &copy; 2025 Dev Aladinh production. We Donate Inc. All rights reserved. |
+      <a href="#" class="text-white"> About us</a> |
+      <a href="#" class="text-white"> Contact us</a>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="{% static 'js/new-donation-request.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <script src="{% static 'js/bootstrap-filestyle.min.js' %}"></script>
+    <script src="{% static 'js/extra_scripts.js' %}"></script>
+  </body>
+</html>

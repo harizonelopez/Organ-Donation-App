@@ -1,0 +1,234 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap & Custom CSS links -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <link 
+        rel="stylesheet" 
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
+        crossorigin="anonymous">
+    <link 
+        href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" 
+        rel="stylesheet">
+    <link 
+        href='https://fonts.googleapis.com/css?family=Sofia' 
+        rel='stylesheet'>
+    <link 
+        rel="stylesheet" 
+        href="{% static 'css/header-footer.css' %}">
+    <link 
+        rel="stylesheet" 
+        href="{% static 'css/custom-stylesheet-hospital-registration.css' %}">
+    <title> 🛡 DNI - Donor Alliance Center </title>
+</head>
+<body>
+    <header class="zone blue">
+        <div class="nav-bar">
+            <p id="company_name" class="push_this_left"><a href="hospital-main-page.html"> Doctor's Registration</a></p>
+        </div>
+    </header>
+    <!-- Show messages -->
+    {% if messages %}
+        <div class="d-flex justify-content-center mt-3">
+        <div class="w-25"> <!-- Change to regulate the width -->
+            {% for message in messages %}
+                <div id="flash-message" class="alert alert-{{ message.tags }} alert-dismissible fade show text-center" role="alert">
+                    {% if message.tags == "success" %}
+                        <i class="fa fa-check-circle text-success mr-2"></i>
+                    {% elif message.tags == "info" %}
+                        <i class="fa fa-info-circle text-primary mr-2"></i>
+                    {% elif message.tags == "warning" %}
+                        <i class="fa fa-exclamation-triangle text-warning mr-2"></i>
+                    {% elif message.tags == "error" %}
+                        <i class="fa fa-times-circle text-danger mr-2"></i>
+                    {% else %}
+                        <i class="fa fa-bell text-secondary mr-2"></i>
+                    {% endif %}
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        </div>
+    {% endif %}
+
+    <!-- Registration form -->     
+    <div class="overlay">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card">
+                        <header class="card-header bg-light mb-3">
+                            <h4 align="Center" class="card-title mt-2"> <b>Hospital Dashboard</b><br>
+                                <i>Register for a new account</i></h4>
+                        </header>
+                        <div class="card-content p-3">
+                            <form action="{% url 'hospital-register' %}" method="POST">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label>Hospital name</label>
+                                    <input 
+                                        type="text" 
+                                        name="hospital_name" 
+                                        class="form-control" 
+                                        placeholder="   ----- facility name -----   "required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Email address</label>
+                                    <input 
+                                        type="email" 
+                                        name="email"
+                                        class="form-control"
+                                        placeholder="   ----- email address -----   " required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Username</label>
+                                    <input 
+                                        type="text" 
+                                        name="username" 
+                                        class="form-control" 
+                                        placeholder="   ----- user-name -----   " required>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label>City</label>
+                                        <input 
+                                            type="text" 
+                                            name="city"
+                                            class="form-control"
+                                            placeholder="   ----- city name -----   " required>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label>province</label> <!-- A feature to be put to scan all cities in home country. Just leave the province name for the time being (: -->
+                                        <input 
+                                            type="text"
+                                            name="province"
+                                            id="input-province" 
+                                            class="form-control"
+                                            placeholder="   ---residence province---">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label>Contact no. (+254)</label>
+                                        <input 
+                                            type="text" 
+                                            name="contact_number"
+                                            class="form-control" 
+                                            maxlength="10" 
+                                            minlength="10" 
+                                            pattern="\d*" 
+                                            title="Enter a valid 10-digit phone number"
+                                            placeholder="   (07/01) _ _ _ _ _ _ _ _    " required>  <!-- Phone number verification coming later  -->
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label>Country</label>
+                                        <select id="input-country" name="country" class="form-control">
+                                            <option selected align="Center">---------------</option>
+                                            <option value="Kenya">Kenya</option>
+                                            <option value="Uganda">Uganda</option>
+                                            <option value="Tanzania">Tanzania</option>
+                                            <option value="Somalia">Somalia</option>
+                                            <option value="Ethiopia">Ethiopia</option>
+                                            <option value="Sudan">Sudan</option>
+                                            <option value="Madagascar">Madagascar</option>
+                                            <option align="Center">---------------</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Create password</label>
+                                    <input 
+                                        type="password" 
+                                        name="password1"
+                                        id="password1" 
+                                        class="form-control" 
+                                        minlength="6" 
+                                        pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}" 
+                                        title="Must include 1 uppercase, 1 lowercase letter, and 1 digit" 
+                                        placeholder="       ----- password -----" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Confirm password</label>
+                                    <input 
+                                        type="password" 
+                                        name="password2"
+                                        id="password2" 
+                                        class="form-control" 
+                                        oninput="checkPassword();" 
+                                        placeholder="   --- re-enter password ---" required>
+                                </div>
+                                <div class="form-group">
+                                    <span id="password-validation-msg"></span>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" id="submit" class="btn btn-primary btn-block">Register</button>
+                                </div>
+                                <div class="text-center">
+                                    <i>Already have an account?</i> <a href="{% url 'hospital-login' %}"> Login here</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="zone blue footer_style">
+        &copy; 2025. Dev Aladinh production. We donate Inc. All rights reserved. | <a href= "#">About us | </a> <a href= "#">Contact us. </a> 
+    </footer>
+
+    <!-- jQuery, Popper.js & Bootstrap JS -->
+    <script> 
+        // Password validation function
+        function checkPassword() {
+            let pass1 = document.getElementById("password1").value;
+            let pass2 = document.getElementById("password2").value;
+            let message = document.getElementById("password-validation-msg");
+        
+            if (pass1 !== pass2) {
+                message.style.color = "red";
+                message.innerHTML = "Passwords do not match!";
+            } else {
+                message.style.color = "green";
+                message.innerHTML = "Passwords match!";
+            }
+        }
+    </script>
+    <script 
+        src="{% static 'js/hospital-registration.js' %}">
+    </script>
+    <script 
+        src="https://code.jquery.com/jquery-3.2.1.slim.min.js" 
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" 
+        crossorigin="anonymous">
+    </script>
+    <script 
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" 
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" 
+        crossorigin="anonymous">
+    </script>
+    <script 
+        src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" 
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" 
+        crossorigin="anonymous">
+    </script>
+    <script>
+        window.setTimeout(function () {
+            const alert = document.getElementById('flash-message');
+            if (alert) {
+                alert.classList.remove('show');
+                alert.classList.add('fade');
+                setTimeout(() => alert.remove(), 500);  // Remove from DOM
+            }
+        }, 5000); // 5 seconds delay before fade out
+    </script>
+</body>
+</html>
