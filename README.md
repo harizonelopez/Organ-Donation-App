@@ -42,7 +42,7 @@ This project is a web application built using Django to facilitate and manage or
 
 ## Usage
 
-- Access the application at `http://127.0.0.1:8000/`.
+- Access the application at `http://127.0.0.1:8000`.
 - Register as a donor or recipient to start using the platform.
 - Admins can log in to manage the system.
 
