@@ -23,5 +23,5 @@ urlpatterns = [
     path('home/', v.wedonate, name='wedonate'),  # Home page route
     path('donors/', include('donors.urls')),    # Include donor's app URLs
     path('hospitals/', include('hospitals.urls')),  # Include hospital's app URLs
-    path('admin/', admin.site.urls),    # Admin site route
+    path('admin/', admin.site.urls),    # Admin site URL
 ]
