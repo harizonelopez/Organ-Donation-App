@@ -100,12 +100,6 @@
                 <p>Enter your hospital account credentials to continue.</p>
             </div>
 
-            {% if form.non_field_errors %}
-                <div class="alert alert-danger">
-                    {{ form.non_field_errors }}
-                </div>
-            {% endif %}
-
             <form method="POST" novalidate>
                 {% csrf_token %}
                 <div class="hospital-login-field">
@@ -136,7 +130,6 @@
                     Access hospital portal
                     <i class="bi bi-arrow-right"></i>
                 </button>
-
             </form>
 
             <div class="hospital-login-divider">
@@ -157,8 +150,7 @@
 
     <!-- FOOTER -->
     <footer class="hospital-login-bottom">
-        <span>© {% now "Y" %} LifeLink. All rights reserved.</span>
-
+        <span></span>
         <a href="{% url 'welcome' %}">
             <i class="bi bi-house-fill"></i>
             Back to Lifelink Home
