@@ -3,9 +3,15 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# Virtual environment
+# Virtual environments
 .env/
 venv/
+.venv/
+
+# Sensitive configuration
+secrets.env
+**/secrets.env
+organ_donation/.env
 
 # Django
 *.log
