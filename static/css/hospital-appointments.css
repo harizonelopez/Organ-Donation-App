@@ -1,0 +1,134 @@
+/* =========================================
+   HOSPITAL APPOINTMENTS
+========================================= */
+.hap-date {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.hap-date strong {
+    color: #102b40;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.hap-date small,
+.hap-location {
+    color: #718494;
+    font-size: 12px;
+}
+
+.hap-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.hap-actions form {
+    margin: 0;
+}
+
+.hap-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    padding: 7px 10px;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.hap-view {
+    color: #087e74;
+    background: #e8f7f5;
+    border-color: #c9eeea;
+}
+
+.hap-view:hover {
+    color: #ffffff;
+    background: #087e74;
+}
+
+.hap-complete {
+    color: #167344;
+    background: #e9f7ef;
+    border-color: #c9ebd6;
+}
+
+.hap-complete:hover {
+    color: #ffffff;
+    background: #167344;
+}
+
+.hap-cancel {
+    color: #b42332;
+    background: #fff0f0;
+    border-color: #f5d1d4;
+}
+
+.hap-cancel:hover {
+    color: #ffffff;
+    background: #b42332;
+}
+
+/* Appointment status variations */
+.ha-status-pending {
+    color: #946200;
+    background: #fff5d9;
+}
+
+.ha-status-scheduled {
+    color: #087e74;
+    background: #e5f6f3;
+}
+
+.ha-status-completed {
+    color: #167344;
+    background: #e9f7ef;
+}
+
+.ha-status-cancelled {
+    color: #b42332;
+    background: #fff0f0;
+}
+
+/* Search and filter */
+.ha-filter-form input[type="search"] {
+    min-width: 280px;
+}
+
+.ha-filter-form select {
+    min-width: 165px;
+}
+
+/* Responsive layout */
+@media (max-width: 900px) {
+    .hap-actions {
+        min-width: 130px;
+    }
+}
+
+@media (max-width: 650px) {
+    .hap-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .hap-actions form,
+    .hap-action {
+        width: 100%;
+    }
+
+    .ha-filter-form input[type="search"] {
+        min-width: 100%;
+    }
+}
+
+

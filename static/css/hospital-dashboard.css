@@ -1,0 +1,1489 @@
+/* =========================================================
+   LIFELINK — HOSPITAL OPERATIONS CENTRE
+========================================================= */
+.ops-page {
+    width: 100%;
+    max-width: 100%;
+    padding: 0 !important;
+    margin: 0;
+    background: #f3f6f9;
+    color: #183044;
+}
+
+.ops-shell {
+    display: flex;
+    width: 100%;
+    min-height: calc(100vh - 140px);
+    overflow: clip;
+    background: #f3f6f9;
+    font-family: 'DM Sans', sans-serif;
+}
+
+/* =========================================================
+     SIDEBAR
+========================================================= */
+.ops-sidebar {
+    width: 258px;
+    min-width: 258px;
+    display: flex;
+    flex-direction: column;
+    padding: 25px 17px 17px;
+    background: #081b2b;
+    color: #fff;
+}
+
+.ops-brand {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 0 8px 27px;
+    color: #fff;
+    text-decoration: none;
+}
+
+.ops-brand-mark {
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    background: #0c9f91;
+    color: #fff;
+    font-size: 1.3rem;
+}
+
+.ops-brand strong {
+    display: block;
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.48rem;
+    line-height: 1;
+    letter-spacing: -.5px;
+}
+
+.ops-brand small {
+    display: block;
+    margin-top: 6px;
+    color: #829cab;
+    font-size: .57rem;
+    font-weight: 700;
+    letter-spacing: 1.15px;
+}
+
+/* Institution selector */
+.ops-institution {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 9px;
+    border-top: 1px solid rgba(255,255,255,.09);
+    border-bottom: 1px solid rgba(255,255,255,.09);
+}
+
+.ops-institution-icon {
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    display: grid;
+    place-items: center;
+    border-radius: 10px;
+    background: rgba(66,232,213,.12);
+    color: #42e8d5;
+    font-size: 1.1rem;
+}
+
+.ops-institution-info {
+    min-width: 0;
+    flex: 1;
+}
+
+.ops-institution-info strong {
+    display: block;
+    overflow-wrap: anywhere;
+    color: #fff;
+    font-size: .72rem;
+    line-height: 1.4;
+}
+
+.ops-institution-info span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 5px;
+    color: #8fa9b7;
+    font-size: .64rem;
+}
+
+.ops-institution-info span i {
+    color: #3dd5a0;
+    font-size: .42rem;
+}
+
+.ops-institution-chevron {
+    color: #7893a2;
+    font-size: .72rem;
+}
+
+/* Navigation */
+.ops-nav-section {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 29px;
+}
+
+.ops-nav-heading {
+    padding: 0 10px;
+    margin-bottom: 7px;
+    color: #718b9a;
+    font-size: .61rem;
+    font-weight: 700;
+    letter-spacing: 1.3px;
+}
+
+.ops-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 12px;
+    border-left: 3px solid transparent;
+    border-radius: 7px;
+    color: #a9bdc9;
+    text-decoration: none;
+    font-size: .78rem;
+    transition: .2s ease;
+}
+
+.ops-nav-link i {
+    width: 19px;
+    font-size: 1rem;
+    text-align: center;
+}
+
+.ops-nav-link:hover,
+.ops-nav-link.active {
+    border-left-color: #42e8d5;
+    background: rgba(66,232,213,.1);
+    color: #fff;
+}
+
+.ops-nav-link.active {
+    font-weight: 600;
+}
+
+/* Sidebar bottom */
+.ops-sidebar-bottom {
+    margin-top: auto;
+    padding-top: 25px;
+}
+
+.ops-sidebar-help {
+    padding: 15px;
+    border: 1px solid rgba(66,232,213,.15);
+    border-radius: 10px;
+    background: rgba(66,232,213,.055);
+}
+
+.ops-help-icon {
+    color: #42e8d5;
+    font-size: 1.2rem;
+}
+
+.ops-sidebar-help strong {
+    display: block;
+    margin-top: 9px;
+    color: #eaf6f8;
+    font-size: .74rem;
+}
+
+.ops-sidebar-help p {
+    margin: 6px 0 0;
+    color: #91a9b7;
+    font-size: .66rem;
+    line-height: 1.6;
+}
+
+.ops-sidebar-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 18px;
+    padding: 15px 2px;
+    border-bottom: 1px solid rgba(255,255,255,.09);
+}
+
+.ops-user-avatar {
+    width: 35px;
+    height: 35px;
+    min-width: 35px;
+    display: grid;
+    place-items: center;
+    border-radius: 9px;
+    background: #173b4c;
+    color: #66e7d8;
+}
+
+.ops-user-details {
+    min-width: 0;
+}
+
+.ops-user-details strong {
+    display: block;
+    overflow-wrap: anywhere;
+    color: #fff;
+    font-size: .68rem;
+}
+
+.ops-user-details span {
+    display: block;
+    margin-top: 4px;
+    color: #829aa8;
+    font-size: .63rem;
+}
+
+.ops-signout {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 12px;
+    padding: 10px;
+    border: 0;
+    border-radius: 7px;
+    background: transparent;
+    color: #f0a4a8;
+    text-align: left;
+    font-size: .74rem;
+    transition: .2s ease;
+}
+
+.ops-signout:hover {
+    background: rgba(225,107,114,.13);
+    color: #fff;
+}
+
+/* =========================================================
+   MAIN WORKSPACE
+========================================================= */
+.ops-main {
+    flex: 1;
+    min-width: 0;
+    padding: 0 32px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Topbar */
+
+.ops-topbar {
+    min-height: 73px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    border-bottom: 1px solid #e3eaf0;
+}
+
+.ops-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #8a9aa7;
+    font-size: .73rem;
+}
+
+.ops-breadcrumb i {
+    font-size: .62rem;
+}
+
+.ops-breadcrumb strong {
+    color: #1a3448;
+    font-weight: 600;
+}
+
+.ops-topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 17px;
+}
+
+.ops-live-indicator {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: #617786;
+    font-size: .69rem;
+}
+
+.ops-live-indicator span {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #20b981;
+    box-shadow: 0 0 0 4px rgba(32,185,129,.11);
+}
+
+.ops-topbar-divider {
+    width: 1px;
+    height: 25px;
+    background: #e1e8ed;
+}
+
+.ops-topbar-date {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: #6f8391;
+    font-size: .69rem;
+}
+
+.ops-topbar-date i {
+    color: #0c9f91;
+}
+
+.ops-topbar-avatar {
+    width: 36px;
+    height: 36px;
+    display: grid;
+    place-items: center;
+    border: 1px solid #dce8ec;
+    border-radius: 10px;
+    background: #e7f5f3;
+    color: #0c9f91;
+    font-size: 1.05rem;
+}
+
+/* Page heading */
+.ops-page-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 20px;
+    padding: 29px 0 21px;
+    scroll-margin-top: 20px;
+}
+
+.ops-eyebrow {
+    display: block;
+    margin-bottom: 7px;
+    color: #0c9f91;
+    font-size: .61rem;
+    font-weight: 750;
+    letter-spacing: 1.15px;
+}
+
+.ops-page-heading h1 {
+    margin: 0;
+    color: #102a3d;
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: -.5px;
+}
+
+.ops-page-heading p {
+    max-width: 650px;
+    margin: 7px 0 0;
+    color: #7e909e;
+    font-size: .77rem;
+    line-height: 1.6;
+}
+
+.ops-verified-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 12px;
+    border: 1px solid #ccefe3;
+    border-radius: 7px;
+    background: #eaf8f2;
+    color: #16845d;
+    font-size: .68rem;
+    font-weight: 650;
+    white-space: nowrap;
+}
+
+/* Institutional status */
+.ops-status-strip {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 14px 17px;
+    border: 1px solid #d4ebe6;
+    border-radius: 9px;
+    background: #edf8f6;
+}
+
+.ops-status-symbol {
+    width: 37px;
+    height: 37px;
+    min-width: 37px;
+    display: grid;
+    place-items: center;
+    border-radius: 9px;
+    background: #d8f1eb;
+    color: #0c9f91;
+    font-size: 1.1rem;
+}
+
+.ops-status-copy {
+    flex: 1;
+    min-width: 0;
+}
+
+.ops-status-copy strong {
+    display: block;
+    color: #1c6259;
+    font-size: .76rem;
+}
+
+.ops-status-copy span {
+    display: block;
+    margin-top: 3px;
+    color: #6d928d;
+    font-size: .68rem;
+    line-height: 1.5;
+}
+
+.ops-status-meta {
+    padding-left: 18px;
+    border-left: 1px solid #d2e8e3;
+    text-align: right;
+}
+
+.ops-status-meta span {
+    display: block;
+    color: #83a29d;
+    font-size: .56rem;
+    font-weight: 700;
+    letter-spacing: .8px;
+}
+
+.ops-status-meta strong {
+    display: block;
+    margin-top: 4px;
+    color: #16845d;
+    font-size: .72rem;
+    letter-spacing: .5px;
+}
+
+/* =========================================================
+   KPI CARDS
+========================================================= */
+.ops-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 19px;
+}
+
+.ops-kpi {
+    min-width: 0;
+    padding: 17px 18px 15px;
+    border: 1px solid #e5ebf0;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 3px 13px rgba(17,42,61,.025);
+}
+
+.ops-kpi-primary {
+    border-top: 3px solid #0c9f91;
+}
+
+.ops-kpi-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.ops-kpi-top > span {
+    color: #718492;
+    font-size: .7rem;
+    font-weight: 600;
+}
+
+.ops-kpi-icon {
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    border-radius: 8px;
+    background: #e1f6f1;
+    color: #0c9f91;
+    font-size: 1rem;
+}
+
+.ops-kpi-icon.amber {
+    background: #fff3df;
+    color: #d28b25;
+}
+
+.ops-kpi-icon.blue {
+    background: #e8f1fc;
+    color: #4388c7;
+}
+
+.ops-kpi-icon.green {
+    background: #e5f6ed;
+    color: #249761;
+}
+
+.ops-kpi h2 {
+    margin: 13px 0 11px;
+    color: #102a3d;
+    font-family: 'Outfit', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.ops-kpi-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    color: #94a2ad;
+    font-size: .61rem;
+    line-height: 1.4;
+}
+
+.ops-kpi-bottom > i {
+    color: #0c9f91;
+}
+
+.ops-kpi-dot {
+    width: 7px;
+    height: 7px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: #0c9f91;
+}
+
+.amber-dot {
+    background: #e9a23b;
+}
+
+.blue-dot {
+    background: #4388c7;
+}
+
+.green-dot {
+    background: #249761;
+}
+
+/* =========================================================
+   SECTION HEADINGS
+========================================================= */
+.ops-section {
+    margin-top: 31px;
+    scroll-margin-top: 20px;
+}
+
+.ops-section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.ops-section-heading h2 {
+    margin: 0;
+    color: #163247;
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.ops-section-heading p {
+    margin: 5px 0 0;
+    color: #8796a1;
+    font-size: .7rem;
+}
+
+.ops-section-period {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 10px;
+    border: 1px solid #e4ebf0;
+    border-radius: 6px;
+    background: #fff;
+    color: #7b8d9a;
+    font-size: .63rem;
+}
+
+/* =========================================================
+   GENERAL CARDS
+========================================================= */
+.ops-card {
+    min-width: 0;
+    padding: 20px;
+    border: 1px solid #e5ebf0;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 3px 14px rgba(17,42,61,.025);
+}
+
+.ops-card-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 17px;
+}
+
+.ops-card-heading h3 {
+    margin: 0;
+    color: #173247;
+    font-family: 'Outfit', sans-serif;
+    font-size: .99rem;
+    font-weight: 700;
+}
+
+.ops-card-heading > div:first-child > span:not(.ops-eyebrow) {
+    display: block;
+    margin-top: 5px;
+    color: #96a3ad;
+    font-size: .65rem;
+}
+
+.ops-chart-symbol {
+    width: 35px;
+    height: 35px;
+    min-width: 35px;
+    display: grid;
+    place-items: center;
+    border-radius: 8px;
+    background: #e2f6f2;
+    color: #0c9f91;
+    font-size: 1rem;
+}
+
+.ops-chart-symbol.purple {
+    background: #f0eafa;
+    color: #8666b4;
+}
+
+.ops-chart-symbol.blue {
+    background: #e8f1fc;
+    color: #4388c7;
+}
+
+.ops-chart-symbol.green {
+    background: #e6f6ed;
+    color: #269a62;
+}
+
+/* =========================================================
+   ANALYTICS CHARTS
+========================================================= */
+.ops-analytics-grid {
+    display: grid;
+    grid-template-columns: 1.55fr 1fr;
+    gap: 15px;
+}
+
+.ops-chart-container {
+    position: relative;
+    width: 100%;
+}
+
+.ops-line-chart {
+    height: 255px;
+}
+
+.ops-chart-footnote {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 12px;
+    padding-top: 11px;
+    border-top: 1px solid #edf1f4;
+    color: #91a0aa;
+    font-size: .62rem;
+}
+
+.ops-chart-footnote i {
+    color: #0c9f91;
+}
+
+.ops-doughnut-wrap {
+    display: flex;
+    justify-content: center;
+    padding: 0 0 5px;
+}
+
+.ops-doughnut-chart {
+    width: 205px;
+    max-width: 100%;
+    height: 190px;
+}
+
+.ops-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+    padding-top: 13px;
+    border-top: 1px solid #edf1f4;
+}
+
+.ops-legend > div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #788b98;
+    font-size: .68rem;
+}
+
+.ops-legend > div strong {
+    margin-left: auto;
+    color: #203c50;
+    font-size: .75rem;
+}
+
+.ops-legend-dot {
+    width: 8px;
+    height: 8px;
+    flex-shrink: 0;
+    border-radius: 50%;
+}
+
+.legend-pending {
+    background: #e9a23b;
+}
+
+.legend-approved {
+    background: #0c9f91;
+}
+
+.legend-rejected {
+    background: #e16b72;
+}
+
+/* =========================================================
+   APPOINTMENT AND REVIEW ANALYTICS
+========================================================= */
+.ops-appointment-analytics {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.ops-appointment-chart-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 145px;
+    align-items: center;
+    gap: 14px;
+}
+
+.ops-appointment-chart {
+    height: 205px;
+}
+
+.ops-appointment-summary {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding-left: 15px;
+    border-left: 1px solid #edf1f4;
+}
+
+.ops-appointment-summary > div span {
+    display: block;
+    color: #8b9ba6;
+    font-size: .62rem;
+    line-height: 1.5;
+}
+
+.ops-appointment-summary > div strong {
+    display: block;
+    margin-top: 5px;
+    color: #173247;
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.4rem;
+}
+
+.ops-decision-row {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 12px 0;
+    border-top: 1px solid #edf1f4;
+}
+
+.ops-decision-icon {
+    width: 33px;
+    height: 33px;
+    min-width: 33px;
+    display: grid;
+    place-items: center;
+    border-radius: 8px;
+    font-size: .9rem;
+}
+
+.ops-decision-icon.approved {
+    background: #e4f6ec;
+    color: #269a62;
+}
+
+.ops-decision-icon.rejected {
+    background: #fff0f0;
+    color: #dc7078;
+}
+
+.ops-decision-icon.pending {
+    background: #fff4e3;
+    color: #d28b25;
+}
+
+.ops-decision-row > div:nth-child(2) {
+    min-width: 0;
+    flex: 1;
+}
+
+.ops-decision-row strong {
+    display: block;
+    color: #304b5e;
+    font-size: .73rem;
+}
+
+.ops-decision-row span {
+    display: block;
+    margin-top: 4px;
+    color: #98a5ae;
+    font-size: .62rem;
+}
+
+.ops-decision-row > b {
+    color: #203c50;
+    font-family: 'Outfit', sans-serif;
+    font-size: 1rem;
+}
+
+/* =========================================================
+   TABLES AND SCHEDULE
+========================================================= */
+.ops-workspace-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 15px;
+    margin-top: 26px;
+    scroll-margin-top: 20px;
+}
+
+.ops-table-heading {
+    align-items: center;
+}
+
+.ops-table-count {
+    padding: 6px 9px;
+    border-radius: 5px;
+    background: #eef5f7;
+    color: #64808d;
+    font-size: .62rem;
+    font-weight: 650;
+    white-space: nowrap;
+}
+
+.ops-table-scroll {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.ops-table {
+    width: 100%;
+    min-width: 460px;
+    border-collapse: collapse;
+}
+
+.ops-table thead th {
+    padding: 11px 9px;
+    border-top: 1px solid #edf1f4;
+    border-bottom: 1px solid #edf1f4;
+    background: #f8fafb;
+    color: #91a0aa;
+    font-size: .57rem;
+    font-weight: 750;
+    letter-spacing: .65px;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.ops-table tbody td {
+    padding: 12px 9px;
+    border-bottom: 1px solid #f0f3f5;
+    color: #647987;
+    font-size: .67rem;
+}
+
+.ops-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.ops-table-person {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.ops-table-avatar {
+    width: 31px;
+    height: 31px;
+    min-width: 31px;
+    display: grid;
+    place-items: center;
+    border-radius: 8px;
+    background: #edf4f7;
+    color: #688696;
+}
+
+.ops-table-person strong {
+    display: block;
+    max-width: 170px;
+    overflow: hidden;
+    color: #294458;
+    font-size: .68rem;
+    font-weight: 650;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ops-table-person small {
+    display: block;
+    margin-top: 4px;
+    color: #9aa7b0;
+    font-size: .59rem;
+}
+
+.ops-status-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 8px;
+    border-radius: 5px;
+    font-size: .58rem;
+    font-weight: 650;
+    white-space: nowrap;
+}
+
+.approved-pill {
+    background: #e6f6ed;
+    color: #228b5a;
+}
+
+.rejected-pill {
+    background: #fff0f0;
+    color: #c65e68;
+}
+
+.pending-pill {
+    background: #fff4e3;
+    color: #b67a20;
+}
+
+.ops-table-date {
+    color: #80919d !important;
+    white-space: nowrap;
+}
+
+.ops-table-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7px;
+    padding: 28px 10px;
+    color: #93a2ac;
+    text-align: center;
+}
+
+.ops-table-empty i {
+    font-size: 1.5rem;
+}
+
+.ops-table-empty strong {
+    color: #526c7c;
+    font-size: .75rem;
+}
+
+.ops-table-empty span {
+    font-size: .65rem;
+}
+
+/* Appointment list */
+.ops-schedule-list {
+    border-top: 1px solid #edf1f4;
+}
+
+.ops-schedule-item {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 13px 0;
+    border-bottom: 1px solid #edf1f4;
+}
+
+.ops-schedule-date {
+    width: 43px;
+    height: 46px;
+    min-width: 43px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #dceaf5;
+    border-radius: 8px;
+    background: #f0f6fc;
+}
+
+.ops-schedule-date strong {
+    color: #326d9e;
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.12rem;
+    line-height: 1;
+}
+
+.ops-schedule-date span {
+    margin-top: 4px;
+    color: #7699b5;
+    font-size: .56rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.ops-schedule-details {
+    flex: 1;
+    min-width: 0;
+}
+
+.ops-schedule-details > strong {
+    display: block;
+    overflow: hidden;
+    color: #294458;
+    font-size: .7rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ops-schedule-details > span,
+.ops-schedule-details > small {
+    display: block;
+    margin-top: 5px;
+    color: #8a9aa5;
+    font-size: .61rem;
+}
+
+.ops-schedule-details > span i {
+    color: #4388c7;
+}
+
+.ops-schedule-status {
+    padding: 5px 7px;
+    border-radius: 5px;
+    background: #eaf3fc;
+    color: #437eae;
+    font-size: .56rem;
+    white-space: nowrap;
+}
+
+.ops-schedule-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 28px 12px;
+    text-align: center;
+}
+
+.ops-schedule-empty > div {
+    width: 47px;
+    height: 47px;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    background: #edf4f8;
+    color: #7896a8;
+    font-size: 1.3rem;
+}
+
+.ops-schedule-empty strong {
+    margin-top: 12px;
+    color: #405d70;
+    font-size: .76rem;
+}
+
+.ops-schedule-empty p {
+    max-width: 240px;
+    margin: 6px 0 0;
+    color: #96a4ad;
+    font-size: .65rem;
+    line-height: 1.6;
+}
+
+/* =========================================================
+   INSTITUTION AND SECURITY
+========================================================= */
+.ops-bottom-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 15px;
+    margin-top: 26px;
+}
+
+.ops-profile-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 20px;
+    border-top: 1px solid #edf1f4;
+}
+
+.ops-profile-grid > div {
+    min-width: 0;
+    padding: 13px 0;
+    border-bottom: 1px solid #edf1f4;
+}
+
+.ops-profile-grid span {
+    display: block;
+    color: #93a1aa;
+    font-size: .62rem;
+}
+
+.ops-profile-grid strong {
+    display: block;
+    margin-top: 6px;
+    overflow-wrap: anywhere;
+    color: #304b5e;
+    font-size: .7rem;
+    font-weight: 650;
+}
+
+.ops-profile-verified {
+    color: #228b5a !important;
+}
+
+.ops-profile-verified i {
+    margin-right: 4px;
+}
+
+.ops-security-list {
+    border-top: 1px solid #edf1f4;
+}
+
+.ops-security-list > div {
+    display: flex;
+    align-items: flex-start;
+    gap: 11px;
+    padding: 13px 0;
+    border-bottom: 1px solid #edf1f4;
+}
+
+.ops-security-list > div > i {
+    margin-top: 2px;
+    color: #0c9f91;
+    font-size: 1rem;
+}
+
+.ops-security-list span {
+    display: block;
+    color: #8495a0;
+    font-size: .64rem;
+    line-height: 1.55;
+}
+
+.ops-security-list strong {
+    display: block;
+    margin-bottom: 3px;
+    color: #304b5e;
+    font-size: .72rem;
+}
+
+/* =========================================================
+   DISCLAIMER AND FOOTER
+========================================================= */
+.ops-disclaimer {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-top: 23px;
+    padding: 16px 18px;
+    border: 1px solid #e3e9ed;
+    border-left: 3px solid #4388c7;
+    border-radius: 8px;
+    background: #edf3f8;
+}
+
+.ops-disclaimer-icon {
+    color: #4388c7;
+    font-size: 1.1rem;
+}
+
+.ops-disclaimer strong {
+    display: block;
+    color: #38586e;
+    font-size: .72rem;
+}
+
+.ops-disclaimer p {
+    margin: 5px 0 0;
+    color: #748a99;
+    font-size: .65rem;
+    line-height: 1.7;
+}
+
+.ops-footer {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: auto;
+    padding: 23px 0;
+    color: #98a5ae;
+    font-size: .63rem;
+}
+
+/* =========================================================
+   RESPONSIVE LAYOUT
+========================================================= */
+@media (max-width: 1250px) {
+    .ops-sidebar {
+        width: 235px;
+        min-width: 235px;
+    }
+
+    .ops-main {
+        padding: 0 23px;
+    }
+
+    .ops-kpi-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .ops-analytics-grid {
+        grid-template-columns: 1.2fr 1fr;
+    }
+}
+
+@media (max-width: 1000px) {
+    .ops-shell {
+        flex-direction: column;
+        overflow: visible;
+    }
+
+    .ops-sidebar {
+        width: 100%;
+        min-width: 0;
+        padding: 16px 20px;
+    }
+
+    .ops-brand {
+        padding-bottom: 14px;
+    }
+
+    .ops-institution {
+        padding: 11px 0;
+    }
+
+    .ops-nav-section {
+        flex-direction: row;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        gap: 6px;
+        margin-top: 13px;
+        padding-bottom: 5px;
+    }
+
+    .ops-nav-heading {
+        display: none;
+    }
+
+    .ops-nav-link {
+        flex-shrink: 0;
+        padding: 9px 11px;
+        border: 0;
+        white-space: nowrap;
+    }
+
+    .ops-nav-link.active {
+        border: 0;
+        border-bottom: 2px solid #42e8d5;
+    }
+
+    .ops-sidebar-help,
+    .ops-sidebar-user {
+        display: none;
+    }
+
+    .ops-sidebar-bottom {
+        padding-top: 7px;
+    }
+
+    .ops-signout {
+        width: auto;
+        padding: 8px 10px;
+    }
+
+    .ops-main {
+        padding: 0 20px;
+    }
+
+    .ops-analytics-grid,
+    .ops-appointment-analytics,
+    .ops-workspace-grid,
+    .ops-bottom-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .ops-doughnut-chart {
+        height: 210px;
+    }
+}
+
+@media (max-width: 600px) {
+    .ops-main {
+        padding: 0 13px;
+    }
+
+    .ops-topbar {
+        min-height: 65px;
+    }
+
+    .ops-topbar-right {
+        gap: 9px;
+    }
+
+    .ops-live-indicator {
+        font-size: .6rem;
+    }
+
+    .ops-topbar-date {
+        display: none;
+    }
+
+    .ops-breadcrumb {
+        font-size: .65rem;
+    }
+
+    .ops-page-heading {
+        align-items: flex-start;
+        flex-direction: column;
+        padding-top: 23px;
+    }
+
+    .ops-page-heading h1 {
+        font-size: 1.55rem;
+    }
+
+    .ops-status-strip {
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .ops-status-meta {
+        width: 100%;
+        padding: 9px 0 0 50px;
+        border: 0;
+        text-align: left;
+    }
+
+    .ops-kpi-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 9px;
+    }
+
+    .ops-kpi {
+        padding: 13px;
+    }
+
+    .ops-kpi-top > span {
+        font-size: .63rem;
+    }
+
+    .ops-kpi-icon {
+        width: 29px;
+        height: 29px;
+        font-size: .85rem;
+    }
+
+    .ops-kpi h2 {
+        font-size: 1.65rem;
+    }
+
+    .ops-kpi-bottom {
+        font-size: .55rem;
+    }
+
+    .ops-section-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .ops-card {
+        padding: 15px;
+    }
+
+    .ops-line-chart {
+        height: 215px;
+    }
+
+    .ops-appointment-chart-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .ops-appointment-chart {
+        height: 190px;
+    }
+
+    .ops-appointment-summary {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 12px 0 0;
+        border-top: 1px solid #edf1f4;
+        border-left: 0;
+    }
+
+    .ops-profile-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .ops-footer {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 380px) {
+    .ops-kpi-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .ops-topbar-avatar {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ops-nav-link,
+    .ops-signout {
+        transition: none;
+    }
+}
+
+/* CLICKABLE APPOINTMENT DETAILS */
+.ops-appointment-link {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.ops-appointment-link:hover strong {
+    color: #4388c7;
+}
+
+.ops-appointment-link small {
+    display: block;
+    margin-top: 3px;
+    font-size: 11px;
+    color: #8293a1;
+}
+
+

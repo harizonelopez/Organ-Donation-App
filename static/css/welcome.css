@@ -1,0 +1,347 @@
+
+/* =========================================
+   LIFELINK WELCOME PAGE
+========================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    font-family: 'Segoe UI', sans-serif;
+    color: #ffffff;
+    background:
+        linear-gradient(
+            120deg,
+            rgba(7, 25, 43, 0.58),
+            rgba(9, 43, 59, 0.48),
+            rgba(7, 25, 43, 0.68)
+        ),
+        url("https://images.unsplash.com/photo-1538108149393-fbbd81895907?auto=format&fit=crop&w=1920&q=85")
+        center / cover fixed no-repeat;
+}
+
+/* --- MAIN WRAPPER --- */
+.welcome-wrapper {
+    min-height: 100vh;
+    padding: 30px 6%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- HEADER --- */
+.welcome-header {
+    width: 100%;
+}
+
+.brand {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 32px;
+    font-weight: 750;
+    letter-spacing: -1px;
+}
+
+.brand:hover {
+    color: #ffffff;
+}
+
+.brand i,
+.brand span {
+    color: #ff7777;
+}
+
+.brand i {
+    margin-right: 9px;
+}
+
+/* --- INTRODUCTION --- */
+.welcome-heading {
+    text-align: center;
+    margin: 45px 0 30px;
+}
+
+.welcome-eyebrow {
+    display: inline-block;
+    color: #8de8c1;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    margin-bottom: 18px;
+}
+
+.welcome-heading h1 {
+    font-size: clamp(36px, 5vw, 58px);
+    font-weight: 750;
+    margin-bottom: 15px;
+}
+
+.welcome-heading h1 span {
+    color: #ff7777;
+}
+
+.welcome-heading p {
+    font-size: 18px;
+    color: #e1e8ed;
+    line-height: 1.7;
+}
+
+.heading-heart {
+    display: inline-block;
+    color: #ff7777;
+    margin-top: 12px;
+}
+
+/* --- PORTAL SELECTION --- */
+.portal-heading {
+    text-align: center;
+    font-size: 19px;
+    font-weight: 600;
+    margin-bottom: 25px;
+}
+
+.portal-container {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 35px;
+    align-items: stretch;
+}
+
+.portal-card {
+    width: 100%;
+    min-width: 0;
+    background: rgba(10, 32, 49, 0.78);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 16px;
+    padding: 30px 28px;
+    text-align: center;
+
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.portal-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+}
+
+/* --- PORTAL ICONS --- */
+.portal-icon {
+    width: 68px;
+    height: 68px;
+    margin: 0 auto 17px;
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 31px;
+}
+
+.donor-icon {
+    color: #55e6a5;
+    background: rgba(24, 128, 68, 0.25);
+    border: 1px solid rgba(85, 230, 165, 0.4);
+}
+
+.hospital-icon {
+    color: #79b8ff;
+    background: rgba(23, 76, 162, 0.25);
+    border: 1px solid rgba(121, 184, 255, 0.4);
+}
+
+/* --- PORTAL TEXT --- */
+.portal-card h3 {
+    font-size: 23px;
+    font-weight: 750;
+    color: #ffffff;
+    margin-bottom: 12px;
+}
+
+.portal-card p {
+    color: #e5edf5;
+    line-height: 1.7;
+    font-size: 14px;
+    min-height: 72px;
+    margin-bottom: 22px;
+    overflow-wrap: break-word;
+}
+
+/* --- PORTAL BUTTONS --- */
+.portal-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    padding: 12px 15px;
+    border-radius: 8px;
+
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 650;
+
+    margin-top: 11px;
+    transition: all 0.25s ease;
+}
+
+.donor-btn {
+    background: #159b69;
+    color: #ffffff;
+}
+
+.donor-btn:hover {
+    background: #08784f;
+    color: #ffffff;
+}
+
+.donor-outline {
+    border: 1px solid #55e6a5;
+    color: #8df0c1;
+    background: rgba(21, 155, 105, 0.10);
+}
+
+.donor-outline:hover {
+    background: rgba(21, 155, 105, 0.28);
+    color: #ffffff;
+}
+
+.hospital-btn {
+    background: #2876d2;
+    color: #ffffff;
+}
+
+.hospital-btn:hover {
+    background: #1859a8;
+    color: #ffffff;
+}
+
+.hospital-outline {
+    border: 1px solid #79b8ff;
+    color: #a8d2ff;
+    background: rgba(40, 118, 210, 0.10);
+}
+
+.hospital-outline:hover {
+    background: rgba(40, 118, 210, 0.28);
+    color: #ffffff;
+}
+
+/* --- BENEFITS --- */
+.benefits {
+    width: 100%;
+    max-width: 1050px;
+    margin: 40px auto 0;
+    padding: 25px;
+
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px;
+
+    background: rgba(10, 32, 49, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 14px;
+
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.benefit {
+    min-width: 0;
+    text-align: center;
+}
+
+.benefit i {
+    font-size: 30px;
+    color: #73d69a;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.benefit h4 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.benefit p {
+    font-size: 13px;
+    color: #d6e0e8;
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* --- FOOTER --- */
+footer {
+    margin-top: auto;
+    padding-top: 35px;
+    text-align: center;
+    color: #c5d0da;
+    font-size: 13px;
+}
+
+/* --- TABLET RESPONSIVENESS --- */
+@media (max-width: 800px) {
+    .portal-container {
+        max-width: 650px;
+        gap: 22px;
+    }
+
+    .portal-card {
+        padding: 25px 20px;
+    }
+
+    .benefits {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* --- MOBILE RESPONSIVENESS --- */
+@media (max-width: 600px) {
+    .welcome-wrapper {
+        padding: 25px 18px;
+    }
+
+    .welcome-heading {
+        margin: 40px 0 30px;
+    }
+
+    .portal-container {
+        grid-template-columns: 1fr;
+        max-width: 430px;
+        gap: 22px;
+    }
+
+    .portal-card {
+        padding: 28px 22px;
+    }
+
+    .portal-card p {
+        min-height: auto;
+    }
+
+    .benefits {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 22px 15px;
+    }
+}
+
+@media (max-width: 420px) {
+    .benefits {
+        grid-template-columns: 1fr;
+    }
+}
+
+

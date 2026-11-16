@@ -1,0 +1,81 @@
+.glass-card {
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+}
+
+.section-heading {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    color: var(--navy);
+}
+
+.muted-text {
+    color: var(--text-muted);
+}
+
+.btn-teal {
+    background: var(--teal);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 11px 21px;
+    font-weight: 600;
+    transition: 0.2s ease;
+}
+
+.btn-teal:hover {
+    background: #087f75;
+    color: white;
+    transform: translateY(-1px);
+}
+
+.form-control,
+.form-select {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 11px 13px;
+    color: var(--text-dark);
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--teal);
+    box-shadow: 0 0 0 3px rgba(12, 159, 145, 0.12);
+}
+
+.form-label {
+    font-weight: 600;
+    color: var(--navy-light);
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 6px 11px;
+    border-radius: 30px;
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.status-pending {
+    background: #fff4d6;
+    color: #946200;
+}
+
+.status-approved {
+    background: #d9f8ec;
+    color: #08784e;
+}
+
+.status-rejected {
+    background: #ffe3e3;
+    color: #b42318;
+}
+
+.status-review {
+    background: #dceeff;
+    color: #175da8;
+}
+
+

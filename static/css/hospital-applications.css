@@ -1,0 +1,836 @@
+/* =========================================
+   HOSPITAL APPLICATION MANAGEMENT
+========================================= */
+.ha-page {
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 42px 0 70px;
+    color: #102b40;
+}
+
+.ha-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+    margin-bottom: 32px;
+}
+
+.ha-eyebrow {
+    display: block;
+    color: #0c9f91;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.8px;
+    margin-bottom: 12px;
+}
+
+.ha-heading h1 {
+    font-family: "Outfit", sans-serif;
+    font-size: clamp(29px, 4vw, 38px);
+    font-weight: 700;
+    letter-spacing: -1px;
+    margin: 0 0 8px;
+    color: #071b2c;
+}
+
+.ha-heading p {
+    color: #718494;
+    font-size: 14px;
+    margin: 0;
+}
+
+.ha-total-card {
+    min-width: 175px;
+    padding: 20px 23px;
+    border: 1px solid #dceaf2;
+    border-radius: 13px;
+    background: #fff;
+}
+
+.ha-total-card span {
+    display: block;
+    color: #718494;
+    font-size: 12px;
+    margin-bottom: 7px;
+}
+
+.ha-total-card strong {
+    color: #071b2c;
+    font-family: "Outfit", sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.ha-toolbar {
+    margin-bottom: 22px;
+}
+
+.ha-filter-form {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.ha-search {
+    position: relative;
+    flex: 1;
+    min-width: 230px;
+}
+
+.ha-search i {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+    color: #8295a3;
+}
+
+.ha-search input,
+.ha-status-select {
+    width: 100%;
+    height: 47px;
+    border: 1px solid #dce6ed;
+    border-radius: 9px;
+    background: #fff;
+    color: #102b40;
+    font-size: 13px;
+    outline: none;
+    transition: .2s ease;
+}
+
+.ha-search input {
+    padding: 0 15px 0 42px;
+}
+
+.ha-status-select {
+    width: 190px;
+    padding: 0 13px;
+}
+
+.ha-search input:focus,
+.ha-status-select:focus,
+.ha-review-form select:focus,
+.ha-review-form textarea:focus {
+    border-color: #0c9f91;
+    box-shadow: 0 0 0 3px rgba(12, 159, 145, .09);
+}
+
+.ha-filter-button {
+    height: 47px;
+    padding: 0 21px;
+    border: 0;
+    border-radius: 9px;
+    background: #0c9f91;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    transition: .2s ease;
+}
+
+.ha-filter-button:hover {
+    background: #087e74;
+}
+
+.ha-clear-filter {
+    color: #718494;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.ha-clear-filter:hover {
+    color: #0c9f91;
+}
+
+.ha-table-card,
+.ha-detail-card {
+    background: #fff;
+    border: 1px solid #e0eaf0;
+    border-radius: 14px;
+    box-shadow: 0 8px 28px rgba(7, 27, 44, .035);
+}
+
+.ha-table-card {
+    overflow: hidden;
+}
+
+.ha-table-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 23px 25px;
+    border-bottom: 1px solid #edf2f5;
+}
+
+.ha-table-heading h2,
+.ha-card-heading h2 {
+    margin: 0;
+    color: #102b40;
+    font-family: "Outfit", sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.ha-table-heading p {
+    margin: 5px 0 0;
+    color: #8797a3;
+    font-size: 12px;
+}
+
+.ha-record-count {
+    color: #718494;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.ha-table {
+    width: 100%;
+    min-width: 850px;
+    border-collapse: collapse;
+}
+
+.ha-table thead {
+    background: #f6f9fb;
+}
+
+.ha-table th {
+    padding: 14px 17px;
+    color: #7c8e9b;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .8px;
+    text-align: left;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.ha-table td {
+    padding: 17px;
+    border-top: 1px solid #edf2f5;
+    vertical-align: middle;
+    font-size: 12px;
+}
+
+.ha-table tbody tr {
+    transition: background .18s ease;
+}
+
+.ha-table tbody tr:hover {
+    background: #f8fbfc;
+}
+
+.ha-case-id {
+    color: #0c9f91;
+    font-size: 13px;
+}
+
+.ha-donor {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 190px;
+}
+
+.ha-avatar,
+.ha-large-avatar {
+    display: grid;
+    flex-shrink: 0;
+    place-items: center;
+    border-radius: 11px;
+    background: #e4f7f4;
+    color: #087e74;
+    font-family: "Outfit", sans-serif;
+    font-weight: 700;
+}
+
+.ha-avatar {
+    width: 36px;
+    height: 36px;
+    font-size: 14px;
+}
+
+.ha-donor strong,
+.ha-donor small {
+    display: block;
+}
+
+.ha-donor strong {
+    color: #18364b;
+    font-size: 12px;
+}
+
+.ha-donor small {
+    margin-top: 4px;
+    color: #8a9aa5;
+    font-size: 10px;
+}
+
+.ha-organ-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    max-width: 190px;
+}
+
+.ha-organ-list span {
+    padding: 5px 8px;
+    border-radius: 5px;
+    background: #edf5f8;
+    color: #466273;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.ha-date,
+.ha-table td small {
+    display: block;
+}
+
+.ha-date {
+    color: #304b5e;
+    font-weight: 600;
+}
+
+.ha-muted {
+    color: #91a0aa !important;
+    font-size: 11px;
+}
+
+.ha-status {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.ha-status-submitted {
+    background: #edf2f7;
+    color: #526879;
+}
+
+.ha-status-under_review {
+    background: #fff4dd;
+    color: #a46b08;
+}
+
+.ha-status-approved {
+    background: #e3f7ef;
+    color: #16845b;
+}
+
+.ha-status-rejected {
+    background: #ffeded;
+    color: #c44c4c;
+}
+
+.ha-view-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 12px;
+    border: 1px solid #d9ebe8;
+    border-radius: 7px;
+    color: #087e74;
+    font-size: 11px;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: .2s ease;
+}
+
+.ha-view-button:hover {
+    background: #0c9f91;
+    border-color: #0c9f91;
+    color: #fff;
+}
+
+.ha-empty-state {
+    padding: 65px 20px;
+    text-align: center;
+}
+
+.ha-empty-icon {
+    display: grid;
+    width: 62px;
+    height: 62px;
+    place-items: center;
+    margin: 0 auto 18px;
+    border-radius: 18px;
+    background: #edf7f7;
+    color: #0c9f91;
+    font-size: 25px;
+}
+
+.ha-empty-state h3 {
+    margin-bottom: 8px;
+    color: #102b40;
+    font-family: "Outfit", sans-serif;
+    font-size: 19px;
+}
+
+.ha-empty-state p {
+    color: #8797a3;
+    font-size: 13px;
+}
+
+.ha-empty-state a {
+    color: #0c9f91;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.ha-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 17px 24px;
+    border-top: 1px solid #edf2f5;
+    color: #82939e;
+    font-size: 11px;
+}
+
+.ha-pagination div {
+    display: flex;
+    gap: 8px;
+}
+
+.ha-pagination a {
+    padding: 8px 11px;
+    border: 1px solid #e0eaf0;
+    border-radius: 7px;
+    color: #365267;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.ha-pagination a:hover {
+    border-color: #0c9f91;
+    color: #0c9f91;
+}
+
+/* =========================================
+   APPLICATION DETAIL
+========================================= */
+.ha-detail-page {
+    padding-top: 28px;
+}
+
+.ha-back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 25px;
+    color: #718494;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.ha-back-link:hover {
+    color: #0c9f91;
+}
+
+.ha-detail-heading {
+    padding-bottom: 25px;
+    border-bottom: 1px solid #e3ebf0;
+}
+
+.ha-detail-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.7fr) minmax(280px, .85fr);
+    align-items: start;
+    gap: 23px;
+}
+
+.ha-main-column,
+.ha-side-column {
+    display: grid;
+    gap: 20px;
+}
+
+.ha-detail-card {
+    padding: 24px;
+}
+
+.ha-card-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 23px;
+}
+
+.ha-card-heading > div {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.ha-card-index {
+    display: grid;
+    width: 29px;
+    height: 29px;
+    place-items: center;
+    border-radius: 8px;
+    background: #e5f6f3;
+    color: #0c9f91;
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.ha-donor-profile {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid #edf2f5;
+}
+
+.ha-large-avatar {
+    width: 55px;
+    height: 55px;
+    border-radius: 15px;
+    font-size: 21px;
+}
+
+.ha-donor-profile h3 {
+    margin: 0 0 5px;
+    color: #102b40;
+    font-family: "Outfit", sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.ha-donor-profile p {
+    margin: 0;
+    color: #8797a3;
+    font-size: 11px;
+}
+
+.ha-info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 21px;
+    padding-top: 22px;
+}
+
+.ha-info-grid span,
+.ha-description > span {
+    display: block;
+    margin-bottom: 7px;
+    color: #8797a3;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+}
+
+.ha-info-grid strong {
+    color: #304b5e;
+    font-size: 12px;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+}
+
+.ha-selected-organs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.ha-organ-item {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 12px 15px;
+    border: 1px solid #dcece9;
+    border-radius: 9px;
+    background: #f5fbfa;
+    color: #176f68;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.ha-organ-item i {
+    font-size: 15px;
+}
+
+.ha-description {
+    margin-top: 25px;
+    padding: 18px;
+    border-radius: 9px;
+    background: #f6f9fb;
+}
+
+.ha-description p {
+    margin: 0;
+    color: #526879;
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+.ha-review-timeline {
+    display: grid;
+    gap: 0;
+}
+
+.ha-review-entry {
+    position: relative;
+    display: flex;
+    gap: 15px;
+    padding-bottom: 22px;
+}
+
+.ha-review-entry:not(:last-child)::before {
+    position: absolute;
+    top: 13px;
+    bottom: 0;
+    left: 5px;
+    width: 1px;
+    background: #dce9ed;
+    content: "";
+}
+
+.ha-timeline-marker {
+    z-index: 1;
+    flex-shrink: 0;
+    width: 11px;
+    height: 11px;
+    margin-top: 3px;
+    border: 3px solid #c8eee8;
+    border-radius: 50%;
+    background: #0c9f91;
+}
+
+.ha-review-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.ha-review-top {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.ha-review-top strong {
+    color: #29475a;
+    font-size: 12px;
+}
+
+.ha-review-top span {
+    color: #91a0aa;
+    font-size: 10px;
+}
+
+.ha-review-content p {
+    margin: 8px 0 0;
+    color: #667d8d;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+.ha-inline-empty {
+    padding: 20px;
+    border-radius: 8px;
+    background: #f6f9fb;
+    color: #82939e;
+    font-size: 12px;
+    text-align: center;
+}
+
+.ha-review-intro {
+    margin: -8px 0 22px;
+    color: #82939e;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+.ha-review-form {
+    display: grid;
+    gap: 10px;
+}
+
+.ha-review-form label {
+    margin-top: 7px;
+    color: #365267;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.ha-review-form select,
+.ha-review-form textarea {
+    width: 100%;
+    border: 1px solid #dce6ed;
+    border-radius: 8px;
+    background: #fff;
+    color: #304b5e;
+    font-family: "DM Sans", sans-serif;
+    font-size: 12px;
+    outline: none;
+    transition: .2s ease;
+}
+
+.ha-review-form select {
+    height: 45px;
+    padding: 0 12px;
+}
+
+.ha-review-form textarea {
+    min-height: 125px;
+    padding: 12px;
+    resize: vertical;
+    line-height: 1.6;
+}
+
+.ha-submit-review {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    min-height: 47px;
+    margin-top: 7px;
+    border: 0;
+    border-radius: 8px;
+    background: #0c9f91;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 800;
+    transition: .2s ease;
+}
+
+.ha-submit-review:hover {
+    background: #087e74;
+    transform: translateY(-1px);
+}
+
+.ha-review-notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 20px;
+    padding: 13px;
+    border-radius: 8px;
+    background: #eff8f7;
+    color: #0c8c80;
+}
+
+.ha-review-notice i {
+    margin-top: 2px;
+    font-size: 15px;
+}
+
+.ha-review-notice p {
+    margin: 0;
+    color: #557b78;
+    font-size: 10px;
+    line-height: 1.7;
+}
+
+.ha-clinical-notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 18px;
+    border: 1px solid #f1e5c9;
+    border-radius: 12px;
+    background: #fffaf0;
+    color: #a77922;
+}
+
+.ha-clinical-notice > i {
+    margin-top: 2px;
+    font-size: 17px;
+}
+
+.ha-clinical-notice strong {
+    display: block;
+    margin-bottom: 6px;
+    color: #80601e;
+    font-size: 12px;
+}
+
+.ha-clinical-notice p {
+    margin: 0;
+    color: #927b4c;
+    font-size: 10px;
+    line-height: 1.7;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+@media (max-width: 900px) {
+    .ha-detail-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .ha-side-column {
+        grid-template-columns: 1fr 1fr;
+        align-items: start;
+    }
+}
+
+@media (max-width: 650px) {
+    .ha-page {
+        padding: 25px 0 45px;
+    }
+
+    .ha-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .ha-total-card {
+        width: 100%;
+    }
+
+    .ha-filter-form {
+        align-items: stretch;
+    }
+
+    .ha-search {
+        flex-basis: 100%;
+    }
+
+    .ha-status-select {
+        flex: 1;
+        width: auto;
+    }
+
+    .ha-table-heading,
+    .ha-pagination {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .ha-detail-card {
+        padding: 18px;
+    }
+
+    .ha-side-column {
+        grid-template-columns: 1fr;
+    }
+
+    .ha-info-grid {
+        grid-template-columns: 1fr;
+        gap: 17px;
+    }
+
+    .ha-review-top {
+        flex-direction: column;
+    }
+}
+
+
