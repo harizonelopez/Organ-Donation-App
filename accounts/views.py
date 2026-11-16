@@ -127,24 +127,20 @@ def hospital_login(request):
             user = form.get_user()
             if user.role != User.Role.HOSPITAL:
                 messages.error(request, "Credentials doesn't belong to a hospital account.")
-
             else:
                 try:
                     profile = user.hospital_profile
                     if profile.verification_status == HospitalProfile.VerificationStatus.VERIFIED:
-                        # Explicit hospital credentials switch the session
-                        # from the currently logged-in account to this hospital.
                         login(request, user)
                         return redirect("hospital-dashboard")
-
                     elif profile.verification_status == HospitalProfile.VerificationStatus.PENDING:
                         messages.warning(request, "Hospital account awaiting administrator verification.")
-
                     else:
                         messages.error(request, "Hospital registration rejected. Contact administrator.")
-
                 except HospitalProfile.DoesNotExist:
                     messages.error(request, "Hospital profile not found.")
+        else:
+            messages.error(request, "Invalid hospital username or password.")
     else:
         form = AuthenticationForm(request)
 
