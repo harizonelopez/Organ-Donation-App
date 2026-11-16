@@ -105,8 +105,6 @@ def hospital_register(request):
 
 
 def hospital_login(request):
-    # Only redirect an already authenticated, verified hospital.
-    # Admin and donor sessions must not interfere with hospital login.
     if request.user.is_authenticated and request.user.role == User.Role.HOSPITAL:
         try:
             profile = request.user.hospital_profile
