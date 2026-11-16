@@ -1,0 +1,103 @@
+/* =========================================
+   LIFELINK GLOBAL NOTIFICATIONS
+========================================= */
+.ll-toast-container {
+    position: fixed;
+    top: 90px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    width: min(92%, 480px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    pointer-events: none;
+}
+
+.ll-toast {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 15px 20px;
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    box-shadow: 0 8px 28px rgba(16, 43, 64, 0.14);
+    pointer-events: auto;
+    animation: ll-toast-enter 0.35s ease forwards;
+}
+
+.ll-toast i {
+    font-size: 19px;
+    flex-shrink: 0;
+}
+
+.ll-toast-success {
+    color: #126b43;
+    background: #e9f8ef;
+    border: 1px solid #bce8ce;
+}
+
+.ll-toast-error {
+    color: #a32232;
+    background: #fff0f0;
+    border: 1px solid #f2c5ca;
+}
+
+.ll-toast-warning {
+    color: #875b08;
+    background: #fff7df;
+    border: 1px solid #f1dfa5;
+}
+
+.ll-toast-info {
+    color: #17618c;
+    background: #edf7ff;
+    border: 1px solid #c8e3f5;
+}
+
+.ll-toast.ll-toast-exit {
+    animation: ll-toast-exit 0.35s ease forwards;
+}
+
+@keyframes ll-toast-enter {
+    from {
+        opacity: 0;
+        transform: translateY(-15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes ll-toast-exit {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-12px);
+    }
+}
+
+@media (max-width: 576px) {
+    .ll-toast-container {
+        top: 75px;
+        width: 94%;
+    }
+
+    .ll-toast {
+        padding: 13px 15px;
+        font-size: 13px;
+    }
+}
+
+
+
