@@ -5,29 +5,6 @@
 {% block content %}
 <section class="container py-5">
     <div class="mb-4">
-        <!--
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                    <a href="{% url 'welcome' %}">LifeLink Home</a>
-                </li>
-                <li class="breadcrumb-item">
-                    <a href="{% url 'hospital-dashboard' %}">Hospital Dashboard</a>
-                </li>
-                <li class="breadcrumb-item">
-                    <a href="{% url 'hospital-application-list' %}">Applications</a>
-                </li>
-                <li class="breadcrumb-item">
-                    <a href="{% url 'hospital-application-detail' application.pk %}">
-                        Application #{{ application.pk }}
-                    </a>
-                </li>
-                <li class="breadcrumb-item active" aria-current="page">
-                    Schedule Appointment
-                </li>
-            </ol>
-        </nav>-->
-
         <a href="{% url 'hospital-application-detail' application.pk %}" class="btn btn-outline-secondary btn-sm">
             <i class="bi bi-arrow-left me-1"></i>
             Back to Application
