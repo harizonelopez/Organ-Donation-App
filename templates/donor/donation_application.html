@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}New Donation Application | LifeLink{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/donation.css' %}">
+{% endblock %}
+{% block content_wrapper %}container donation-page{% endblock %}
+
+{% block content %}
+<div class="donation-header">
+    <a href="{% url 'donor-dashboard' %}" class="back-link">
+        <i class="bi bi-arrow-left"></i> Back to Dashboard
+    </a>
+
+    <span class="portal-label">DONOR PORTAL</span>
+    <h1>Donation Application</h1>
+    <p>
+        Tell us about your donation intentions. Your application will be
+        reviewed by a registered hospital.
+    </p>
+</div>
+
+<div class="donation-layout">
+    <section class="donation-form-card">
+        <div class="form-heading">
+            <div class="heading-icon">
+                <i class="bi bi-heart-pulse"></i>
+            </div>
+            <div>
+                <h2>Application Details</h2>
+                <p>Select the organs you wish to donate.</p>
+            </div>
+        </div>
+
+        <form method="POST">
+            {% csrf_token %}
+            {% if form.non_field_errors %}
+                <div class="form-error">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            <div class="form-section">
+                <label class="section-label">
+                    Select Donation Options
+                    <span class="required">*</span>
+                </label>
+
+                <p class="field-help">
+                    You may select more than one option.
+                </p>
+
+                <div class="organ-grid">
+                    {% for checkbox in form.organs %}
+                        <label class="organ-option">
+                            {{ checkbox.tag }}
+                            <span class="organ-check">
+                                <i class="bi bi-check"></i>
+                            </span>
+                            <span class="organ-name">
+                                {{ checkbox.choice_label }}
+                            </span>
+                        </label>
+                    {% endfor %}
+                </div>
+
+                {% if form.organs.errors %}
+                    <div class="field-error">
+                        {{ form.organs.errors }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-section">
+                <label for="{{ form.description.id_for_label }}"
+                       class="section-label">
+                    Additional Information
+                    <span class="optional">(Optional)</span>
+                </label>
+
+                <p class="field-help">
+                    Share any additional information about your donation
+                    intentions.
+                </p>
+
+                {{ form.description }}
+
+                {% if form.description.errors %}
+                    <div class="field-error">
+                        {{ form.description.errors }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="consent-notice">
+                <i class="bi bi-shield-check"></i>
+                <div>
+                    <strong>Important information</strong>
+                    <p>
+                        Submitting this application does not confirm your
+                        medical eligibility or guarantee acceptance.
+                        A qualified medical team must conduct the necessary
+                        evaluation.
+                    </p>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <a href="{% url 'donor-dashboard' %}" class="btn-cancel">Cancel</a>
+                <button type="submit" class="btn-submit">
+                    Submit Application
+                    <i class="bi bi-arrow-right"></i>
+                </button>
+            </div>
+        </form>
+    </section>
+
+    <aside class="donation-info">
+        <div class="info-card">
+            <div class="info-icon">
+                <i class="bi bi-heart-fill"></i>
+            </div>
+
+            <h3>Your decision matters</h3>
+            <p>
+                Registering your donation intentions is an important first
+                step towards helping others.
+            </p>
+        </div>
+
+        <div class="process-card">
+            <h3>What happens next?</h3>
+            <div class="process-step">
+                <span>01</span>
+                <div>
+                    <strong>Application submitted</strong>
+                    <p>Your application is securely recorded.</p>
+                </div>
+            </div>
+
+            <div class="process-step">
+                <span>02</span>
+                <div>
+                    <strong>Hospital review</strong>
+                    <p>A registered hospital reviews your application.</p>
+                </div>
+            </div>
+
+            <div class="process-step">
+                <span>03</span>
+                <div>
+                    <strong>Medical evaluation</strong>
+                    <p>Qualified professionals determine suitability.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="privacy-note">
+            <i class="bi bi-lock-fill"></i>
+            Your application information is intended for authorized
+            personnel only.
+        </div>
+    </aside>
+</div>
+
+{% endblock %}
+
+

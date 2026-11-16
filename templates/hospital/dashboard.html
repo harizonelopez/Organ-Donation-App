@@ -1,0 +1,775 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Operations Centre | LifeLink{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/hospital-dashboard.css' %}">
+{% endblock %}
+{% block content_wrapper %}container-fluid ops-page{% endblock %}
+
+{% block content %}
+<div class="ops-shell">
+    <!-- INSTITUTIONAL NAVIGATION -->
+    <aside class="ops-sidebar">
+        <a href="{% url 'hospital-dashboard' %}" class="ops-brand">
+            <span class="ops-brand-mark">
+                <i class="bi bi-heart-pulse-fill"></i>
+            </span>
+            <span>
+                <strong>LifeLink</strong>
+                <small>HEALTHCARE NETWORK</small>
+            </span>
+        </a>
+
+        <div class="ops-institution">
+            <div class="ops-institution-icon">
+                <i class="bi bi-hospital"></i>
+            </div>
+            <div class="ops-institution-info">
+                <strong>{{ hospital_profile.hospital_name }}</strong>
+                <span>
+                    <i class="bi bi-circle-fill"></i>
+                    Verified institution
+                </span>
+            </div>
+            <i class="bi bi-chevron-down ops-institution-chevron"></i>
+        </div>
+
+        <div class="ops-nav-section">
+            <span class="ops-nav-heading">OPERATIONS</span>
+            <a href="#overview" class="ops-nav-link active">
+                <i class="bi bi-speedometer2"></i>
+                <span>Command centre</span>
+            </a>
+
+            <a href="#analytics" class="ops-nav-link">
+                <i class="bi bi-bar-chart-line"></i>
+                <span>Analytics</span>
+            </a>
+
+            <a href="#reviews" class="ops-nav-link">
+                <i class="bi bi-clipboard2-pulse"></i>
+                <span>Review activity</span>
+            </a>
+
+            <a href="{% url 'hospital-appointment-list' %}" class="ops-nav-link">
+                <i class="bi bi-calendar2-week"></i>
+                <span>Appointments</span>
+            </a>
+
+            <a href="{% url 'hospital-application-list' %}" class="ops-nav-link">
+                <i class="bi bi-clipboard2-pulse"></i>
+                <span>Assigned Applications</span>
+            </a>
+        </div>
+
+        <div class="ops-nav-section">
+            <span class="ops-nav-heading">INSTITUTION</span>
+            <a href="#institution" class="ops-nav-link">
+                <i class="bi bi-building"></i>
+                <span>Institution profile</span>
+            </a>
+
+            <a href="#security" class="ops-nav-link">
+                <i class="bi bi-shield-lock"></i>
+                <span>Security & access</span>
+            </a>
+        </div>
+
+        <div class="ops-sidebar-bottom">
+            <div class="ops-sidebar-help">
+                <div class="ops-help-icon">
+                    <i class="bi bi-shield-check"></i>
+                </div>
+                <strong>Protected workspace</strong>
+                <p>Institutional access is restricted to authorized hospital accounts.</p>
+            </div>
+
+            <div class="ops-sidebar-user">
+                <div class="ops-user-avatar">
+                    <i class="bi bi-hospital"></i>
+                </div>
+                <div class="ops-user-details">
+                    <strong>{{ hospital_profile.hospital_name }}</strong>
+                    <span>Institutional account</span>
+                </div>
+            </div>
+
+            <form method="POST" action="{% url 'hospital-logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="ops-signout">
+                    <i class="bi bi-box-arrow-left"></i>
+                    Sign out of portal
+                </button>
+            </form>
+        </div>
+    </aside>
+
+    <!-- MAIN WORKSPACE -->
+    <main class="ops-main">
+        <!-- TOP HEADER -->
+        <header class="ops-topbar">
+            <div class="ops-breadcrumb">
+                <span>LifeLink</span>
+                <i class="bi bi-chevron-right"></i>
+                <strong>Operations centre</strong>
+            </div>
+
+            <div class="ops-topbar-right">
+                <div class="ops-live-indicator">
+                    <span></span>
+                    Institutional portal
+                </div>
+
+                <div class="ops-topbar-divider"></div>
+
+                <div class="ops-topbar-date">
+                    <i class="bi bi-calendar3"></i>
+                    {% now "l, d F Y" %}
+                </div>
+
+                <div class="ops-topbar-avatar">
+                    <i class="bi bi-hospital"></i>
+                </div>
+            </div>
+        </header>
+
+        <!-- PAGE INTRODUCTION -->
+        <section class="ops-page-heading" id="overview">
+            <div>
+                <span class="ops-eyebrow">INSTITUTIONAL OPERATIONS / OVERVIEW</span>
+                <h1>Command centre</h1>
+                <p>
+                    Monitor your institution's donation review activity,
+                    coordinate appointments and oversee operational progress.
+                </p>
+            </div>
+
+            <div class="ops-heading-actions">
+                <span class="ops-verified-badge">
+                    <i class="bi bi-patch-check-fill"></i>
+                    Verified institution
+                </span>
+            </div>
+        </section>
+
+        <!-- INSTITUTION STATUS STRIP -->
+        <section class="ops-status-strip">
+            <div class="ops-status-symbol">
+                <i class="bi bi-shield-check"></i>
+            </div>
+            <div class="ops-status-copy">
+                <strong>Institutional access active</strong>
+                <span>
+                    Your hospital account is verified and authorized to access
+                    its institutional workspace.
+                </span>
+            </div>
+            <div class="ops-status-meta">
+                <span>ACCOUNT STATUS</span>
+                <strong>VERIFIED</strong>
+            </div>
+        </section>
+
+        <!-- KPI OVERVIEW -->
+        <section class="ops-kpi-grid">
+            <article class="ops-kpi ops-kpi-primary">
+                <div class="ops-kpi-top">
+                    <span>Assigned applications</span>
+                    <div class="ops-kpi-icon">
+                        <i class="bi bi-clipboard2-check"></i>
+                    </div>
+                </div>
+                <h2>{{ total_assigned_applications }}</h2>
+                <div class="ops-kpi-bottom">
+                    <span>Donation requests assigned to your hospital</span>
+                    <i class="bi bi-arrow-up-right"></i>
+                </div>
+            </article>
+
+            <article class="ops-kpi">
+                <div class="ops-kpi-top">
+                    <span>Under review</span>
+                    <div class="ops-kpi-icon amber">
+                        <i class="bi bi-hourglass-split"></i>
+                    </div>
+                </div>
+                <h2>{{ unreviewed_applications }}</h2>
+                <div class="ops-kpi-bottom">
+                    <span>Assigned applications awaiting initial review</span>
+                    <span class="ops-kpi-dot amber-dot"></span>
+                </div>
+            </article>
+
+            <article class="ops-kpi">
+                <div class="ops-kpi-top">
+                    <span>Applications in progress</span>
+                    <div class="ops-kpi-icon blue">
+                        <i class="bi bi-arrow-repeat"></i>
+                    </div>
+                </div>
+                <h2>{{ applications_under_review }}</h2>
+                <div class="ops-kpi-bottom">
+                    <span>Assigned applications currently under review</span>
+                    <span class="ops-kpi-dot blue-dot"></span>
+                </div>
+            </article>
+
+            <article class="ops-kpi">
+                <div class="ops-kpi-top">
+                    <span>Upcoming appointments</span>
+                    <div class="ops-kpi-icon blue">
+                        <i class="bi bi-calendar2-event"></i>
+                    </div>
+                </div>
+                <h2>{{ upcoming_appointments_count }}</h2>
+                <div class="ops-kpi-bottom">
+                    <span>Future appointments scheduled</span>
+                    <span class="ops-kpi-dot blue-dot"></span>
+                </div>
+            </article>
+
+            <article class="ops-kpi">
+                <div class="ops-kpi-top">
+                    <span>Approved reviews</span>
+                    <div class="ops-kpi-icon green">
+                        <i class="bi bi-check2-circle"></i>
+                    </div>
+                </div>
+                <h2>{{ approved_reviews }}</h2>
+                <div class="ops-kpi-bottom">
+                    <span>Accepted for further evaluation</span>
+                    <span class="ops-kpi-dot green-dot"></span>
+                </div>
+            </article>
+        </section>
+
+        <!-- ANALYTICS -->
+        <section class="ops-section" id="analytics">
+            <div class="ops-section-heading">
+                <div>
+                    <span class="ops-eyebrow">PERFORMANCE INTELLIGENCE</span>
+                    <h2>Operational analytics</h2>
+                    <p>Review activity and decision distribution within your institution.</p>
+                </div>
+                <span class="ops-section-period">
+                    <i class="bi bi-clock-history"></i>
+                    Last 6 months of recorded reviews
+                </span>
+            </div>
+
+            <div class="ops-analytics-grid">
+                <!-- REVIEW TREND -->
+                <article class="ops-card ops-trend-card">
+                    <div class="ops-card-heading">
+                        <div>
+                            <h3>Review activity</h3>
+                            <span>Monthly review actions recorded</span>
+                        </div>
+                        <div class="ops-chart-symbol">
+                            <i class="bi bi-graph-up-arrow"></i>
+                        </div>
+                    </div>
+
+                    <div class="ops-chart-container ops-line-chart">
+                        <canvas id="reviewTrendChart"></canvas>
+                    </div>
+
+                    <div class="ops-chart-footnote">
+                        <i class="bi bi-info-circle"></i>
+                        Based on review records created by this institution.
+                    </div>
+                </article>
+
+                <!-- REVIEW DISTRIBUTION -->
+                <article class="ops-card ops-distribution-card">
+                    <div class="ops-card-heading">
+                        <div>
+                            <h3>Review outcomes</h3>
+                            <span>Distribution of recorded decisions</span>
+                        </div>
+                        <div class="ops-chart-symbol purple">
+                            <i class="bi bi-pie-chart"></i>
+                        </div>
+                    </div>
+
+                    <div class="ops-doughnut-wrap">
+                        <div class="ops-chart-container ops-doughnut-chart">
+                            <canvas id="reviewStatusChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="ops-legend">
+                        <div>
+                            <span class="ops-legend-dot legend-pending"></span>
+                            <span>Under review</span>
+                            <strong>{{ pending_reviews }}</strong>
+                        </div>
+                        <div>
+                            <span class="ops-legend-dot legend-approved"></span>
+                            <span>Approved</span>
+                            <strong>{{ approved_reviews }}</strong>
+                        </div>
+                        <div>
+                            <span class="ops-legend-dot legend-rejected"></span>
+                            <span>Rejected</span>
+                            <strong>{{ rejected_reviews }}</strong>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- APPOINTMENT ANALYTICS -->
+        <section class="ops-appointment-analytics">
+            <article class="ops-card ops-appointment-chart-card">
+                <div class="ops-card-heading">
+                    <div>
+                        <span class="ops-eyebrow">SCHEDULING INTELLIGENCE</span>
+                        <h3>Appointment distribution</h3>
+                        <span>Recorded appointments by status</span>
+                    </div>
+                    <div class="ops-chart-symbol blue">
+                        <i class="bi bi-calendar-week"></i>
+                    </div>
+                </div>
+
+                <div class="ops-appointment-chart-layout">
+                    <div class="ops-chart-container ops-appointment-chart">
+                        <canvas id="appointmentChart"></canvas>
+                    </div>
+                    <div class="ops-appointment-summary">
+                        <div>
+                            <span>Completed appointments</span>
+                            <strong>{{ completed_appointments }}</strong>
+                        </div>
+                        <div>
+                            <span>Upcoming appointments</span>
+                            <strong>{{ upcoming_appointments_count }}</strong>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="ops-card ops-review-summary-card">
+                <div class="ops-card-heading">
+                    <div>
+                        <span class="ops-eyebrow">REVIEW PERFORMANCE</span>
+                        <h3>Decision summary</h3>
+                        <span>Recorded outcomes for this institution</span>
+                    </div>
+                    <div class="ops-chart-symbol green">
+                        <i class="bi bi-clipboard-data"></i>
+                    </div>
+                </div>
+
+                <div class="ops-decision-row">
+                    <div class="ops-decision-icon approved">
+                        <i class="bi bi-check-lg"></i>
+                    </div>
+                    <div>
+                        <strong>Approved</strong>
+                        <span>Accepted for further evaluation</span>
+                    </div>
+                    <b>{{ approved_reviews }}</b>
+                </div>
+
+                <div class="ops-decision-row">
+                    <div class="ops-decision-icon rejected">
+                        <i class="bi bi-x-lg"></i>
+                    </div>
+                    <div>
+                        <strong>Rejected</strong>
+                        <span>Not accepted for further evaluation</span>
+                    </div>
+                    <b>{{ rejected_reviews }}</b>
+                </div>
+
+                <div class="ops-decision-row">
+                    <div class="ops-decision-icon pending">
+                        <i class="bi bi-hourglass"></i>
+                    </div>
+                    <div>
+                        <strong>Under review</strong>
+                        <span>Review process still in progress</span>
+                    </div>
+                    <b>{{ pending_reviews }}</b>
+                </div>
+            </article>
+        </section>
+
+        <!-- WORKSPACE TABLES -->
+        <section class="ops-workspace-grid" id="reviews">
+            <!-- RECENT REVIEWS -->
+            <article class="ops-card ops-table-card">
+                <div class="ops-card-heading ops-table-heading">
+                    <div>
+                        <span class="ops-eyebrow">CASE MANAGEMENT</span>
+                        <h3>Recent review activity</h3>
+                        <span>Latest recorded review actions</span>
+                    </div>
+                    <span class="ops-table-count">
+                        {{ total_cases_reviewed }} cases
+                    </span>
+                </div>
+
+                <div class="ops-table-scroll">
+                    <table class="ops-table">
+                        <thead>
+                            <tr>
+                                <th>DONOR</th>
+                                <th>REVIEW DECISION</th>
+                                <th>DATE</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for review in recent_reviews %}
+                            <tr>
+                                <td>
+                                    <div class="ops-table-person">
+                                        <span class="ops-table-avatar">
+                                            <i class="bi bi-person"></i>
+                                        </span>
+                                        <div>
+                                            <strong>
+                                                {{ review.donation_request.donor.get_full_name|default:review.donation_request.donor.username }}
+                                            </strong>
+                                            <small>Donation application</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    {% if review.decision == "APPROVED" %}
+                                        <span class="ops-status-pill approved-pill">Approved</span>
+                                    {% elif review.decision == "REJECTED" %}
+                                        <span class="ops-status-pill rejected-pill">Rejected</span>
+                                    {% else %}
+                                        <span class="ops-status-pill pending-pill">Under review</span>
+                                    {% endif %}
+                                </td>
+                                <td class="ops-table-date">
+                                    {{ review.reviewed_at|date:"d M Y" }}
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="3">
+                                    <div class="ops-table-empty">
+                                        <i class="bi bi-inbox"></i>
+                                        <strong>No review activity yet</strong>
+                                        <span>Recorded review actions will appear here.</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </article>
+
+            <!-- UPCOMING APPOINTMENTS -->
+            <article class="ops-card ops-schedule-card" id="appointments">
+                <div class="ops-card-heading">
+                    <div>
+                        <span class="ops-eyebrow">SCHEDULE CONTROL</span>
+                        <h3>Upcoming appointments</h3>
+                        <span>Next scheduled institutional visits</span>
+                    </div>
+                    <div class="ops-chart-symbol blue">
+                        <i class="bi bi-calendar2-check"></i>
+                    </div>
+                </div>
+
+                <div class="ops-schedule-list">
+                    {% for appointment in upcoming_appointments_list %}
+                    <div class="ops-schedule-item">
+                        <div class="ops-schedule-date">
+                            <strong>{{ appointment.appointment_date|date:"d" }}</strong>
+                            <span>{{ appointment.appointment_date|date:"M" }}</span>
+                        </div>
+                        <a href="{% url 'hospital-application-detail' appointment.donation_request.id %}"
+                            class="ops-schedule-details ops-appointment-link">
+                            <strong>
+                                {{ appointment.donor.get_full_name|default:appointment.donor.username }}
+                            </strong>
+                            <small>
+                                Application #{{ appointment.donation_request.id }}
+                            </small>
+                            <span>
+                                <i class="bi bi-clock"></i>
+                                {{ appointment.appointment_time|time:"H:i" }}
+                            </span>
+                            <small>{{ appointment.location|default:"Location not specified" }}</small>
+                        </a>
+                        <span class="ops-schedule-status">
+                            {{ appointment.get_status_display }}
+                        </span>
+                    </div>
+                    {% empty %}
+                    <div class="ops-schedule-empty">
+                        <div>
+                            <i class="bi bi-calendar2-x"></i>
+                        </div>
+                        <strong>No upcoming appointments</strong>
+                        <p>Future appointments coordinated by your institution will appear here.</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </article>
+        </section>
+
+        <!-- INSTITUTIONAL INFORMATION -->
+        <section class="ops-bottom-grid" id="institution">
+            <article class="ops-card ops-institution-card">
+                <div class="ops-card-heading">
+                    <div>
+                        <span class="ops-eyebrow">ORGANIZATION DIRECTORY</span>
+                        <h3>Institution profile</h3>
+                        <span>Registered institutional information</span>
+                    </div>
+                    <div class="ops-chart-symbol">
+                        <i class="bi bi-building"></i>
+                    </div>
+                </div>
+
+                <div class="ops-profile-grid">
+                    <div>
+                        <span>Institution name</span>
+                        <strong>{{ hospital_profile.hospital_name }}</strong>
+                    </div>
+                    <div>
+                        <span>Registration number</span>
+                        <strong>{{ hospital_profile.registration_number }}</strong>
+                    </div>
+                    <div>
+                        <span>Institutional email</span>
+                        <strong>{{ request.user.email }}</strong>
+                    </div>
+                    <div>
+                        <span>Contact number</span>
+                        <strong>{{ hospital_profile.contact_number }}</strong>
+                    </div>
+                    <div>
+                        <span>Location</span>
+                        <strong>{{ hospital_profile.city }}, {{ hospital_profile.country }}</strong>
+                    </div>
+                    <div>
+                        <span>Verification status</span>
+                        <strong class="ops-profile-verified">
+                            <i class="bi bi-patch-check-fill"></i>
+                            {{ hospital_profile.get_verification_status_display }}
+                        </strong>
+                    </div>
+                </div>
+            </article>
+
+            <article class="ops-card ops-security-card" id="security">
+                <div class="ops-card-heading">
+                    <div>
+                        <span class="ops-eyebrow">INFORMATION GOVERNANCE</span>
+                        <h3>Security & responsibility</h3>
+                        <span>Institutional access principles</span>
+                    </div>
+                    <div class="ops-chart-symbol green">
+                        <i class="bi bi-shield-lock"></i>
+                    </div>
+                </div>
+
+                <div class="ops-security-list">
+                    <div>
+                        <i class="bi bi-patch-check-fill"></i>
+                        <span>
+                            <strong>Verified institution</strong>
+                            Your institution has passed administrator verification.
+                        </span>
+                    </div>
+                    <div>
+                        <i class="bi bi-person-lock"></i>
+                        <span>
+                            <strong>Restricted access</strong>
+                            Donor information must only be accessed for authorized purposes.
+                        </span>
+                    </div>
+                    <div>
+                        <i class="bi bi-file-earmark-medical"></i>
+                        <span>
+                            <strong>Responsible medical data handling</strong>
+                            Medical records must be treated as confidential information.
+                        </span>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+        <!-- MEDICAL DISCLAIMER -->
+        <section class="ops-disclaimer">
+            <div class="ops-disclaimer-icon">
+                <i class="bi bi-info-circle-fill"></i>
+            </div>
+            <div>
+                <strong>Clinical and operational responsibility</strong>
+                <p>
+                    LifeLink supports donation coordination and institutional
+                    review workflows. An administrative approval or rejection
+                    is not a clinical determination of donor suitability.
+                    Medical assessments and final clinical decisions must be
+                    made by appropriately qualified healthcare professionals.
+                </p>
+            </div>
+        </section>
+
+        <footer class="ops-footer">
+            <span>© {% now "Y" %} LifeLink Healthcare Network</span>
+            <span>Institutional Operations Centre</span>
+        </footer>
+
+    </main>
+</div>
+
+<!-- CHART DATA -->
+{{ review_trend_labels|json_script:"reviewTrendLabels" }}
+{{ review_trend_values|json_script:"reviewTrendValues" }}
+{{ review_status_labels|json_script:"reviewStatusLabels" }}
+{{ review_status_values|json_script:"reviewStatusValues" }}
+{{ appointment_chart_labels|json_script:"appointmentChartLabels" }}
+{{ appointment_chart_values|json_script:"appointmentChartValues" }}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const readData = (id) => {
+            const element = document.getElementById(id);
+            return element ? JSON.parse(element.textContent) : [];
+        };
+
+        const trendLabels = readData("reviewTrendLabels");
+        const trendValues = readData("reviewTrendValues");
+        const statusLabels = readData("reviewStatusLabels");
+        const statusValues = readData("reviewStatusValues");
+        const appointmentLabels = readData("appointmentChartLabels");
+        const appointmentValues = readData("appointmentChartValues");
+
+        if (typeof Chart === "undefined") return;
+
+        Chart.defaults.font.family = "'DM Sans', sans-serif";
+        Chart.defaults.color = "#8293a1";
+
+        const trendCanvas = document.getElementById("reviewTrendChart");
+        if (trendCanvas) {
+            new Chart(trendCanvas, {
+                type: "line",
+                data: {
+                    labels: trendLabels,
+                    datasets: [{
+                        label: "Review actions",
+                        data: trendValues,
+                        borderColor: "#0c9f91",
+                        backgroundColor: "rgba(12,159,145,.12)",
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.38,
+                        pointRadius: 4,
+                        pointHoverRadius: 6,
+                        pointBackgroundColor: "#ffffff",
+                        pointBorderColor: "#0c9f91",
+                        pointBorderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: "#071b2c",
+                            padding: 12,
+                            displayColors: false
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: { display: false },
+                            border: { display: false }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            ticks: { precision: 0 },
+                            grid: { color: "#edf2f5" },
+                            border: { display: false }
+                        }
+                    }
+                }
+            });
+        }
+
+        const statusCanvas = document.getElementById("reviewStatusChart");
+        if (statusCanvas) {
+            new Chart(statusCanvas, {
+                type: "doughnut",
+                data: {
+                    labels: statusLabels,
+                    datasets: [{
+                        data: statusValues,
+                        backgroundColor: ["#e9a23b", "#0c9f91", "#e16b72"],
+                        borderWidth: 0,
+                        hoverOffset: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: "74%",
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: "#071b2c",
+                            padding: 12
+                        }
+                    }
+                }
+            });
+        }
+
+        const appointmentCanvas = document.getElementById("appointmentChart");
+        if (appointmentCanvas) {
+            new Chart(appointmentCanvas, {
+                type: "bar",
+                data: {
+                    labels: appointmentLabels,
+                    datasets: [{
+                        label: "Appointments",
+                        data: appointmentValues,
+                        backgroundColor: "#4388c7",
+                        borderRadius: 6,
+                        maxBarThickness: 38
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: "#071b2c",
+                            padding: 12
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: { display: false },
+                            border: { display: false }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            ticks: { precision: 0 },
+                            grid: { color: "#edf2f5" },
+                            border: { display: false }
+                        }
+                    }
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}

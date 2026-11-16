@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Schedule Appointment | LifeLink{% endblock %}
+
+{% block content %}
+<section class="container py-5">
+    <div class="mb-4">
+        <!--
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{% url 'welcome' %}">LifeLink Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{% url 'hospital-dashboard' %}">Hospital Dashboard</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{% url 'hospital-application-list' %}">Applications</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{% url 'hospital-application-detail' application.pk %}">
+                        Application #{{ application.pk }}
+                    </a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    Schedule Appointment
+                </li>
+            </ol>
+        </nav>-->
+
+        <a href="{% url 'hospital-application-detail' application.pk %}" class="btn btn-outline-secondary btn-sm">
+            <i class="bi bi-arrow-left me-1"></i>
+            Back to Application
+        </a>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4 p-md-5">
+                    <div class="mb-4">
+                        <span class="badge bg-primary mb-2">Hospital Portal</span>
+                        <h2 class="fw-bold">Schedule Donor Appointment</h2>
+                        <p class="text-muted mb-0">
+                            Arrange an appointment for application
+                            #{{ application.pk }}.
+                        </p>
+                    </div>
+
+                    <div class="alert alert-light border mb-4">
+                        <h6 class="fw-bold mb-2">Donor information</h6>
+                        <p class="mb-1">
+                            <strong>Name:</strong>
+                            {{ application.donor.get_full_name|default:application.donor.username }}
+                        </p>
+                        <p class="mb-0">
+                            <strong>Application:</strong>
+                            #{{ application.pk }}
+                        </p>
+                    </div>
+
+                    <form method="POST">
+                        {% csrf_token %}
+                        {% for field in form %}
+                            <div class="mb-3">
+                                <label for="{{ field.id_for_label }}" class="form-label fw-semibold">
+                                    {{ field.label }}
+                                </label>
+
+                                {{ field }}
+
+                                {% if field.help_text %}
+                                    <small class="form-text text-muted">
+                                        {{ field.help_text }}
+                                    </small>
+                                {% endif %}
+
+                                {% for error in field.errors %}
+                                    <div class="text-danger small mt-1">
+                                        {{ error }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                {{ form.non_field_errors }}
+                            </div>
+                        {% endif %}
+
+                        <div class="d-flex justify-content-between mt-4">
+                            <a href="{% url 'hospital-application-detail' application.pk %}" class="btn btn-outline-secondary">
+                                Cancel
+                            </a>
+
+                            <button type="submit" class="btn btn-primary px-4">
+                                Schedule Appointment
+                            </button>
+                        </div>
+                    </form>
+
+                    <div class="alert alert-info mt-4 mb-0 small">
+                        Scheduling an appointment does not establish medical
+                        eligibility. Donor suitability must be determined by
+                        qualified medical professionals.
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+

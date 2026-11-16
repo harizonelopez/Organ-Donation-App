@@ -1,0 +1,262 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Donor Registration | LifeLink{% endblock %}
+{% block extra_css %}
+
+<link rel="stylesheet" href="{% static 'css/auth.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="auth-section">
+    <div class="auth-layout">
+        <!-- Left introduction panel -->
+        <div class="auth-intro donor-intro">
+            <div class="intro-top">
+                <span class="intro-tag">
+                    <i class="bi bi-heart-pulse-fill"></i>
+                     LIFE LINK DONOR COMMUNITY
+                </span>
+
+                <div class="medical-visual">
+                    <div class="medical-circle circle-one"></div>
+                    <div class="medical-circle circle-two"></div>
+
+                    <div class="medical-icon">
+                        <i class="bi bi-heart-pulse-fill"></i>
+                    </div>
+
+                    <div class="floating-icon floating-icon-one">
+                        <i class="bi bi-heart-fill"></i>
+                    </div>
+
+                    <div class="floating-icon floating-icon-two">
+                        <i class="bi bi-plus-lg"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="intro-content">
+                <p class="intro-eyebrow">A SMALL STEP. A BIGGER POSSIBILITY.</p>
+                <h1>Your decision<br>could <span>change lives.</span></h1>
+
+                <p class="intro-description">
+                    Join a community committed to making organ donation
+                    more accessible, organized and transparent.
+                    Your journey begins with a simple registration.
+                </p>
+
+                <div class="intro-benefits">
+                    <div class="benefit-item">
+                        <span class="benefit-icon">
+                            <i class="bi bi-shield-check"></i>
+                        </span>
+                        <div>
+                            <strong>Secure registration</strong>
+                            <small>Your account information is protected.</small>
+                        </div>
+                    </div>
+
+                    <div class="benefit-item">
+                        <span class="benefit-icon">
+                            <i class="bi bi-clipboard2-pulse"></i>
+                        </span>
+                        <div>
+                            <strong>Application tracking</strong>
+                            <small>Follow your application progress.</small>
+                        </div>
+                    </div>
+
+                    <div class="benefit-item">
+                        <span class="benefit-icon">
+                            <i class="bi bi-hospital"></i>
+                        </span>
+                        <div>
+                            <strong>Hospital coordination</strong>
+                            <small>Connect through verified hospitals.</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="intro-footer">
+                <i class="bi bi-info-circle"></i>
+                 Registration does not constitute medical approval or
+                 confirmation of donor eligibility.
+            </div>
+        </div>
+
+        <!-- Right registration panel -->
+        <div class="auth-form-panel">
+            <div class="form-heading">
+                <span class="form-step-label">CREATE YOUR ACCOUNT</span>
+                <h2>Become a donor</h2>
+                <p>Enter your details below to create your LifeLink account.</p>
+            </div>
+
+            <form method="POST" action="" class="auth-form">
+                {% csrf_token %}
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {% for error in form.non_field_errors %}
+                            <p class="mb-0">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <!-- Personal information -->
+                <div class="form-section-heading">
+                    <span class="form-section-icon">
+                        <i class="bi bi-person"></i>
+                    </span>
+                    <div>
+                        <h5>Personal information</h5>
+                        <small>Tell us a little about yourself.</small>
+                    </div>
+                </div>
+
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label for="{{ form.first_name.id_for_label }}" class="form-label">First name</label>
+                        {{ form.first_name }}
+                        {% for error in form.first_name.errors %}
+                            <small class="field-error">{{ error }}</small>
+                        {% endfor %}
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="{{ form.last_name.id_for_label }}" class="form-label">Last name</label>
+                        {{ form.last_name }}
+                        {% for error in form.last_name.errors %}
+                            <small class="field-error">{{ error }}</small>
+                        {% endfor %}
+                    </div>
+
+                    <div class="col-12">
+                        <label for="{{ form.date_of_birth.id_for_label }}"
+                               class="form-label">Date of birth <span class="optional-label">(Optional)</span></label>
+                        {{ form.date_of_birth }}
+                        {% for error in form.date_of_birth.errors %}
+                            <small class="field-error">{{ error }}</small>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Contact information -->
+                <div class="form-section-heading mt-4">
+                    <span class="form-section-icon">
+                        <i class="bi bi-telephone"></i>
+                    </span>
+                    <div>
+                        <h5>Contact information</h5>
+                        <small>How can we reach you?</small>
+                    </div>
+                </div>
+
+                <div class="row g-3">
+                    <div class="col-12">
+                        <label for="{{ form.email.id_for_label }}" class="form-label">Email address</label>
+                        {{ form.email }}
+                        {% for error in form.email.errors %}
+                            <small class="field-error">{{ error }}</small>
+                        {% endfor %}
+                    </div>
+
+                    <div class="col-12">
+                        <label for="{{ form.phone_number.id_for_label }}" class="form-label">Phone number</label>
+                        {{ form.phone_number }}
+                        {% for error in form.phone_number.errors %}
+                            <small class="field-error">{{ error }}</small>
+                        {% endfor %}
+                    </div>
+
+                    <div class="col-12">
+                        <label for="{{ form.address.id_for_label }}" class="form-label">Residential address</label>
+                        {{ form.address }}
+                        {% for error in form.address.errors %}
+                            <small class="field-error">{{ error }}</small>
+                        {% endfor %}
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="{{ form.city.id_for_label }}" class="form-label">City / Town</label>
+                        {{ form.city }}
+                        {% for error in form.city.errors %}
+                            <small class="field-error">{{ error }}</small>
+                        {% endfor %}
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="{{ form.country.id_for_label }}" class="form-label">Country</label>
+                        {{ form.country }}
+                        {% for error in form.country.errors %}
+                            <small class="field-error">{{ error }}</small>
+                        {% endfor %}
+                    </div>
+
+                </div>
+
+                <!-- Account credentials -->
+                <div class="form-section-heading mt-4">
+                    <span class="form-section-icon">
+                        <i class="bi bi-shield-lock"></i>
+                    </span>
+                    <div>
+                        <h5>Account security</h5>
+                        <small>Choose your login credentials.</small>
+                    </div>
+                </div>
+
+                <div class="row g-3">
+                   <div class="col-12">
+                        <label for="{{ form.username.id_for_label }}" class="form-label">Username</label>
+                        {{ form.username }}
+                        {% for error in form.username.errors %}
+                            <small class="field-error">{{ error }}</small>
+                        {% endfor %}
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="{{ form.password1.id_for_label }}" class="form-label">Password</label>
+                        {{ form.password1 }}
+                        {% for error in form.password1.errors %}
+                            <small class="field-error">{{ error }}</small>
+                        {% endfor %}
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="{{ form.password2.id_for_label }}" class="form-label">Confirm password</label>
+                        {{ form.password2 }}
+                        {% for error in form.password2.errors %}
+                            <small class="field-error">{{ error }}</small>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="form-security-note mt-4">
+                    <i class="bi bi-lock-fill"></i>
+                     Your password is securely handled by the system.
+                </div>
+
+                <button type="submit" class="btn btn-teal auth-submit w-100 mt-4">
+                    Create donor account
+                    <i class="bi bi-arrow-right ms-2"></i>
+                </button>
+
+                <div class="auth-switch">
+                    <p class="mb-2">
+                        Already have an account?
+                        <a href="{% url 'donor-login' %}">Sign in</a>
+                    </p>
+
+                    <a href="{% url 'welcome' %}" class="auth-home-link">
+                        <i class="bi bi-house-door-fill"></i>
+                        Back to LifeLink Home
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+

@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Hospital Portal Login | LifeLink{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/auth.css' %}">
+{% endblock %}
+{% block content_wrapper %}container-fluid hospital-login-page{% endblock %}
+
+{% block content %}
+<div class="hospital-login-container">
+    <!-- HEADER -->
+    <header class="hospital-login-header">
+        <a href="{% url 'hospital-login' %}" class="hospital-login-brand">
+            <span class="hospital-brand-icon">
+                <i class="bi bi-heart-pulse-fill"></i>
+            </span>
+            <span>
+                <strong>LifeLink</strong>
+                <small>INSTITUTIONAL PORTAL</small>
+            </span>
+        </a>
+
+        <div class="hospital-security-label">
+            <i class="bi bi-shield-lock-fill"></i>
+            Secure institutional access
+        </div>
+    </header>
+
+    <!-- LOGIN CONTENT -->
+    <div class="hospital-login-content">
+        <!-- LEFT INFORMATION -->
+        <section class="hospital-login-intro">
+            <span class="hospital-login-overline">
+                HEALTHCARE INSTITUTION ACCESS
+            </span>
+            <h1>Manage your institution's donation coordination workspace.</h1>
+            <p>
+                Sign in to access your hospital's authorized workspace,
+                manage assigned applications and coordinate review activities.
+            </p>
+
+            <div class="hospital-login-benefits">
+                <div class="hospital-login-benefit">
+                    <div class="hospital-benefit-icon">
+                        <i class="bi bi-clipboard2-check"></i>
+                    </div>
+                    <div>
+                        <strong>Application oversight</strong>
+                        <span>Access and manage applications assigned to your institution.</span>
+                    </div>
+                </div>
+
+                <div class="hospital-login-benefit">
+                    <div class="hospital-benefit-icon">
+                        <i class="bi bi-calendar2-week"></i>
+                    </div>
+                    <div>
+                        <strong>Appointment coordination</strong>
+                        <span>Organize appointments and follow-up activities.</span>
+                    </div>
+                </div>
+
+                <div class="hospital-login-benefit">
+                    <div class="hospital-benefit-icon">
+                        <i class="bi bi-shield-check"></i>
+                    </div>
+                    <div>
+                        <strong>Protected institutional access</strong>
+                        <span>Access is restricted to verified hospital accounts.</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="hospital-login-disclaimer">
+                <i class="bi bi-info-circle"></i>
+                <span>
+                    Hospital account verification is required before
+                    institutional portal access is granted.
+                </span>
+            </div>
+        </section>
+
+        <!-- LOGIN FORM -->
+        <section class="hospital-login-card">
+            <div class="hospital-login-card-top">
+                <div class="hospital-login-card-icon">
+                    <i class="bi bi-building-lock"></i>
+                </div>
+                <span class="hospital-login-card-status">
+                    <span></span>
+                    AUTHORIZED INSTITUTIONS
+                </span>
+            </div>
+
+            <div class="hospital-login-heading">
+                <span>INSTITUTIONAL SIGN IN</span>
+                <h2>Welcome back</h2>
+                <p>Enter your hospital account credentials to continue.</p>
+            </div>
+
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            <form method="POST" novalidate>
+                {% csrf_token %}
+                <div class="hospital-login-field">
+                    <label for="{{ form.username.id_for_label }}">Hospital username</label>
+                    <div class="hospital-input-wrapper">
+                        <i class="bi bi-person"></i>
+                        {{ form.username }}
+                    </div>
+
+                    {% for error in form.username.errors %}
+                        <small class="text-danger">{{ error }}</small>
+                    {% endfor %}
+                </div>
+
+                <div class="hospital-login-field">
+                    <label for="{{ form.password.id_for_label }}">Password</label>
+                    <div class="hospital-input-wrapper">
+                        <i class="bi bi-lock"></i>
+                        {{ form.password }}
+                    </div>
+
+                    {% for error in form.password.errors %}
+                        <small class="text-danger">{{ error }}</small>
+                    {% endfor %}
+                </div>
+
+                <button type="submit" class="hospital-login-button">
+                    Access hospital portal
+                    <i class="bi bi-arrow-right"></i>
+                </button>
+
+            </form>
+
+            <div class="hospital-login-divider">
+                <span>NEW TO LIFELINK?</span>
+            </div>
+
+            <a href="{% url 'hospital-register' %}" class="hospital-create-account">
+                Register your healthcare institution
+                <i class="bi bi-arrow-up-right"></i>
+            </a>
+
+            <div class="hospital-login-footer">
+                <i class="bi bi-shield-lock"></i>
+                Your institutional credentials are protected.
+            </div>
+        </section>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="hospital-login-bottom">
+        <span>© {% now "Y" %} LifeLink. All rights reserved.</span>
+
+        <a href="{% url 'welcome' %}">
+            <i class="bi bi-house-fill"></i>
+            Back to Lifelink Home
+        </a>
+    </footer>
+</div>
+{% endblock %}
+

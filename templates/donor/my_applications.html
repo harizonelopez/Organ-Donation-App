@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}My Applications | LifeLink{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/donation.css' %}">
+{% endblock %}
+{% block content_wrapper %}container-fluid applications-page{% endblock %}
+
+{% block content %}
+<div class="applications-header">
+    <div>
+        <span class="portal-label">DONOR PORTAL</span>
+        <h1>My Applications</h1>
+        <p>View and track your organ donation applications.</p>
+    </div>
+
+    <a href="{% url 'donation-application' %}" class="btn-submit">
+        <i class="bi bi-plus-lg"></i>
+        New Application
+    </a>
+</div>
+
+<div class="applications-summary">
+    <div>
+        <span>Total applications</span>
+        <strong>{{ applications|length }}</strong>
+    </div>
+    <div>
+        <span>Latest submission</span>
+        <strong>
+            {% with latest=applications|first %}
+                {% if latest %}
+                    {{ latest.submitted_at|date:"d M Y" }}
+                {% else %}
+                    —
+                {% endif %}
+            {% endwith %}
+        </strong>
+    </div>
+</div>
+
+<div class="applications-list">
+    {% for application in applications %}
+        <article class="application-card">
+            <div class="application-card-top">
+                <div>
+                    <span class="application-reference">
+                        APPLICATION #{{ application.pk }}
+                    </span>
+                    <h2>Donation Application</h2>
+                    <p>
+                        Submitted {{ application.submitted_at|date:"d M Y" }}
+                        at {{ application.submitted_at|time:"g:i A" }}
+                    </p>
+                </div>
+
+                <span class="application-status status-{{ application.status|lower }}">
+                    {{ application.get_status_display }}
+                </span>
+            </div>
+
+            <div class="application-organs">
+                <span class="detail-label">Selected organs</span>
+                <div class="organ-tags">
+                    {% for item in application.organs.all %}
+                        <span class="organ-tag">
+                            {{ item.get_organ_display }}
+                        </span>
+                    {% empty %}
+                        <span class="muted-text">No organs recorded.</span>
+                    {% endfor %}
+                </div>
+            </div>
+
+            {% if application.description %}
+                <div class="application-description">
+                    <span class="detail-label">Additional information</span>
+                    <p>{{ application.description|linebreaksbr }}</p>
+                </div>
+            {% endif %}
+
+            <div class="application-card-footer">
+                <span>
+                    <i class="bi bi-clock-history"></i>
+                    Last updated {{ application.updated_at|date:"d M Y" }}
+                </span>
+                <span>
+                    <i class="bi bi-shield-check"></i>
+                    Application record
+                </span>
+            </div>
+
+        </article>
+
+    {% empty %}
+        <div class="applications-empty">
+            <div class="empty-icon">
+                <i class="bi bi-file-earmark-text"></i>
+            </div>
+            <h2>No applications yet</h2>
+            <p>
+                You haven't submitted a donation application.
+                When you do, it will appear here.
+            </p>
+            <a href="{% url 'donation-application' %}" class="btn-submit">
+                Start an Application
+                <i class="bi bi-arrow-right"></i>
+            </a>
+        </div>
+    {% endfor %}
+
+</div>
+
+<a href="{% url 'donor-dashboard' %}" class="applications-back">
+    <i class="bi bi-arrow-left"></i>
+    Back to Dashboard
+</a>
+
+{% endblock %}

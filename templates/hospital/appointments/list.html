@@ -1,0 +1,212 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Hospital Appointments | LifeLink{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/hospital-applications.css' %}">
+<link rel="stylesheet" href="{% static 'css/hospital-appointments.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="ha-page">
+    <div class="ha-heading">
+        <div>
+            <span class="ha-eyebrow">HOSPITAL OPERATIONS / APPOINTMENT MANAGEMENT</span>
+            <h1>Hospital Appointments</h1>
+            <p>Manage donor appointments assigned to your hospital.</p>
+        </div>
+
+        <div class="ha-total-card">
+            <span>Total Appointments</span>
+            <strong>{{ total_appointments }}</strong>
+        </div>
+    </div>
+
+    <div class="ha-toolbar">
+        <form method="GET" class="ha-filter-form">
+            <div class="ha-search">
+                <input
+                    type="search"
+                    name="q"
+                    value="{{ search_query }}"
+                    placeholder="Search donor, appointment ID or application ID...">
+            </div>
+
+            <select name="status" class="ha-status-select">
+                <option value="">All Statuses</option>
+                {% for value, label in status_choices %}
+                    <option value="{{ value }}" {% if selected_status == value %}selected{% endif %}>
+                        {{ label }}
+                    </option>
+                {% endfor %}
+            </select>
+
+            <button type="submit" class="ha-filter-button">
+                <i class="fas fa-filter"></i> Filter
+            </button>
+
+            {% if search_query or selected_status %}
+                <a href="{% url 'hospital-appointment-list' %}" class="ha-clear-filter">
+                    Clear
+                </a>
+            {% endif %}
+        </form>
+    </div>
+
+    <div class="ha-table-card">
+        <div class="ha-table-heading">
+            <div>
+                <h2>Appointment Records</h2>
+                <p>Review and manage scheduled donor appointments.</p>
+            </div>
+
+            <span class="ha-record-count">
+                {{ page_obj.paginator.count }} record{{ page_obj.paginator.count|pluralize }}
+            </span>
+        </div>
+
+        {% if appointments %}
+            <div class="ha-table-responsive">
+                <table class="ha-table">
+                    <thead>
+                        <tr>
+                            <th>Appointment</th>
+                            <th>Donor</th>
+                            <th>Application</th>
+                            <th>Date &amp; Time</th>
+                            <th>Location</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for appointment in appointments %}
+                            <tr>
+                                <td>
+                                    <strong class="ha-case-id">
+                                        APT-{{ appointment.id|stringformat:"04d" }}
+                                    </strong>
+                                </td>
+
+                                <td>
+                                    <div class="ha-donor">
+                                        <div class="ha-avatar">
+                                            {{ appointment.donor.first_name|first|default:appointment.donor.username|first|upper }}
+                                        </div>
+                                        <div>
+                                            <strong>
+                                                {{ appointment.donor.get_full_name|default:appointment.donor.username }}
+                                            </strong>
+                                            <small>{{ appointment.donor.email }}</small>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <span class="ha-case-id">
+                                        APP-{{ appointment.donation_request.id|stringformat:"04d" }}
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <div class="hap-date">
+                                        <strong>{{ appointment.appointment_date|date:"d M Y" }}</strong>
+                                        <small>{{ appointment.appointment_time|time:"h:i A" }}</small>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <span class="hap-location">
+                                        {{ appointment.location|default:"Not specified" }}
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <span class="ha-status ha-status-{{ appointment.status|lower }}">
+                                        {{ appointment.get_status_display }}
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <div class="hap-actions">
+                                        <!--
+                                        <a href="{% url 'hospital-application-detail' pk=appointment.donation_request.id %}" class="hap-action hap-view">
+                                            View
+                                        </a>-->
+
+                                        {% if appointment.status == "SCHEDULED" %}
+                                            <form method="POST" action="{% url 'hospital-complete-appointment' appointment.id %}">
+                                                {% csrf_token %}
+                                                <button type="submit" class="hap-action hap-complete">
+                                                    Complete
+                                                </button>
+                                            </form>
+
+                                            <form method="POST" action="{% url 'hospital-cancel-appointment' appointment.id %}">
+                                                {% csrf_token %}
+                                                <button type="submit" class="hap-action hap-cancel">
+                                                    Cancel
+                                                </button>
+                                            </form>
+                                        {% endif %}
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            {% if page_obj.has_other_pages %}
+                <div class="ha-pagination">
+                    {% if page_obj.has_previous %}
+                        <a href="?page={{ page_obj.previous_page_number }}&q={{ search_query|urlencode }}&status={{ selected_status|urlencode }}">
+                            Previous
+                        </a>
+                    {% endif %}
+
+                    <span>
+                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                    </span>
+
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}&q={{ search_query|urlencode }}&status={{ selected_status|urlencode }}">
+                            Next
+                        </a>
+                    {% endif %}
+                </div>
+            {% endif %}
+
+        {% else %}
+            <div class="ha-empty-state">
+                <div class="ha-empty-icon">
+                    <i class="fas fa-calendar-check"></i>
+                </div>
+
+                <h3>No appointments found</h3>
+                <p>
+                    {% if search_query or selected_status %}
+                        No appointments match your current search or filter.
+                    {% else %}
+                        Appointments scheduled for your hospital will appear here.
+                        You can schedule one from an assigned application.
+                    {% endif %}
+                </p>
+
+                {% if search_query or selected_status %}
+                    <a href="{% url 'hospital-appointment-list' %}" class="ha-view-button">
+                        Clear Filters
+                    </a>
+                {% else %}
+                    <a href="{% url 'hospital-applications' %}" class="ha-view-button">
+                        View Assigned Applications
+                    </a>
+                {% endif %}
+            </div>
+        {% endif %}
+
+    </div>
+</section>
+{% endblock %}
+

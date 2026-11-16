@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Assigned Applications | LifeLink{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/hospital-applications.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="ha-page">
+    <div class="ha-heading">
+        <div>
+            <span class="ha-eyebrow">HOSPITAL OPERATIONS / CASE MANAGEMENT</span>
+            <h1>Assigned Applications</h1>
+            <p>Review and manage donation applications assigned to your institution.</p>
+        </div>
+
+        <div class="ha-total-card">
+            <span>Total assigned cases</span>
+            <strong>{{ total_assigned }}</strong>
+        </div>
+    </div>
+
+    <div class="ha-toolbar">
+        <form method="get" class="ha-filter-form">
+            <div class="ha-search">
+                <i class="bi bi-search"></i>
+                <input
+                    type="search"
+                    name="q"
+                    value="{{ search_query }}"
+                    placeholder="Search donor, application ID or organ...">
+            </div>
+
+            <select name="status" class="ha-status-select">
+                <option value="">All statuses</option>
+                {% for value, label in status_choices %}
+                    <option value="{{ value }}"
+                        {% if selected_status == value %}selected{% endif %}>
+                        {{ label }}
+                    </option>
+                {% endfor %}
+            </select>
+
+            <button type="submit" class="ha-filter-button">
+                <i class="bi bi-funnel"></i>
+                Filter
+            </button>
+
+            {% if search_query or selected_status %}
+                <a href="{% url 'hospital-application-list' %}" class="ha-clear-filter">
+                    Clear
+                </a>
+            {% endif %}
+        </form>
+    </div>
+
+    <div class="ha-table-card">
+        <div class="ha-table-heading">
+            <div>
+                <h2>Case queue</h2>
+                <p>Applications currently assigned to your hospital</p>
+            </div>
+            <span class="ha-record-count">
+                {{ page_obj.paginator.count }} records
+            </span>
+        </div>
+
+        {% if applications %}
+            <div class="table-responsive">
+                <table class="ha-table">
+                    <thead>
+                        <tr>
+                            <th>Application</th>
+                            <th>Donor</th>
+                            <th>Organs of interest</th>
+                            <th>Submitted</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for application in applications %}
+                            <tr>
+                                <td>
+                                    <strong class="ha-case-id">
+                                        #{{ application.pk }}
+                                    </strong>
+                                </td>
+
+                                <td>
+                                    <div class="ha-donor">
+                                        <span class="ha-avatar">
+                                            {{ application.donor.first_name|default:application.donor.username|first|upper }}
+                                        </span>
+                                        <div>
+                                            <strong>
+                                                {{ application.donor.get_full_name|default:application.donor.username }}
+                                            </strong>
+                                            <small>{{ application.donor.email }}</small>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <div class="ha-organ-list">
+                                        {% for item in application.organs.all %}
+                                            <span>{{ item.get_organ_display }}</span>
+                                        {% empty %}
+                                            <span class="ha-muted">Not specified</span>
+                                        {% endfor %}
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <span class="ha-date">
+                                        {{ application.submitted_at|date:"d M Y" }}
+                                    </span>
+                                    <small class="ha-muted">
+                                        {{ application.submitted_at|date:"H:i" }}
+                                    </small>
+                                </td>
+
+                                <td>
+                                    <span class="ha-status ha-status-{{ application.status|lower }}">
+                                        {{ application.get_status_display }}
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <a href="{% url 'hospital-application-detail' application.pk %}" class="ha-view-button">
+                                        Review <i class="bi bi-arrow-up-right"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            {% if page_obj.has_other_pages %}
+                <div class="ha-pagination">
+                    <span>
+                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                    </span>
+
+                    <div>
+                        {% if page_obj.has_previous %}
+                            <a href="?q={{ search_query|urlencode }}&status={{ selected_status|urlencode }}&page={{ page_obj.previous_page_number }}">
+                                <i class="bi bi-chevron-left"></i> Previous
+                            </a>
+                        {% endif %}
+
+                        {% if page_obj.has_next %}
+                            <a href="?q={{ search_query|urlencode }}&status={{ selected_status|urlencode }}&page={{ page_obj.next_page_number }}">
+                                Next <i class="bi bi-chevron-right"></i>
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+
+        {% else %}
+            <div class="ha-empty-state">
+                <div class="ha-empty-icon">
+                    <i class="bi bi-inbox"></i>
+                </div>
+                <h3>No applications found</h3>
+                <p>
+                    {% if search_query or selected_status %}
+                        No assigned applications match your current filters.
+                    {% else %}
+                        Your hospital has no assigned applications at the moment.
+                    {% endif %}
+                </p>
+                {% if search_query or selected_status %}
+                    <a href="{% url 'hospital-application-list' %}">
+                        Clear filters
+                    </a>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+
+</section>
+{% endblock %}
+

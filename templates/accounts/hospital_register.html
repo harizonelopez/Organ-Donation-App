@@ -1,0 +1,271 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Hospital Registration | LifeLink{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/auth.css' %}">
+{% endblock %}
+{% block content_wrapper %}container-fluid hospital-register-page{% endblock %}
+
+{% block content %}
+<div class="hospital-register-container">
+    <!-- PAGE HEADER -->
+    <div class="hospital-page-header">
+        <div>
+            <span class="hospital-page-kicker">
+                <i class="bi bi-hospital"></i>
+                INSTITUTIONAL PORTAL
+            </span>
+            <h1>Hospital registration</h1>
+            <p>
+                Register your healthcare institution with the LifeLink
+                organ donation management network.
+            </p>
+        </div>
+
+        <div class="hospital-header-badge">
+            <i class="bi bi-shield-check"></i>
+            Secure registration
+        </div>
+    </div>
+
+    <div class="hospital-register-layout">
+        <!-- REGISTRATION FORM -->
+        <div class="hospital-form-card">
+            <div class="hospital-form-heading">
+                <div class="hospital-heading-icon">
+                    <i class="bi bi-building-add"></i>
+                </div>
+                <div>
+                    <h2>Institution details</h2>
+                    <p>Provide your hospital's official information.</p>
+                </div>
+            </div>
+
+            <form method="POST" novalidate>
+                {% csrf_token %}
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {{ form.non_field_errors }}
+                    </div>
+                {% endif %}
+
+                <!-- SECTION 1 -->
+                <div class="hospital-form-section">
+                    <div class="hospital-section-title">
+                        <span>01</span>
+                        <div>
+                            <h3>Hospital information</h3>
+                            <p>Official institution identification</p>
+                        </div>
+                    </div>
+
+                    <div class="hospital-field-grid">
+                        <div class="hospital-field full-width">
+                            <label for="{{ form.hospital_name.id_for_label }}">Hospital name</label>
+                            {{ form.hospital_name }}
+                            {% for error in form.hospital_name.errors %}
+                                <small class="text-danger">{{ error }}</small>
+                            {% endfor %}
+                        </div>
+
+                        <div class="hospital-field">
+                            <label for="{{ form.registration_number.id_for_label }}">Registration number</label>
+                            {{ form.registration_number }}
+                            {% for error in form.registration_number.errors %}
+                                <small class="text-danger">{{ error }}</small>
+                            {% endfor %}
+                        </div>
+
+                        <div class="hospital-field">
+                            <label for="{{ form.contact_number.id_for_label }}">Contact number</label>
+                            {{ form.contact_number }}
+                            {% for error in form.contact_number.errors %}
+                                <small class="text-danger">{{ error }}</small>
+                            {% endfor %}
+                        </div>
+
+                        <div class="hospital-field full-width">
+                            <label for="{{ form.address.id_for_label }}">Physical address</label>
+                            {{ form.address }}
+                            {% for error in form.address.errors %}
+                                <small class="text-danger">{{ error }}</small>
+                            {% endfor %}
+                        </div>
+
+                        <div class="hospital-field">
+                            <label for="{{ form.city.id_for_label }}">City / Town</label>
+                            {{ form.city }}
+                            {% for error in form.city.errors %}
+                                <small class="text-danger">{{ error }}</small>
+                            {% endfor %}
+                        </div>
+
+                        <div class="hospital-field">
+                            <label for="{{ form.country.id_for_label }}">Country</label>
+                            {{ form.country }}
+                            {% for error in form.country.errors %}
+                                <small class="text-danger">{{ error }}</small>
+                            {% endfor %}
+                        </div>
+
+                        <div class="hospital-field full-width">
+                            <label for="{{ form.email.id_for_label }}">Official institutional email</label>
+                            {{ form.email }}
+                            {% for error in form.email.errors %}
+                                <small class="text-danger">{{ error }}</small>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION 2 -->
+                <div class="hospital-form-section">
+                    <div class="hospital-section-title">
+                        <span>02</span>
+                        <div>
+                            <h3>Account credentials</h3>
+                            <p>Create your institution's login details</p>
+                        </div>
+                    </div>
+
+                    <div class="hospital-field-grid">
+                        <div class="hospital-field full-width">
+                            <label for="{{ form.username.id_for_label }}">Hospital username</label>
+                            {{ form.username }}
+                            {% for error in form.username.errors %}
+                                <small class="text-danger">{{ error }}</small>
+                            {% endfor %}
+                        </div>
+
+                        <div class="hospital-field">
+                            <label for="{{ form.password1.id_for_label }}">Password</label>
+                            {{ form.password1 }}
+                            {% for error in form.password1.errors %}
+                                <small class="text-danger">{{ error }}</small>
+                            {% endfor %}
+                        </div>
+
+                        <div class="hospital-field">
+                            <label for="{{ form.password2.id_for_label }}">Confirm password</label>
+                            {{ form.password2 }}
+                            {% for error in form.password2.errors %}
+                                <small class="text-danger">{{ error }}</small>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VERIFICATION NOTICE -->
+                <div class="hospital-verification-notice">
+                    <div class="verification-notice-icon">
+                        <i class="bi bi-shield-lock"></i>
+                    </div>
+                    <div>
+                        <strong>Administrator verification required</strong>
+                        <p>
+                            Your institution's registration will be reviewed
+                            by a LifeLink administrator. Hospital portal
+                            access will only be granted after verification.
+                        </p>
+                    </div>
+                </div>
+
+                <button type="submit" class="hospital-register-button">
+                    Submit institutional registration
+                    <i class="bi bi-arrow-right"></i>
+                </button>
+
+                <div class="hospital-form-footer">
+                    <p class="mb-2">
+                        Already registered?
+                        <a href="{% url 'hospital-login' %}">Sign in to hospital portal</a>
+                    </p>
+
+                    <a href="{% url 'welcome' %}" class="auth-home-link">
+                        <i class="bi bi-house-door-fill"></i>
+                        Back to LifeLink Home
+                    </a>
+                </div>
+            </form>
+        </div>
+
+        <!-- RIGHT INFORMATION PANEL -->
+        <aside class="hospital-info-column">
+            <div class="hospital-info-card hospital-info-dark">
+                <div class="hospital-info-symbol">
+                    <i class="bi bi-heart-pulse"></i>
+                </div>
+
+                <span class="hospital-info-eyebrow">LIFELINK NETWORK</span>
+                <h2>Connecting healthcare institutions through coordinated care.</h2>
+                <p>
+                    LifeLink provides a centralized platform for managing
+                    organ donation applications and coordinating institutional
+                    review activities.
+                </p>
+
+                <div class="hospital-info-divider"></div>
+                <div class="hospital-info-stat">
+                    <i class="bi bi-shield-check"></i>
+                    <div>
+                        <strong>Verified access</strong>
+                        <span>Institutional verification before portal access.</span>
+                    </div>
+                </div>
+
+                <div class="hospital-info-stat">
+                    <i class="bi bi-folder2-open"></i>
+                    <div>
+                        <strong>Controlled records</strong>
+                        <span>Access to authorized applications and records.</span>
+                    </div>
+                </div>
+
+                <div class="hospital-info-stat">
+                    <i class="bi bi-calendar2-check"></i>
+                    <div>
+                        <strong>Coordinated reviews</strong>
+                        <span>Manage application reviews and appointments.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hospital-info-card hospital-process-card">
+                <span class="hospital-process-label">WHAT HAPPENS NEXT?</span>
+
+                <div class="hospital-process-step">
+                    <span>1</span>
+                    <div>
+                        <strong>Submit registration</strong>
+                        <p>Provide your institution's details.</p>
+                    </div>
+                </div>
+
+                <div class="hospital-process-step">
+                    <span>2</span>
+                    <div>
+                        <strong>Administrator review</strong>
+                        <p>Your institutional details are reviewed.</p>
+                    </div>
+                </div>
+
+                <div class="hospital-process-step">
+                    <span>3</span>
+                    <div>
+                        <strong>Portal access</strong>
+                        <p>Verified institutions can sign in.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hospital-donor-link">
+                Registering as an individual donor?
+                <a href="{% url 'donor-register' %}">Donor registration</a>
+            </div>
+        </aside>
+    </div>
+</div>
+
+{% endblock %}
+

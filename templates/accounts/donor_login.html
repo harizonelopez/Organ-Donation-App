@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Donor Login | LifeLink{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/auth.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="auth-section">
+    <div class="auth-layout">
+        <div class="auth-intro donor-intro">
+            <div class="intro-top">
+                <span class="intro-tag">
+                    <i class="bi bi-heart-pulse-fill"></i>
+                     WELCOME BACK TO LIFELINK
+                </span>
+
+                <div class="medical-visual">
+                    <div class="medical-circle circle-one"></div>
+                    <div class="medical-circle circle-two"></div>
+                    <div class="medical-icon">
+                        <i class="bi bi-heart-pulse-fill"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="intro-content">
+                <p class="intro-eyebrow">YOUR JOURNEY CONTINUES</p>
+                <h1>Every step<br><span>matters.</span></h1>
+                <p class="intro-description">
+                    Sign in to access your donor account, follow your
+                    application progress and stay connected with
+                    your healthcare coordination team.
+                </p>
+            </div>
+
+            <div class="intro-footer">
+                <i class="bi bi-shield-check"></i>
+                 Your account information is protected.
+            </div>
+        </div>
+
+        <div class="auth-form-panel login-panel">
+            <div class="form-heading">
+                <span class="form-step-label">DONOR PORTAL</span>
+                <h2>Welcome back</h2>
+                <p>Enter your account credentials to continue.</p>
+            </div>
+
+            <form method="POST" class="auth-form">
+                {% csrf_token %}
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {% for error in form.non_field_errors %}
+                            <p class="mb-0">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <div class="mb-3">
+                    <label for="{{ form.username.id_for_label }}" class="form-label">Username</label>
+                    <input
+                        type="text"
+                        name="username"
+                        id="{{ form.username.id_for_label }}"
+                        class="form-control"
+                        placeholder="Enter username"
+                        value="{{ form.username.value|default:'' }}"
+                        required
+                        autofocus>
+                    {% for error in form.username.errors %}
+                        <small class="field-error">{{ error }}</small>
+                    {% endfor %}
+                </div>
+
+                <div class="mb-3">
+                    <label for="{{ form.password.id_for_label }}" class="form-label">Password</label>
+                    <input
+                        type="password"
+                        name="password"
+                        id="{{ form.password.id_for_label }}"
+                        class="form-control"
+                        placeholder="Enter your password"
+                        required>
+                    {% for error in form.password.errors %}
+                        <small class="field-error">{{ error }}</small>
+                    {% endfor %}
+                </div>
+
+                <button type="submit" class="btn btn-teal auth-submit w-100 mt-3">
+                    Sign in
+                    <i class="bi bi-arrow-right ms-2"></i>
+                </button>
+
+                <div class="auth-switch">
+                    <p class="mb-2">
+                        Don't have an account?
+                        <a href="{% url 'donor-register' %}">Register as a donor</a>
+                    </p>
+
+                    <a href="{% url 'welcome' %}" class="auth-home-link">
+                        <i class="bi bi-house-door-fill"></i>
+                        Back to LifeLink Home
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}
+

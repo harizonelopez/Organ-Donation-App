@@ -1,0 +1,216 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Application #{{ application.pk }} | LifeLink{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/hospital-applications.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="ha-page ha-detail-page">
+    <a href="{% url 'hospital-application-list' %}" class="ha-back-link">
+        <i class="bi bi-arrow-left"></i> Back to applications
+    </a>
+
+    <div class="ha-heading ha-detail-heading">
+        <div>
+            <span class="ha-eyebrow">APPLICATION RECORD / #{{ application.pk }}</span>
+            <h1>Donation Application</h1>
+            <p>Review the submitted information and record your institution's decision.</p>
+        </div>
+
+        <span class="ha-status ha-status-{{ application.status|lower }}">
+            {{ application.get_status_display }}
+        </span>
+    </div>
+
+    <div class="ha-detail-grid">
+        <div class="ha-main-column">
+            <div class="ha-detail-card">
+                <div class="ha-card-heading">
+                    <div>
+                        <span class="ha-card-index">01</span>
+                        <h2>Donor information</h2>
+                    </div>
+                </div>
+
+                <div class="ha-donor-profile">
+                    <div class="ha-large-avatar">
+                        {{ application.donor.first_name|default:application.donor.username|first|upper }}
+                    </div>
+
+                    <div>
+                        <h3>
+                            {{ application.donor.get_full_name|default:application.donor.username }}
+                        </h3>
+                        <p>Registered donor</p>
+                    </div>
+                </div>
+
+                <div class="ha-info-grid">
+                    <div>
+                        <span>Email address</span>
+                        <strong>{{ application.donor.email }}</strong>
+                    </div>
+                    <div>
+                        <span>Username</span>
+                        <strong>{{ application.donor.username }}</strong>
+                    </div>
+                    <div>
+                        <span>Application submitted</span>
+                        <strong>{{ application.submitted_at|date:"d M Y, H:i" }}</strong>
+                    </div>
+                    <div>
+                        <span>Last updated</span>
+                        <strong>{{ application.updated_at|date:"d M Y, H:i" }}</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ha-detail-card">
+                <div class="ha-card-heading">
+                    <div>
+                        <span class="ha-card-index">02</span>
+                        <h2>Organs of interest</h2>
+                    </div>
+                </div>
+
+                <div class="ha-selected-organs">
+                    {% for item in application.organs.all %}
+                        <div class="ha-organ-item">
+                            <i class="bi bi-heart-pulse"></i>
+                            <span>{{ item.get_organ_display }}</span>
+                        </div>
+                    {% empty %}
+                        <p class="ha-muted">No organs were specified.</p>
+                    {% endfor %}
+                </div>
+
+                <div class="ha-description">
+                    <span>Additional information provided by donor</span>
+                    {% if application.description %}
+                        <p>{{ application.description|linebreaksbr }}</p>
+                    {% else %}
+                        <p class="ha-muted">No additional information was provided.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="ha-detail-card">
+                <div class="ha-card-heading">
+                    <div>
+                        <span class="ha-card-index">03</span>
+                        <h2>Review history</h2>
+                    </div>
+                    <span class="ha-record-count">{{ reviews|length }} records</span>
+                </div>
+
+                {% if reviews %}
+                    <div class="ha-review-timeline">
+                        {% for review in reviews %}
+                            <div class="ha-review-entry">
+                                <div class="ha-timeline-marker"></div>
+                                <div class="ha-review-content">
+                                    <div class="ha-review-top">
+                                        <strong>{{ review.get_decision_display }}</strong>
+                                        <span>{{ review.reviewed_at|date:"d M Y, H:i" }}</span>
+                                    </div>
+                                    {% if review.comments %}
+                                        <p>{{ review.comments|linebreaksbr }}</p>
+                                    {% else %}
+                                        <p class="ha-muted">No comments recorded.</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="ha-inline-empty">
+                        No review activity has been recorded for this application.
+                    </div>
+                {% endif %}
+            </div>
+
+        </div>
+
+        <aside class="ha-side-column">
+            <div class="ha-detail-card"> <!-- Hospital appointments -->
+                <div class="ha-card-heading">
+                    <div>
+                        <span class="ha-card-index">05</span>
+                        <h2>Donor appointment</h2>
+                    </div>
+                </div>
+
+                <p class="ha-review-intro">
+                    Arrange a medical evaluation appointment for this donor.
+                </p>
+
+                <a href="{% url 'hospital-schedule-appointment' application.pk %}" class="ha-submit-review"
+                    style="display: flex; justify-content: center; align-items: center; text-decoration: none;">
+                    Schedule appointment <i class="bi bi-calendar-plus ms-2"></i>
+                </a>
+            </div>
+            <div class="ha-detail-card ha-review-card">
+                <div class="ha-card-heading">
+                    <div>
+                        <span class="ha-card-index">04</span>
+                        <h2>Record review</h2>
+                    </div>
+                </div>
+
+                <p class="ha-review-intro">
+                    Record your institution's current assessment of this application.
+                </p>
+
+                <form method="post" class="ha-review-form">
+                    {% csrf_token %}
+
+                    <label for="decision">Review decision</label>
+                    <select name="decision" id="decision" required>
+                        <option value="">Select a decision</option>
+                        {% for value, label in decision_choices %}
+                            <option value="{{ value }}">{{ label }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <label for="comments">Review comments</label>
+                    <textarea
+                        name="comments"
+                        id="comments"
+                        rows="6"
+                        placeholder="Enter your review notes or explanation..."
+                    ></textarea>
+
+                    <button type="submit" class="ha-submit-review">
+                        Submit review <i class="bi bi-arrow-right"></i>
+                    </button>
+                </form>
+
+                <div class="ha-review-notice">
+                    <i class="bi bi-shield-check"></i>
+                    <p>
+                        Your review will be saved in the application's history.
+                        Previous reviews will not be overwritten.
+                    </p>
+                </div>
+            </div>
+
+            <div class="ha-clinical-notice">
+                <i class="bi bi-info-circle"></i>
+                <div>
+                    <strong>Clinical responsibility</strong>
+                    <p>
+                        This administrative review does not establish donor
+                        medical suitability. Clinical evaluation and final
+                        decisions must be performed by qualified medical
+                        professionals.
+                    </p>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+</section>
+{% endblock %}
+

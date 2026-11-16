@@ -1,0 +1,434 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Donor Dashboard | LifeLink{% endblock %}
+{% block content_wrapper %}container-fluid p-0{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="donor-dashboard">
+    <!-- SIDEBAR -->
+    <aside class="dashboard-sidebar">
+        <div class="sidebar-brand">
+            <i class="bi bi-heart-pulse-fill"></i>
+            <span>LifeLink</span>
+        </div>
+
+        <div class="sidebar-user">
+            <div class="user-avatar">
+                {{ user.first_name|default:user.username|first|upper }}
+            </div>
+
+            <div class="sidebar-user-details">
+                <strong>{{ user.first_name|default:user.username }}</strong>
+                <small>Donor account</small>
+            </div>
+        </div>
+
+        <!-- SIDEBAR NAVIGATION -->
+        <nav class="sidebar-nav">
+            <span class="sidebar-label">MAIN MENU</span>
+            <a href="#overview" class="sidebar-link">
+                <i class="bi bi-grid-1x2"></i>
+                <span>Overview</span>
+            </a>
+
+            <a href="{% url 'my-applications' %}" class="sidebar-link" 
+                active {% if request.resolver_match.url_name == 'my-applications' %}active{% endif %}>
+                <i class="bi bi-file-earmark-text"></i>
+                <span>My applications</span>
+            </a>
+
+            <a href="{% url 'donation-application' %}" class="sidebar-link"
+                {% if request.resolver_match.url_name == 'donation-application' %}active{% endif %}>
+                <i class="bi bi-file-earmark-plus"></i>
+                <span>New Application</span>
+            </a>
+
+            <a href="#health" class="sidebar-link">
+                <i class="bi bi-heart-pulse"></i>
+                <span>Health centre</span>
+            </a>
+
+            <a href="#records" class="sidebar-link">
+                <i class="bi bi-folder2-open"></i>
+                <span>Medical records</span>
+            </a>
+
+            <a href="#appointments" class="sidebar-link">
+                <i class="bi bi-calendar2-check"></i>
+                <span>Appointments</span>
+            </a>
+
+            <a href="#notifications" class="sidebar-link">
+                <i class="bi bi-bell"></i>
+                <span>Notifications</span>
+            </a>
+
+            <span class="sidebar-label account-label">ACCOUNT</span>
+
+            <a href="#profile" class="sidebar-link">
+                <i class="bi bi-person-circle"></i>
+                <span>My profile</span>
+            </a>
+        </nav>
+
+        <!-- PRIVACY INFORMATION -->
+        <div class="sidebar-help">
+            <i class="bi bi-shield-check"></i>
+            <strong>Your privacy matters</strong>
+
+            <p>
+                Your personal and medical information should only
+                be accessed by authorized personnel.
+            </p>
+        </div>
+
+        <!-- SIGN OUT -->
+        <form method="POST" action="{% url 'donor-logout' %}" class="sidebar-logout-form">
+            {% csrf_token %}
+            <button type="submit" class="sidebar-logout">
+                <i class="bi bi-box-arrow-left"></i>
+                <span>Sign out</span>
+            </button>
+        </form>
+    </aside>
+
+    <!-- DASHBOARD CONTENT -->
+    <div class="dashboard-main">
+        <!-- TOP BAR -->
+        <header class="dashboard-topbar">
+            <div class="topbar-heading">
+                <span class="topbar-label">DONOR PORTAL</span>
+                <h5>Personal dashboard</h5>
+            </div>
+
+            <div class="topbar-user">
+                <div class="topbar-avatar">
+                    {{ user.first_name|default:user.username|first|upper }}
+                </div>
+
+                <div class="topbar-user-details">
+                    <strong>{{ user.get_full_name|default:user.username }}</strong>
+                    <small>Donor account</small>
+                </div>
+            </div>
+        </header>
+
+        <!-- OVERVIEW -->
+        <section id="overview" class="dashboard-section">
+
+            <!-- WELCOME BANNER -->
+            <div class="welcome-banner">
+                <div class="welcome-content">
+                    <span class="welcome-eyebrow">
+                        <i class="bi bi-stars"></i>
+                        YOUR LIFELINK JOURNEY
+                    </span>
+
+                    <h1>
+                        Welcome back,
+                        {{ user.first_name|default:user.username }}!
+                    </h1>
+
+                    <p>
+                        Manage your donation applications, healthcare
+                        information and appointments from one place.
+                    </p>
+
+                </div>
+
+                <div class="welcome-icon">
+                    <i class="bi bi-heart-pulse"></i>
+                </div>
+            </div>
+
+            <!-- SUMMARY CARDS -->
+            <div class="dashboard-stats">
+                <div class="stat-card">
+                    <div class="stat-icon stat-teal">
+                        <i class="bi bi-file-earmark-medical"></i>
+                    </div>
+
+                    <div class="stat-content">
+                        <span>Total applications</span>
+                        <h3>{{ total_applications }}</h3>
+                        <small>Your submitted applications</small>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon stat-orange">
+                        <i class="bi bi-hourglass-split"></i>
+                    </div>
+
+                    <div class="stat-content">
+                        <span>Awaiting decision</span>
+                        <h3>{{ pending_applications }}</h3>
+                        <small>Submitted or under review</small>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon stat-green">
+                        <i class="bi bi-check-circle"></i>
+                    </div>
+
+                    <div class="stat-content">
+                        <span>Administratively approved</span>
+                        <h3>{{ approved_applications }}</h3>
+                        <small>Further evaluation may still be required</small>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon stat-blue">
+                        <i class="bi bi-folder2-open"></i>
+                    </div>
+
+                    <div class="stat-content">
+                        <span>Medical records</span>
+                        <h3>{{ total_medical_records }}</h3>
+                        <small>Uploaded documents</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DASHBOARD PANELS -->
+            <div class="dashboard-content-grid">
+
+                <!-- APPLICATIONS -->
+                <div class="dashboard-panel" id="applications">
+                    <div class="panel-heading">
+                        <div>
+                            <span class="panel-eyebrow">DONATION MANAGEMENT</span>
+                            <h4>Recent applications</h4>
+                        </div>
+
+                        <span class="panel-icon">
+                            <i class="bi bi-file-earmark-text"></i>
+                        </span>
+                    </div>
+
+                    {% for application in recent_applications %}
+                        <div class="application-item">
+                            <div class="application-info">
+                                <strong>Application #{{ application.id }}</strong>
+                                <small>
+                                    Submitted {{ application.submitted_at|date:"d M Y" }}
+                                </small>
+                            </div>
+
+                            <span class="application-status status-{{ application.status|lower }}">
+                                {{ application.get_status_display }}
+                            </span>
+                        </div>
+
+                    {% empty %}
+
+                        <div class="empty-state">
+                            <i class="bi bi-file-earmark-plus"></i>
+                            <h5>No applications yet</h5>
+                            <p>Your donation applications will appear here once submitted.</p>
+                        </div>
+
+                    {% endfor %}
+                </div>
+
+                <!-- APPOINTMENTS -->
+                <div class="dashboard-panel" id="appointments">
+                    <div class="panel-heading">
+                        <div>
+                            <span class="panel-eyebrow">HOSPITAL COORDINATION</span>
+                            <h4>Scheduled appointments</h4>
+                        </div>
+
+                        <span class="panel-icon">
+                            <i class="bi bi-calendar2-check"></i>
+                        </span>
+                    </div>
+
+                    {% for appointment in upcoming_appointments %}
+                        <div class="appointment-item">
+                            <div class="appointment-date">
+                                <strong>{{ appointment.appointment_date|date:"d" }}</strong>
+                                <small>{{ appointment.appointment_date|date:"M" }}</small>
+                            </div>
+
+                            <div class="appointment-info">
+                                <strong>{{ appointment.location }}</strong>
+                                <small>
+                                    {{ appointment.appointment_date|date:"l, d F Y" }}
+                                </small>
+
+                                <small>
+                                    {{ appointment.appointment_time|time:"g:i A" }}
+                                </small>
+                            </div>
+                        </div>
+                    {% empty %}
+
+                        <div class="empty-state">
+                            <i class="bi bi-calendar-plus"></i>
+                            <h5>No scheduled appointments</h5>
+                            <p>Hospital appointments will appear here when scheduled.</p>
+                        </div>
+                    {% endfor %}
+
+                </div>
+
+                <!-- HEALTH CENTRE -->
+                <div class="dashboard-panel" id="health">
+                    <div class="panel-heading">
+                        <div>
+                            <span class="panel-eyebrow">PERSONAL HEALTHCARE</span>
+                            <h4>Your health centre</h4>
+                        </div>
+
+                        <span class="panel-icon">
+                            <i class="bi bi-heart-pulse"></i>
+                        </span>
+
+                    </div>
+
+                    <p class="panel-description">
+                        Keep your relevant healthcare information organized
+                        and accessible to authorized medical personnel.
+                    </p>
+
+                    <div class="feature-list">
+                        <div>
+                            <i class="bi bi-person-vcard"></i>
+                            <span>Personal health profile</span>
+                            <span class="feature-tag">Coming soon</span>
+                        </div>
+
+                        <div>
+                            <i class="bi bi-capsule"></i>
+                            <span>Medications and allergies</span>
+                            <span class="feature-tag">Coming soon</span>
+                        </div>
+
+                        <div>
+                            <i class="bi bi-droplet"></i>
+                            <span>Blood group information</span>
+                            <span class="feature-tag">Coming soon</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MEDICAL RECORDS -->
+                <div class="dashboard-panel" id="records">
+                    <div class="panel-heading">
+                        <div>
+                            <span class="panel-eyebrow">DOCUMENT MANAGEMENT</span>
+                            <h4>Medical records</h4>
+                        </div>
+
+                        <span class="panel-icon">
+                            <i class="bi bi-folder2-open"></i>
+                        </span>
+                    </div>
+
+                    <div class="records-summary">
+                        <div class="records-number">
+                            <strong>{{ total_medical_records }}</strong>
+                            <span>Uploaded documents</span>
+                        </div>
+                        <i class="bi bi-file-earmark-medical records-large-icon"></i>
+                    </div>
+
+                    <p class="panel-description">
+                        Your medical reports, laboratory results and
+                        other supporting documents will be managed here.
+                    </p>
+                </div>
+
+                <!-- NOTIFICATIONS -->
+                <div class="dashboard-panel" id="notifications">
+                    <div class="panel-heading">
+                        <div>
+                            <span class="panel-eyebrow">UPDATES</span>
+                            <h4>Notifications</h4>
+                        </div>
+
+                        <span class="panel-icon">
+                            <i class="bi bi-bell"></i>
+                        </span>
+                    </div>
+
+                    <div class="empty-state">
+                        <i class="bi bi-bell"></i>
+                        <h5>Your updates will appear here</h5>
+                        <p>
+                            Application updates and hospital notifications
+                            will be available here.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- PROFILE -->
+                <div class="dashboard-panel" id="profile">
+                    <div class="panel-heading">
+                        <div>
+                            <span class="panel-eyebrow">ACCOUNT INFORMATION</span>
+                            <h4>Personal profile</h4>
+                        </div>
+
+                        <span class="panel-icon">
+                            <i class="bi bi-person-circle"></i>
+                        </span>
+                    </div>
+
+                    <div class="profile-details">
+                        <div>
+                            <span>Full name</span>
+                            <strong>{{ user.get_full_name|default:user.username }}</strong>
+                        </div>
+
+                        <div>
+                            <span>Username</span>
+                            <strong>{{ user.username }}</strong>
+                        </div>
+
+                        <div>
+                            <span>Email address</span>
+                            <strong>{{ user.email }}</strong>
+                        </div>
+
+                        <div>
+                            <span>Account type</span>
+                            <strong>{{ user.get_role_display }}</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MEDICAL DISCLAIMER -->
+            <div class="dashboard-disclaimer">
+                <i class="bi bi-info-circle"></i>
+                <p>
+                    <strong>Important:</strong>
+                    LifeLink supports donor registration and hospital coordination.
+                    Application approval does not establish medical eligibility.
+                    Donor suitability and all clinical decisions must be determined
+                    by qualified medical professionals.
+                </p>
+            </div>
+        </section>
+
+        <!-- DASHBOARD FOOTER -->
+        <footer class="dashboard-footer">
+            <span>© LifeLink. Donor Healthcare Portal.</span>
+            <span>Secure · Responsible · Compassionate</span>
+        </footer>
+
+    </div>
+</div>
+
+{% endblock %}
+{% block footer %}{% endblock %}
+
+
