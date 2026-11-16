@@ -49,8 +49,9 @@ def hospital_schedule_appointment(request, application_id):
             appointment.status = Appointment.Status.SCHEDULED
             appointment.save()
 
-            messages.success(request, "Appointment successfully scheduled.")
-            return redirect("hospital-application-detail", pk=application.pk)
+            messages.success(request, "Appointment scheduled successfully.")
+            return redirect("hospital-appointment-list")
+            #return redirect("hospital-application-detail", pk=application.pk)
 
     return render(
         request,
