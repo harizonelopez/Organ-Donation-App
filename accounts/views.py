@@ -95,9 +95,7 @@ def hospital_register(request):
                 "Hospital registration submitted successfully. "
                 "Account awaiting administrator verification."
             )
-
             return redirect("hospital-login")
-
     else:
         form = HospitalRegistrationForm()
 
@@ -198,7 +196,7 @@ def donor_logout(request):
 @login_required
 def donor_dashboard(request):
     if request.user.role != User.Role.DONOR:
-        messages.error(request, "Access denied to the donor dashboard.")
+        messages.error(request, "Access denied..")
         return redirect("donor-login")
 
     applications = DonationRequest.objects.filter(
@@ -231,7 +229,6 @@ def donor_dashboard(request):
 
         "upcoming_appointments": appointments,
     }
-
     return render(request, "donor/dashboard.html", context)
 
 
@@ -250,10 +247,10 @@ def hospital_dashboard(request):
 
     if profile.verification_status != HospitalProfile.VerificationStatus.VERIFIED:
         logout(request)
-        messages.warning(request, "Hospital account awaiting administrator verification.")
+        messages.warning(request, "Hospital account awaiting Administrator verification.")
         return redirect("hospital-login")
 
-    # Applications assigned specifically to this hospital
+    # Applications assigned specifically to the hospital
     assigned_applications = DonationRequest.objects.filter(
         assigned_hospital=request.user
     )
@@ -413,12 +410,9 @@ def hospital_dashboard(request):
 @require_POST
 def hospital_logout(request):
     if request.user.role != User.Role.HOSPITAL:
-        messages.error(request, "This action is only available to hospital accounts.")
+        messages.error(request, "Action available only for hospital accounts.")
         return redirect("hospital-login")
-
     logout(request)
-    # messages.success(request, "You have successfully signed out of the hospital portal.")
-
     return redirect("hospital-login")
 
 
