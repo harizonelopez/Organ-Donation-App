@@ -833,4 +833,77 @@
     }
 }
 
+/* =========================================
+   INTERNAL HOSPITAL NOTES
+========================================= */
+.ha-internal-note-form {
+    margin-bottom: 25px;
+}
+
+.ha-internal-note-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.ha-internal-note-header > div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ha-internal-note-header i {
+    color: #0c9f91;
+    font-size: 13px;
+}
+
+.ha-internal-note-header strong {
+    color: #29475a;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.ha-internal-note-header time {
+    color: #91a0aa;
+    font-size: 10px;
+}
+
+.ha-internal-notes-list {
+    display: grid;
+    gap: 12px;
+}
+
+.ha-internal-note {
+    padding: 16px;
+    border: 1px solid #e3eeec;
+    border-radius: 9px;
+    background: #f8fbfa;
+}
+
+.ha-internal-note p {
+    margin: 0;
+    color: #526879;
+    font-size: 12px;
+    line-height: 1.8;
+    overflow-wrap: anywhere;
+}
+
+.ha-internal-note .ha-muted {
+    display: block;
+    margin-top: 10px;
+}
+
+@media (max-width: 650px) {
+    .ha-internal-note {
+        padding: 13px;
+    }
+
+    .ha-internal-note-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
 
