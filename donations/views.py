@@ -4,11 +4,9 @@ from django.db import transaction
 from django.shortcuts import render, redirect, get_object_or_404
 from accounts.models import User, HospitalProfile
 from .forms import DonationApplicationForm
-from .models import DonationRequest, DonationOrgan, DonationReview
+from .models import (DonationRequest, DonationOrgan, DonationReview, HospitalApplicationNote,)
 from django.core.paginator import Paginator
 from django.db.models import Q
-# from django.views.decorators.http import require_POST
-
 
 @login_required
 def donation_application(request):
@@ -128,13 +126,9 @@ def hospital_application_list(request):
 @login_required
 def hospital_application_detail(request, pk):
     if not _is_verified_hospital(request.user):
-        messages.error(
-            request,
-            "You must have a verified hospital account to access applications."
-        )
+        messages.error(request, "Verified hospital account needed for access.")
         return redirect("hospital-login")
-
-    # This restriction prevents a hospital from opening another hospital's application by changing the URL ID
+    # Only applications assigned to this hospital can be accessed.
     application = get_object_or_404(
         DonationRequest.objects
         .filter(assigned_hospital=request.user)
@@ -142,7 +136,7 @@ def hospital_application_detail(request, pk):
         .prefetch_related("organs"),
         pk=pk,
     )
-
+    # Formal review history belonging to this hospital.
     reviews = (
         DonationReview.objects
         .filter(
@@ -151,39 +145,67 @@ def hospital_application_detail(request, pk):
         )
         .order_by("-reviewed_at")
     )
+    # Private notes belonging to this hospital.
+    internal_notes = (
+        HospitalApplicationNote.objects
+        .filter(
+            donation_request=application,
+            hospital=request.user,
+        )
+        .order_by("-created_at")
+    )
 
     if request.method == "POST":
-        decision = request.POST.get("decision", "").strip()
-        comments = request.POST.get("comments", "").strip()
+        action = request.POST.get("action", "review").strip()
+        # Add internal note
+        if action == "add_note":
+            note_text = request.POST.get("note", "").strip()
 
-        valid_decisions = DonationReview.Decision.values
+            if not note_text:
+                messages.error(request, "Enter a note before saving.")
+            else:
+                HospitalApplicationNote.objects.create(
+                    donation_request=application,
+                    hospital=request.user,
+                    note=note_text,
+                )
+                messages.success(request, "Internal note saved successfully.")
+            return redirect("hospital-application-detail", pk=application.pk,)
+        # RECORD FORMAL REVIEW
+        elif action == "review":
+            decision = request.POST.get("decision", "").strip()
+            comments = request.POST.get("comments", "").strip()
 
-        if decision not in valid_decisions:
-            messages.error(request, "Select a valid review decision.")
+            valid_decisions = DonationReview.Decision.values
+            if decision not in valid_decisions:
+                messages.error(request, "Select valid review decision.")
+                return redirect("hospital-application-detail", pk=application.pk,)
+
+            with transaction.atomic():
+                DonationReview.objects.create(
+                    donation_request=application,
+                    hospital=request.user,
+                    decision=decision,
+                    comments=comments,
+                )
+
+                application.status = decision
+                application.save(
+                    update_fields=["status", "updated_at"]
+                )
+            messages.success(request, "Review recorded successfully.")
             return redirect("hospital-application-detail", pk=application.pk)
-
-        with transaction.atomic():
-            DonationReview.objects.create(
-                donation_request=application,
-                hospital=request.user,
-                decision=decision,
-                comments=comments,
-            )
-
-            application.status = decision
-            application.save(update_fields=["status", "updated_at"])
-
-        messages.success(request, "Application review successfully recorded.")
-
-        return redirect("hospital-application-detail", pk=application.pk)
+        else:
+            messages.error(request, "Invalid application action.")
+            return redirect("hospital-application-detail", pk=application.pk)
 
     context = {
         "application": application,
         "reviews": reviews,
+        "internal_notes": internal_notes,
         "decision_choices": DonationReview.Decision.choices,
     }
-
-    return render(request, "hospital/applications/detail.html", context,)
+    return render(request, "hospital/applications/detail.html", context)
 
 
 
