@@ -11,7 +11,6 @@
     <a href="{% url 'hospital-application-list' %}" class="ha-back-link">
         <i class="bi bi-arrow-left"></i> Back to applications
     </a>
-
     <div class="ha-heading ha-detail-heading">
         <div>
             <span class="ha-eyebrow">APPLICATION RECORD / #{{ application.pk }}</span>
@@ -130,7 +129,71 @@
                     </div>
                 {% endif %}
             </div>
+        </div>
 
+        <div class="ha-detail-card ha-internal-notes-card"><!-- Internal hospital notes -->
+            <div class="ha-card-heading">
+                <div>
+                    <span class="ha-card-index">04</span>
+                    <h2>Internal hospital notes</h2>
+                </div>
+                <span class="ha-record-count">
+                    {{ internal_notes|length }} notes
+                </span>
+            </div>
+
+            <p class="ha-review-intro">
+                Record private observations and follow-up information
+                for your institution's application management.
+            </p>
+
+            <form method="POST" class="ha-review-form ha-internal-note-form"><!-- Add note form -->
+                {% csrf_token %}
+                <input type="hidden" name="action" value="add_note">
+                <label for="internal-note">New internal note</label>
+                <textarea
+                    name="note"
+                    id="internal-note"
+                    rows="4"
+                    maxlength="5000"
+                    placeholder="Write an internal observation or follow-up note..."
+                    required>
+                </textarea>
+
+                <button type="submit" class="ha-submit-review">Save note
+                    <i class="bi bi-journal-check"></i>
+                </button>
+            </form>
+
+            <div class="ha-internal-notes-list">
+                {% for note in internal_notes %}
+                    <article class="ha-internal-note">
+                        <div class="ha-internal-note-header">
+                            <div>
+                                <i class="bi bi-lock-fill"></i>
+                                <strong>Private hospital note</strong>
+                            </div>
+
+                            <time datetime="{{ note.created_at|date:'c' }}">
+                                {{ note.created_at|date:"d M Y, H:i" }}
+                            </time>
+                        </div>
+
+                        <p>{{ note.note|linebreaksbr }}</p>
+
+                        {% if note.updated_at != note.created_at %}
+                            <small class="ha-muted">
+                                Updated {{ note.updated_at|date:"d M Y, H:i" }}
+                            </small>
+                        {% endif %}
+                    </article>
+                {% empty %}
+                    <div class="ha-inline-empty">
+                        <i class="bi bi-journal-text"></i>
+                         No internal notes have been recorded yet.
+                    </div>
+                {% endfor %}
+            </div>
         </div>
 
         <aside class="ha-side-column">
