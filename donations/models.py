@@ -101,3 +101,24 @@ class DonationReview(models.Model):
     class Meta:
         ordering = ["-reviewed_at"]
 
+class HospitalApplicationNote(models.Model):
+    donation_request = models.ForeignKey(
+        DonationRequest,
+        on_delete=models.CASCADE,
+        related_name="hospital_notes",
+    )
+    hospital = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.PROTECT,
+        related_name="application_notes",
+        limit_choices_to={"role": "HOSPITAL"},
+    )
+    note = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return f"Hospital Note - Application #{self.donation_request_id}"
