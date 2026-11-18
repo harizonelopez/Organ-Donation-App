@@ -48,6 +48,11 @@ class DonationOrgan(models.Model):
         PANCREAS = "PANCREAS", "Pancreas"
         CORNEA = "CORNEA", "Cornea"
         BONE_MARROW = "BONE_MARROW", "Bone Marrow"
+        SMALL_INTESTINE = "SMALL_INTESTINE", "Small Intestine"
+        UTERUS = "UTERUS", "Uterus"
+        KIDNEY_PANCREAS = "KIDNEY_PANCREAS", "Kidney-pancreas"
+        HAND = "HAND", "Hand"
+        FACE = "FACE", "Face"
 
     donation_request = models.ForeignKey(
         DonationRequest,
@@ -69,7 +74,6 @@ class DonationOrgan(models.Model):
                 name="unique_organ_per_donation_request",
             )
         ]
-
 
 class DonationReview(models.Model):
     class Decision(models.TextChoices):
