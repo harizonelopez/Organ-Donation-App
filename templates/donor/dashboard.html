@@ -62,9 +62,15 @@
                 <span>Appointments</span>
             </a>
 
-            <a href="#notifications" class="sidebar-link">
+            <a href="{% url 'notification-list' %}" class="sidebar-link">
                 <i class="bi bi-bell"></i>
                 <span>Notifications</span>
+
+                {% if unread_notification_count %}
+                    <span class="notification-sidebar-badge">
+                        {{ unread_notification_count }}
+                    </span>
+                {% endif %}
             </a>
 
             <span class="sidebar-label account-label">ACCOUNT</span>
@@ -353,20 +359,55 @@
                             <span class="panel-eyebrow">UPDATES</span>
                             <h4>Notifications</h4>
                         </div>
-
                         <span class="panel-icon">
                             <i class="bi bi-bell"></i>
                         </span>
                     </div>
 
-                    <div class="empty-state">
-                        <i class="bi bi-bell"></i>
-                        <h5>Your updates will appear here</h5>
-                        <p>
-                            Application updates and hospital notifications
-                            will be available here.
-                        </p>
+                    <div class="notification-preview-list">
+                        {% for notification in recent_notifications %}
+                            <div class="notification-preview-item {% if not notification.is_read %}unread{% endif %}">
+                                <div class="notification-preview-icon">
+                                    {% if notification.notification_type == "APPOINTMENT_SCHEDULED" %}
+                                        <i class="bi bi-calendar-check"></i>
+                                    {% elif notification.notification_type == "APPOINTMENT_REMINDER" %}
+                                        <i class="bi bi-alarm"></i>
+                                    {% elif notification.notification_type == "APPOINTMENT_RESCHEDULED" %}
+                                        <i class="bi bi-calendar-event"></i>
+                                    {% elif notification.notification_type == "APPOINTMENT_CANCELLED" %}
+                                        <i class="bi bi-calendar-x"></i>
+                                    {% else %}
+                                        <i class="bi bi-bell"></i>
+                                    {% endif %}
+                                </div>
+                                <div class="notification-preview-content">
+                                    <div class="notification-preview-top">
+                                        <h6>{{ notification.title }}</h6>
+                                        {% if not notification.is_read %}
+                                            <span class="notification-preview-new">NEW</span>
+                                        {% endif %}
+                                    </div>
+                                    <p>{{ notification.message }}</p>
+                                    <span class="notification-preview-time">
+                                        <i class="bi bi-clock"></i>
+                                        {{ notification.created_at|date:"d M Y, h:i A" }}
+                                    </span>
+                                </div>
+                            </div>
+                        {% empty %}
+                            <div class="empty-state">
+                                <i class="bi bi-bell"></i>
+                                <h5>You're all caught up!</h5>
+                                <p>You don't have any notifications at the moment.</p>
+                            </div>
+                        {% endfor %}
                     </div>
+                    {% if recent_notifications %}
+                        <a href="{% url 'notification-list' %}" class="notification-view-all">
+                            View all notifications
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+                    {% endif %}
                 </div>
 
                 <!-- PROFILE -->
