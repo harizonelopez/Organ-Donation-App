@@ -8,6 +8,8 @@ from .models import Appointment
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.views.decorators.http import require_POST
+from core.utils import create_notification
+from core.models import Notification
 
 @login_required
 def hospital_schedule_appointment(request, application_id):
@@ -49,9 +51,21 @@ def hospital_schedule_appointment(request, application_id):
             appointment.status = Appointment.Status.SCHEDULED
             appointment.save()
 
+            # Create a donor in-app notification
+            create_notification(
+                recipient=appointment.donor,
+                notification_type=Notification.NotificationType.APPOINTMENT_SCHEDULED,
+                title="Appointment Scheduled",
+                message=(
+                    f"Your appointment has been scheduled for "
+                    f"{appointment.appointment_date:%d %B %Y} at "
+                    f"{appointment.appointment_time:%I:%M %p}. "
+                    f"Location: {appointment.location or 'To be communicated'}."
+                ),
+            )
+
             messages.success(request, "Appointment scheduled successfully.")
             return redirect("hospital-appointment-list")
-            #return redirect("hospital-application-detail", pk=application.pk)
 
     return render(
         request,
