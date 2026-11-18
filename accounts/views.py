@@ -15,6 +15,7 @@ from django.db.models import Count
 from django.db.models.functions import TruncMonth
 from django.utils import timezone
 from donations.models import DonationReview
+from core.models import Notification
 
 
 def welcome(request):
@@ -174,7 +175,7 @@ def donor_login(request):
             user = form.get_user()
 
             if user.role != User.Role.DONOR:
-                messages.error(request, "This login page is for donor accounts only.")
+                messages.error(request, "Login page is for donor accounts only.")
             else:
                 login(request, user)
                 return redirect("donor-dashboard")
@@ -212,6 +213,10 @@ def donor_dashboard(request):
         status="SCHEDULED"
     ).order_by("appointment_date", "appointment_time")
 
+    recent_notifications = Notification.objects.filter(
+        recipient=request.user
+    ).order_by("-created_at")[:3]
+
     context = {
         "total_applications": applications.count(),
 
@@ -228,6 +233,13 @@ def donor_dashboard(request):
         "recent_applications": applications[:5],
 
         "upcoming_appointments": appointments,
+
+        "recent_notifications": recent_notifications,
+
+        "unread_notifications": Notification.objects.filter(
+            recipient=request.user,
+            is_read=False
+        ).count(),
     }
     return render(request, "donor/dashboard.html", context)
 
@@ -412,6 +424,7 @@ def hospital_logout(request):
     if request.user.role != User.Role.HOSPITAL:
         messages.error(request, "Action available only for hospital accounts.")
         return redirect("hospital-login")
+    
     logout(request)
     return redirect("hospital-login")
 
