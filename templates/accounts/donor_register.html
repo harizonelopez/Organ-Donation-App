@@ -247,16 +247,16 @@
                         Already have an account?
                         <a href="{% url 'donor-login' %}">Sign in</a>
                     </p>
-
-                    <a href="{% url 'welcome' %}" class="auth-home-link">
-                        <i class="bi bi-house-door-fill"></i>
-                        Back to LifeLink Home
-                    </a>
                 </div>
             </form>
         </div>
     </div>
+    <div class="auth-home-outside">
+        <a href="{% url 'welcome' %}" class="auth-home-link">
+            <i class="bi bi-house-door-fill"></i>
+            Back to LifeLink Home
+        </a>
+    </div>
 </section>
-
 {% endblock %}
 
