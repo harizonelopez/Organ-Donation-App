@@ -9,7 +9,11 @@ env = environ.Env(
     DJANGO_DEBUG=(bool, True)
 )
 
-environ.Env.read_env(os.path.join(BASE_DIR, "secrets.env"))
+# environ.Env.read_env(os.path.join(BASE_DIR, "secrets.env"))
+if os.getenv("DJANGO_ENV") == "production":
+    environ.Env.read_env(os.path.join(BASE_DIR, "secrets.production.env"))
+else:
+    environ.Env.read_env(os.path.join(BASE_DIR, "secrets.env"))
 
 # Security
 SECRET_KEY = env("DJANGO_SECRET_KEY")
@@ -19,6 +23,18 @@ ALLOWED_HOSTS = env.list(
     "DJANGO_ALLOWED_HOSTS",
     default=["127.0.0.1", "localhost"]
 )
+
+# Production security
+if not DEBUG:
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+    SECURE_HSTS_SECONDS = 31536000
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
 
 # Applications
 INSTALLED_APPS = [
@@ -39,6 +55,7 @@ INSTALLED_APPS = [
 # Middleware
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -107,6 +124,13 @@ STATIC_URL = "/static/"
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
+STORAGES = {
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
 # Media files
 MEDIA_URL = "/media/"
