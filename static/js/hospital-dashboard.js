@@ -145,13 +145,3 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-document.querySelectorAll(".ops-nav-link").forEach(link => {
-    link.addEventListener("click", function () {
-        document.querySelectorAll(".ops-nav-link").forEach(item => {
-            item.classList.remove("active");
-        });
-
-        this.classList.add("active");
-    });
-});
-
