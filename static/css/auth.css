@@ -1895,3 +1895,25 @@
     text-decoration: underline;
 }
 
+/* BACK TO HOME LINK */
+.auth-home-outside {
+    max-width: 1100px;
+    margin: 22px auto 0;
+    text-align: left;
+}
+
+.auth-home-outside .auth-home-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #0c9f91;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.auth-home-outside .auth-home-link:hover {
+    color: #087d72;
+}
+
