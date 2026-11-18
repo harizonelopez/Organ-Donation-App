@@ -45,19 +45,7 @@
                 <ul class="navbar-nav ms-auto align-items-lg-center">
 
                     {% if user.is_authenticated %}
-                        <li class="nav-item">
-                            <span class="nav-link">
-                                <i class="bi bi-person-circle me-1"></i>
-                                {{ user.first_name|default:user.username }}
-                            </span>
-                        </li>
-
-                        {% if user.role == "DONOR" %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'donor-dashboard' %}">Dashboard</a>
-                            </li>
-
-                        {% elif user.role == "HOSPITAL" %}
+                        {% if user.role == "HOSPITAL" %}
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'hospital-dashboard' %}">Dashboard</a>
                             </li>
@@ -71,14 +59,14 @@
                     {% else %}
                         {% if request.resolver_match.url_name == "hospital-login" or request.resolver_match.url_name == "hospital-register" %}
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'hospital-login' %}">Hospital Login</a>
+                                <a class="nav-link" href="{% url 'hospital-login' %}">Login</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link nav-register" href="{% url 'hospital-register' %}">Register Hospital</a>
                             </li>
                         {% else %}
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'donor-login' %}">Donor Login</a>
+                                <a class="nav-link" href="{% url 'donor-login' %}">Login</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link nav-register" href="{% url 'donor-register' %}">Get Started</a>

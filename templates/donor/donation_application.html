@@ -12,7 +12,6 @@
     <a href="{% url 'donor-dashboard' %}" class="back-link">
         <i class="bi bi-arrow-left"></i> Back to Dashboard
     </a>
-
     <span class="portal-label">DONOR PORTAL</span>
     <h1>Donation Application</h1>
     <p>
@@ -46,11 +45,7 @@
                     Select Donation Options
                     <span class="required">*</span>
                 </label>
-
-                <p class="field-help">
-                    You may select more than one option.
-                </p>
-
+                <p class="field-help">You may select more than one option.</p>
                 <div class="organ-grid">
                     {% for checkbox in form.organs %}
                         <label class="organ-option">
@@ -73,17 +68,12 @@
             </div>
 
             <div class="form-section">
-                <label for="{{ form.description.id_for_label }}"
-                       class="section-label">
+                <label for="{{ form.description.id_for_label }}" class="section-label">
                     Additional Information
                     <span class="optional">(Optional)</span>
                 </label>
 
-                <p class="field-help">
-                    Share any additional information about your donation
-                    intentions.
-                </p>
-
+                <p class="field-help">Share any additional information about your donation intentions.</p>
                 {{ form.description }}
 
                 {% if form.description.errors %}
@@ -107,7 +97,7 @@
             </div>
 
             <div class="form-actions">
-                <a href="{% url 'donor-dashboard' %}" class="btn-cancel">Cancel</a>
+                <a href="{% url 'my-applications' %}" class="btn-cancel">Cancel</a>
                 <button type="submit" class="btn-submit">
                     Submit Application
                     <i class="bi bi-arrow-right"></i>
@@ -123,10 +113,7 @@
             </div>
 
             <h3>Your decision matters</h3>
-            <p>
-                Registering your donation intentions is an important first
-                step towards helping others.
-            </p>
+            <p>Registering your donation intentions is an important first step towards helping others.</p>
         </div>
 
         <div class="process-card">
