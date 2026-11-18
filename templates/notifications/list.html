@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Notifications | LifeLink{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/notifications-page.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="notification-page">
+    <div class="notification-heading">
+        <div>
+            <span class="notification-eyebrow">
+                <i class="bi bi-bell"></i> YOUR UPDATES
+            </span>
+            <h1>Notifications</h1>
+            <p>Stay informed about your donation journey and appointments.</p>
+        </div>
+
+        <div class="notification-heading-icon">
+            <i class="bi bi-bell"></i>
+        </div>
+    </div>
+
+    <div class="notification-panel">
+        <div class="notification-panel-header">
+            <div>
+                <h5>All Notifications</h5>
+                <span>Your recent updates and reminders</span>
+            </div>
+
+            <span class="notification-count">
+                {{ notifications|length }} Updates
+            </span>
+        </div>
+
+        {% for notification in notifications %}
+            <div class="notification-item {% if not notification.is_read %}unread{% endif %}">
+                <div class="notification-item-icon">
+                    {% if notification.notification_type == "APPOINTMENT_SCHEDULED" %}
+                        <i class="bi bi-calendar-check"></i>
+                    {% elif notification.notification_type == "APPOINTMENT_REMINDER" %}
+                        <i class="bi bi-alarm"></i>
+                    {% elif notification.notification_type == "APPOINTMENT_RESCHEDULED" %}
+                        <i class="bi bi-calendar-event"></i>
+                    {% elif notification.notification_type == "APPOINTMENT_CANCELLED" %}
+                        <i class="bi bi-calendar-x"></i>
+                    {% else %}
+                        <i class="bi bi-bell"></i>
+                    {% endif %}
+                </div>
+
+                <div class="notification-item-content">
+                    <div class="notification-item-top">
+                        <h6>{{ notification.title }}</h6>
+
+                        {% if not notification.is_read %}
+                            <span class="notification-new">NEW</span>
+                        {% endif %}
+                    </div>
+
+                    <p>{{ notification.message }}</p>
+
+                    <div class="notification-item-bottom">
+                        <span class="notification-time">
+                            <i class="bi bi-clock"></i>
+                            {{ notification.created_at|date:"d M Y, h:i A" }}
+                        </span>
+
+                        {% if not notification.is_read %}
+                            <form method="POST" action="{% url 'mark-notification-read' notification.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="notification-mark-read">
+                                    Mark as read
+                                </button>
+                            </form>
+                        {% endif %}
+                    </div>
+                </div>
+
+            </div>
+        {% empty %}
+            <div class="notification-empty">
+                <div class="notification-empty-icon">
+                    <i class="bi bi-bell-slash"></i>
+                </div>
+                <h5>You're all caught up!</h5>
+                <p>You don't have any notifications at the moment.</p>
+            </div>
+        {% endfor %}
+    </div>
+    <a href="{% url 'donor-dashboard' %}" class="notification-back-link">
+        <i class="bi bi-arrow-left"></i>
+        Back to Dashboard
+    </a>
+</section>
+{% endblock %}
