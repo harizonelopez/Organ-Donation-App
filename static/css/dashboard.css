@@ -10,7 +10,6 @@
     overflow: clip;
 }
 
-
 /* =========================================
    SIDEBAR
 ========================================= */
@@ -133,7 +132,6 @@
     padding-left: 9px;
 }
 
-
 /* SIDEBAR PRIVACY CARD */
 .sidebar-help {
     margin-top: auto;
@@ -160,7 +158,6 @@
     line-height: 1.6;
     margin: 0;
 }
-
 
 /* SIGN OUT */
 .sidebar-logout-form {
@@ -192,7 +189,6 @@
     background: rgba(255,100,100,.12);
     color: #ffffff;
 }
-
 
 /* =========================================
    MAIN DASHBOARD AREA
@@ -254,7 +250,6 @@
     color: #718493;
 }
 
-
 /* =========================================
    WELCOME BANNER
 ========================================= */
@@ -308,7 +303,6 @@
     transform: rotate(-12deg);
     padding-right: 25px;
 }
-
 
 /* =========================================
    STATISTICS CARDS
@@ -389,7 +383,6 @@
     display: block;
 }
 
-
 /* =========================================
    DASHBOARD CONTENT GRID
 ========================================= */
@@ -437,7 +430,6 @@
     border-radius: 11px;
     font-size: 1.15rem;
 }
-
 
 /* =========================================
    APPLICATIONS
@@ -500,7 +492,6 @@
     background: #ffe8e9;
 }
 
-
 /* =========================================
    APPOINTMENTS
 ========================================= */
@@ -539,7 +530,6 @@
 .appointment-info {
     min-width: 0;
 }
-
 
 /* =========================================
    HEALTH CENTRE
@@ -580,7 +570,6 @@
     white-space: nowrap;
 }
 
-
 /* =========================================
    MEDICAL RECORDS
 ========================================= */
@@ -611,7 +600,6 @@
     color: #a5dcd5;
 }
 
-
 /* =========================================
    PROFILE
 ========================================= */
@@ -635,7 +623,6 @@
     text-align: right;
     overflow-wrap: anywhere;
 }
-
 
 /* =========================================
    EMPTY STATES
@@ -663,7 +650,6 @@
     line-height: 1.6;
     margin: 0;
 }
-
 
 /* =========================================
    DISCLAIMER
@@ -693,7 +679,6 @@
     margin: 0;
 }
 
-
 /* =========================================
    DASHBOARD FOOTER
 ========================================= */
@@ -708,7 +693,6 @@
     color: #8999a4;
     font-size: .72rem;
 }
-
 
 /* =========================================
    TABLET RESPONSIVENESS
@@ -729,7 +713,6 @@
     }
 
 }
-
 
 /* =========================================
    SMALL SCREEN NAVIGATION
@@ -805,7 +788,6 @@
     }
 
 }
-
 
 /* =========================================
    MOBILE
@@ -926,9 +908,7 @@
     .feature-list > div {
         flex-wrap: wrap;
     }
-
 }
-
 
 /* =========================================
    ACCESSIBILITY
@@ -942,7 +922,126 @@
 
 }
 
+/* NOTIFICATION SIDEBAR BADGE */
+.notification-sidebar-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 21px;
+    height: 21px;
+    padding: 0 6px;
+    margin-left: auto;
+    border-radius: 20px;
+    background: #e74c3c;
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 800;
+    line-height: 1;
+    box-shadow: 0 2px 6px rgba(231, 76, 60, 0.2);
+}
 
+/* =========================================
+   DONOR DASHBOARD NOTIFICATION PREVIEW
+========================================= */
+.notification-preview-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.notification-preview-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 17px 0;
+    border-bottom: 1px solid #edf2f5;
+}
+
+.notification-preview-item:last-child {
+    border-bottom: none;
+}
+
+.notification-preview-item.unread {
+    background: #f5fafb;
+    margin: 0 -15px;
+    padding: 17px 15px;
+    border-radius: 9px;
+}
+
+.notification-preview-icon {
+    width: 39px;
+    height: 39px;
+    min-width: 39px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e8f6f4;
+    color: #0c9f91;
+    border-radius: 10px;
+    font-size: 17px;
+}
+
+.notification-preview-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.notification-preview-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 5px;
+}
+
+.notification-preview-top h6 {
+    margin: 0;
+    color: #102b40;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.notification-preview-content p {
+    margin: 0 0 7px;
+    color: #687c89;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.notification-preview-new {
+    background: #e74c3c;
+    color: #ffffff;
+    padding: 3px 7px;
+    border-radius: 20px;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.4px;
+}
+
+.notification-preview-time {
+    color: #91a1ab;
+    font-size: 10px;
+}
+
+.notification-preview-time i {
+    margin-right: 3px;
+}
+
+.notification-view-all {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 12px;
+    color: #0c9f91;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: gap 0.2s ease, color 0.2s ease;
+}
+
+.notification-view-all:hover {
+    color: #087d72;
+    gap: 11px;
+}
 
 
 
