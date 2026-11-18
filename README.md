@@ -134,27 +134,25 @@ Data access is intended to follow role and assignment boundaries. A hospital sho
    pip install -r requirements.txt
    ```
 
-5. Create or update the required configuration files described below.
-
-6. Apply database migrations:
+5. Apply database migrations:
 
    ```bash
    python manage.py migrate
    ```
 
-7. Create an administrator account:
+6. Create an administrator account:
 
    ```bash
    python manage.py createsuperuser
    ```
 
-8. Start the development server:
+7. Start the development server:
 
    ```bash
    python manage.py runserver
    ```
 
-9. Open [http://127.0.0.1:8000](http://127.0.0.1:8000).
+8. Open [http://127.0.0.1:8000](http://127.0.0.1:8000)
 
 Press `Ctrl+C` to stop the server. Run `deactivate` to leave the virtual environment.
 
