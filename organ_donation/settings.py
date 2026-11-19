@@ -9,11 +9,11 @@ env = environ.Env(
     DJANGO_DEBUG=(bool, True)
 )
 
-# environ.Env.read_env(os.path.join(BASE_DIR, "secrets.env"))
-if os.getenv("DJANGO_ENV") == "production":
-    environ.Env.read_env(os.path.join(BASE_DIR, "secrets.production.env"))
-else:
-    environ.Env.read_env(os.path.join(BASE_DIR, "secrets.env"))
+# Load local environment variables if the file exists
+local_env_file = os.path.join(BASE_DIR, "secrets.env")
+
+if os.path.exists(local_env_file):
+    environ.Env.read_env(local_env_file)
 
 # Security
 SECRET_KEY = env("DJANGO_SECRET_KEY")
@@ -22,6 +22,10 @@ DEBUG = env.bool("DJANGO_DEBUG", default=True)
 ALLOWED_HOSTS = env.list(
     "DJANGO_ALLOWED_HOSTS",
     default=["127.0.0.1", "localhost"]
+)
+CSRF_TRUSTED_ORIGINS = env.list(
+    "DJANGO_CSRF_TRUSTED_ORIGINS",
+    default=[]
 )
 
 # Production security
@@ -87,12 +91,21 @@ TEMPLATES = [
 WSGI_APPLICATION = "organ_donation.wsgi.application"
 
 # Database
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+if os.getenv("DATABASE_URL"):
+    import dj_database_url
+    DATABASES = {
+        "default": dj_database_url.config(
+            conn_max_age=600,
+            conn_health_checks=True,
+        )
     }
-}
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+        }
+    }
 
 # Custom user model
 AUTH_USER_MODEL = "accounts.User"
