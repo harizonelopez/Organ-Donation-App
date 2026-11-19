@@ -12,6 +12,7 @@ venv/
 secrets.env
 **/secrets.env
 organ_donation/.env
+secrets*.env
 
 # Django
 *.log
