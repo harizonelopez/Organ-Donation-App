@@ -194,7 +194,7 @@ def donor_logout(request):
     return redirect("donor-dashboard")
 
 
-@login_required
+@login_required(login_url="donor-login")
 def donor_dashboard(request):
     if request.user.role != User.Role.DONOR:
         messages.error(request, "Access denied..")
@@ -244,7 +244,7 @@ def donor_dashboard(request):
     return render(request, "donor/dashboard.html", context)
 
 
-@login_required
+@login_required(login_url="hospital-login")
 def hospital_dashboard(request):
     if request.user.role != User.Role.HOSPITAL:
         messages.error(request, "Access denied.")
